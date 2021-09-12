@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --white: #FFF;
+  --white-hover: #faf5f5e7;
+  --background: #f1f1f1;
+  --green: #3AB874;
+  --red: #CA413F;
+  --text: #413e3e;
+}
+
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+
+  background: var(--background);
+  color: var(--text);
+}
