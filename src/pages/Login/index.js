@@ -1,4 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
+import Button from "../../components/Button";
+import Input from "../../components/Input";
 
 import './index.css';
 
@@ -18,17 +22,28 @@ export default function Login() {
         <div>
           <form className="login">
             <div className="input-block">
-              <label>Usuário</label>
-              <input type="email" placeholder="Digite seu usuário" />
+              <Input
+                label="Usuário"
+                type="text"
+                placeholder="Digite seu usuário"
+              />
             </div>
             <div className="input-block">
-              <label>Senha</label>
-              <input type="password" placeholder="Digite sua senha" />
-              <p className="forgotten-password">Esqueceu a senha?</p>
+              <Input
+                label="Senha"
+                type="password"
+                placeholder="Digite sua senha"
+              >
+                <Link className="forgotten-password" to="/forgotten_password">Esqueceu a senha?</Link>
+              </Input>
             </div>
-            
+
             <div className="input-block">
-              <button className="btn-login">Entrar</button>
+              <Button
+                description="Entrar"
+                color="var(--green)"
+                link="/home"
+              />
             </div>
           </form>
         </div>

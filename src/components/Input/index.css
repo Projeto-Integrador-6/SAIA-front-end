@@ -1,0 +1,21 @@
+.textbox label {
+  font-size: 1rem;
+  font-weight: 400;
+
+  color: var(--text);
+
+  line-height: 30px;
+}
+
+.textbox input {
+  width: 100%;
+  height: 40px;
+  padding: 25px;
+
+  border: 1px solid #8b8989;
+  border-radius: 5px;
+}
+
+.textbox input:focus { 
+  outline: none !important;
+}

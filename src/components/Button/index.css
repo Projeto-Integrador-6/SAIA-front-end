@@ -1,0 +1,18 @@
+.button {
+  width: 100%;
+  height: 55px;
+  
+  border: none;
+  border-radius: 5px;
+
+  color: var(--white);
+
+  font-size: 1rem;
+
+  transition: 0.4s filter;
+}
+
+.button:hover {
+  filter: brightness(80%);
+  transition: 0.4s;
+}

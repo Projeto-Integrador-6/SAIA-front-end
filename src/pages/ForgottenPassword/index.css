@@ -37,11 +37,25 @@
   margin-bottom: 15px;
 }
 
+.side-login .login .button-spacing {
+  margin-top: 12px;
+}
+
 .forgotten-password {
   display: flex;
   justify-content: flex-end;
 
   margin-top: 8px;
+
+  text-decoration: none;
+  color: var(--text);
+  transition: 0.4s opacity;
+}
+
+.forgotten-password:hover {
+  opacity: 0.8;
+  
+  transition: 0.4s;
 }
 
 .side-image {
@@ -78,7 +92,6 @@
 
     filter: brightness(65%);
 
-  
   }
     
 }
