@@ -1,0 +1,42 @@
+.box-container{
+    width: 20%;
+}
+
+.box-container a {
+    text-decoration: none;
+}
+
+.box{
+    
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    width: 95%;
+    height: 100px;
+
+    background-color: var(--background);
+
+    border: none;
+    box-shadow: 2px 2px 10px -3px #333;
+    border-radius: 8px;
+
+    color: var(--text);
+}
+
+.box:hover {
+    filter: brightness(90%);
+    transition: 0.4s;
+}
+
+.box h3 {
+    font-size: 1.8em;
+    line-height: 28px;
+    font-weight: normal;
+}
+.box-content{
+    color: var(--green-dark);
+    font-size: 1.4em;
+}
