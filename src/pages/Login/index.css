@@ -48,8 +48,6 @@
   display: none;
 }
 
-
-
 @media screen and (min-width: 770px) {
   .login-container{
     display: grid;

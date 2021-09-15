@@ -1,0 +1,104 @@
+.sidebar {
+  position: fixed;
+  width: 60px;
+  height: 100%;
+  background: var(--green);
+  overflow: hidden;
+
+  transition: 0.5s;
+
+}
+
+.sidebar.active {
+  width: 100%;
+}
+
+.sidebar ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+
+.sidebar ul li{
+  position: relative;
+  width: 100%;
+}
+
+.sidebar ul li a, .toggle .toggle-btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--white);
+
+  transition: 0.5s background;
+}
+
+.sidebar ul li a:hover {
+  background: var(--green-dark);
+
+  transition: 0.5s background;
+}
+
+.sidebar ul li a .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  padding: 0 5px;
+  height: 60px;
+  
+  white-space: nowrap;
+
+  font-size: 1rem;
+}
+
+.sidebar ul li a .icon, .toggle .toggle-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-width: 60px;
+  height: 60px;
+}
+
+.sidebar ul li a .icon svg, .toggle .toggle-btn svg {
+  font-size: 1.5rem;
+}
+
+.toggle {
+  width: 100%;
+  height: 60px;
+  cursor: pointer;
+}
+
+.toggle .toggle-btn {
+  background: var(--green);
+  border: none;
+}
+
+.toggle .toggle-btn:hover, .toggle .toggle-btn.active {
+  background: var(--green-dark);
+
+  transition: 0.5s background;
+}
+
+.content {
+  display: flex;
+  position: absolute;
+
+  margin-top: 50px;
+  margin-left: 6%;
+
+  z-index: -1;
+}
+
+@media screen and (min-width: 770px){
+  .sidebar.active {
+    width: 250px;
+  }
+}
