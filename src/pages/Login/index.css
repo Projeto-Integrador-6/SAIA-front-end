@@ -17,7 +17,7 @@
   margin: 50px;
 }
 
-.side-login .welcome-text {
+.side-login .welcome-text h2, .side-login .welcome-text p{
   line-height: 40px;
 }
 
@@ -58,12 +58,10 @@
 
   .filter {
     background-color: black !important;
-    
   }
   
   .side-image {
     display: flex !important;
-    
   }
 
   .image {
@@ -75,8 +73,6 @@
     height: 100vh;
 
     filter: brightness(65%);
-
-  
   }
     
 }

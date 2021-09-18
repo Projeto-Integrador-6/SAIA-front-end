@@ -1,16 +1,11 @@
-.home-container {
-    width: 90vw;
-    height: 90vh;
+.side-navigation{
+  width: 100%;
 }
 
-.side-navigation{
-    width: 100%;
-    
-}
 .boxes-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
 }

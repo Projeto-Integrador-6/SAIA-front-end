@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { BiHomeAlt, BiMenu } from "react-icons/bi";
+import { BiHomeAlt, BiMenu, BiFile } from "react-icons/bi";
 
 import './index.css';
-import Navbar from "../Navbar";
 
 export default function Sidebar({ ...props }) {
 
@@ -15,23 +14,43 @@ export default function Sidebar({ ...props }) {
   }
 
   return (
-    <div className="sidebar-container">
+    <>
       <div className={sidebar === true ? 'sidebar active' : 'sidebar'}>
         <ul>
           <li>
             <div className="toggle">
               <button className={sidebar === true ? 'toggle-btn active' : 'toggle-btn'} onClick={handleSidebar}><BiMenu /></button>
             </div>
+          </li>
+          <li>
             <Link to="/">
               <span className="icon"><BiHomeAlt /></span>
               <span className="title">Home</span>
             </Link>
           </li>
+          <li>
+            <Link to="/">
+              <span className="icon"><BiFile /></span>
+              <span className="title">Avaliações</span>
+            </Link>
+          </li>
         </ul>
       </div>
-      <div className="content">
-        {props.children}
+      <div className="body">
+        <div className="navbar">
+          <div className="brand">
+            <h3>SAIA</h3>
+          </div>
+          <div className="user">
+            <p>Olá, Usuário</p>
+          </div>
+        </div>
+
+        <div className="content">
+          {props.children}
+        </div>
+
       </div>
-    </div>
+    </>
   )
 }
