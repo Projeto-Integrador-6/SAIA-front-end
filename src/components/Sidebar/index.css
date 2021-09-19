@@ -5,7 +5,7 @@
   background: var(--green);
   overflow: hidden;
 
-  transition: 0.5s;
+  transition: 0.4s;
 
   z-index: 9999999;
 }
@@ -15,15 +15,18 @@
 }
 
 .sidebar ul {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
+  
+  list-style: none;
 }
 
 .sidebar ul li{
   position: relative;
   width: 100%;
+
+  margin-bottom: 10px;
 }
 
 .sidebar ul li a, .toggle .toggle-btn {
@@ -35,6 +38,7 @@
   color: var(--white);
 
   transition: 0.5s background;
+  
 }
 
 .sidebar ul li a:hover {
@@ -49,12 +53,12 @@
   align-items: center;
   position: relative;
 
-  padding: 0 5px;
+  padding: 0 15px;
   height: 60px;
   
   white-space: nowrap;
 
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .sidebar ul li a .icon, .toggle .toggle-btn {
@@ -63,8 +67,7 @@
   align-items: center;
   position: relative;
   min-width: 60px;
-  height: 60px;
-  
+  height: 60px;  
 }
 
 .sidebar ul li a .icon svg, .toggle .toggle-btn svg {
@@ -94,7 +97,7 @@
   min-height: 90vh;
   left: 60px;
   width: calc(100% - 60px);
-  transition: all 0.5s ease;
+  transition: all 0.4s ease;
 }
 
 .body .content {
@@ -114,7 +117,7 @@
 	-webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); 
 	-moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 
-  transition: all 0.5s ease;
+  transition: all 0.4s ease;
   
   display: flex;
   justify-content: space-between;

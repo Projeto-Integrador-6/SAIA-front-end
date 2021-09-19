@@ -25,15 +25,16 @@ export default function Sidebar({ ...props }) {
           <li>
             <Link to="/">
               <span className="icon"><BiHomeAlt /></span>
-              <span className="title">Home</span>
+              <span className="title">Início</span>
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/educational_test">
               <span className="icon"><BiFile /></span>
               <span className="title">Avaliações</span>
             </Link>
           </li>
+          
         </ul>
       </div>
       <div className="body">
