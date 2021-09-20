@@ -23,13 +23,13 @@ export default function Sidebar({ ...props }) {
             </div>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/home">
               <span className="icon"><BiHomeAlt /></span>
               <span className="title">Início</span>
             </Link>
           </li>
           <li>
-            <Link to="/educational_test">
+            <Link to="/manager/educational_test">
               <span className="icon"><BiFile /></span>
               <span className="title">Avaliações</span>
             </Link>

@@ -1,0 +1,15 @@
+.page-title-container {
+  margin-bottom: 40px;
+}
+
+.page-title-container .title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width: 770px){
+  .page-title-container .title {
+    font-size: 2rem !important;
+  }
+}

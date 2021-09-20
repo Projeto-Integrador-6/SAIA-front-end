@@ -103,6 +103,7 @@
 .body .content {
   padding-top: 100px;
   padding-left: 50px;
+  padding-right: 50px;
 }
 
 .body .navbar {
@@ -129,9 +130,6 @@
 .body .navbar .brand h3 {
   color: var(--green);
 }
-
-
-
 
 @media screen and (min-width: 770px){
   .sidebar.active {

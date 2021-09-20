@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Login from './pages/Login';
 import Home from './pages/Home';
-import EducationalTest from "./pages/EducationalTest";
+import EducationalTestManager from "./pages/EducationalTestManager";
 import ForgottenPassword from "./pages/ForgottenPassword";
 
 import history from './history/index';
@@ -15,7 +15,7 @@ export default function Routes() {
       <Switch>
         <Route path="/forgotten_password" component={ForgottenPassword} />
         <Route path="/home" component={Home} />
-        <Route path="/educational_test" component={EducationalTest} />
+        <Route path="/manager/educational_test" component={EducationalTestManager} />
         <Route path="/" component={Login} />
       </Switch>
     </BrowserRouter>

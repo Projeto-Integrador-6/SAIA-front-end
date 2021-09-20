@@ -1,0 +1,43 @@
+.test-nav {
+  margin-bottom: 20px;
+}
+
+.test-nav-buttons, .test-list-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.test-nav-buttons button, .test-list-buttons button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+  border-radius: 20px;
+  gap: 5px;
+
+  background: none;
+  border: 1px solid transparent;
+
+  color: var(--green);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+
+
+  transition: all 0.4s ease;
+}
+
+.test-list-buttons button svg, .test-nav-buttons button svg {
+  font-size: 1.3rem ;
+}
+
+.test-nav-buttons button:hover, .test-list-buttons button:hover {
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+
+.test-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

@@ -1,0 +1,24 @@
+.list-card {
+  display: flex;
+  justify-content: space-between;
+  
+  align-items: center;
+  width: 100%;
+  height: auto;
+  max-height: 180px;
+  padding: 30px;
+
+  background: var(--white);
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+
+.list-card .list-info h4 {
+  font-weight: 400;
+}
+
+@media screen and (min-width: 770px){
+  .list-card {
+    height: 40px;
+  }
+}
