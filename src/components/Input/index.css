@@ -1,4 +1,4 @@
-.textbox label {
+.textbox label, .textarea label {
   font-size: 1rem;
   font-weight: 400;
 
@@ -14,8 +14,26 @@
 
   border: 1px solid #8b8989;
   border-radius: 5px;
+
+  background: transparent;
 }
 
-.textbox input:focus { 
+.textbox input:focus, .textarea textarea:focus { 
   outline: none !important;
+}
+
+.textarea textarea {
+  width: 100%;
+  height: auto;
+  min-height: 71px;
+  padding: 25px;
+
+  border: 1px solid #8b8989;
+  border-radius: 5px;
+
+  resize: vertical;
+
+  transition: 0.1s;
+
+  background: transparent;
 }

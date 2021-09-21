@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-import { BiHomeAlt, BiMenu, BiFile } from "react-icons/bi";
+import { BiHomeAlt, BiMenu, BiFile, BiFileBlank } from "react-icons/bi";
 
 import './index.css';
 
@@ -23,16 +23,22 @@ export default function Sidebar({ ...props }) {
             </div>
           </li>
           <li>
-            <Link to="/home">
+            <NavLink to="/home" activeStyle={{ background: 'var(--green-dark)'}}>
               <span className="icon"><BiHomeAlt /></span>
               <span className="title">Início</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/manager/educational_test">
+            <NavLink to="/manager/educational_test" activeStyle={{ background: 'var(--green-dark)'}}>
               <span className="icon"><BiFile /></span>
               <span className="title">Avaliações</span>
-            </Link>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/manager/questions" activeStyle={{ background: 'var(--green-dark)'}}>
+              <span className="icon"><BiFileBlank /></span>
+              <span className="title">Questões</span>
+            </NavLink>
           </li>
           
         </ul>

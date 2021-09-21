@@ -8,6 +8,7 @@
   transition: 0.4s;
 
   z-index: 9999999;
+
 }
 
 .sidebar.active {
@@ -31,12 +32,13 @@
 
 .sidebar ul li a, .toggle .toggle-btn {
   position: relative;
-  display: block;
   width: 100%;
   display: flex;
+
+  font-family: 'Raleway', sans-serif;
+  
   text-decoration: none;
   color: var(--white);
-
   transition: 0.5s background;
   
 }

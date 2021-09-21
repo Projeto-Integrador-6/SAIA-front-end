@@ -1,13 +1,18 @@
-.test-nav {
+.educational-test-nav {
   margin-bottom: 20px;
 }
 
-.test-nav-buttons, .test-list-buttons {
+.educational-test-nav-buttons, .educational-test-list-buttons {
   display: flex;
   gap: 10px;
 }
 
-.test-nav-buttons button, .test-list-buttons button {
+.educational-test-nav-buttons a {
+  text-decoration: none;
+}
+
+.educational-test-nav-buttons button, 
+.educational-test-list-buttons button {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -27,16 +32,18 @@
   transition: all 0.4s ease;
 }
 
-.test-list-buttons button svg, .test-nav-buttons button svg {
+.educational-test-list-buttons button svg, 
+.educational-test-nav-buttons button svg {
   font-size: 1.3rem ;
 }
 
-.test-nav-buttons button:hover, .test-list-buttons button:hover {
+.educational-test-nav-buttons button:hover, 
+.educational-test-list-buttons button:hover {
   background: var(--green-light);
   color: var(--green-dark);
 }
 
-.test-list {
+.educational-test-list {
   display: flex;
   flex-direction: column;
   gap: 15px;

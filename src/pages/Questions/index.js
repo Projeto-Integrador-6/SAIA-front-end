@@ -1,5 +1,5 @@
 import React from "react";
-import { BiPlus, BiCog, BiFileBlank } from "react-icons/bi";
+import { BiPlus, BiCog } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 import ListCard from "../../components/ListCard";
@@ -8,27 +8,26 @@ import Sidebar from "../../components/Sidebar";
 
 import './index.css';
 
-export default function EducationalTest() {
+export default function Questions() {
   return (
     <Sidebar>
-      <PageTitle title="Avaliações" />
+      <PageTitle title="Questões" />
 
       <div className="educational-test-nav">
         <ListCard content={
           <div className="educational-test-nav-buttons">
-            <Link to="educational_test/create">
-              <button><BiPlus />Criar Avaliação</button>
+            <Link to="questions/create">
+              <button><BiPlus />Criar Questão</button>
             </Link>
           </div>
         } />
       </div>
 
       <div className="educational-test-list">
-        <ListCard content="Avaliação de Algoritmos"
+        <ListCard content="Questão de Algoritmos"
           buttons={
             <div className="educational-test-list-buttons">
-              <button><BiFileBlank/>Visualizar</button>
-              <button><BiCog/>Configurações</button>
+              <button><BiCog />Configurações</button>
             </div>
           } />
       </div>
