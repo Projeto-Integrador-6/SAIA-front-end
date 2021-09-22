@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import { BiHomeAlt, BiMenu, BiFile, BiFileBlank } from "react-icons/bi";
+import { BiHomeAlt, BiMenu, BiFile, BiFileBlank, BiCheck } from "react-icons/bi";
 
 import './index.css';
 
@@ -40,6 +40,12 @@ export default function Sidebar({ ...props }) {
               <span className="title">Questões</span>
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/manager/results" activeStyle={{ background: 'var(--green-dark)'}}>
+              <span className="icon"><BiCheck /></span>
+              <span className="title">Resultados</span>
+            </NavLink>
+          </li>
           
         </ul>
       </div>
@@ -58,6 +64,7 @@ export default function Sidebar({ ...props }) {
         </div>
 
       </div>
+
     </>
   )
 }
