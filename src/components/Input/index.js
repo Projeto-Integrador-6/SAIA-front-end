@@ -21,5 +21,17 @@ function Textarea({ ...props }) {
   )
 }
 
+function RadioButton({ ...props }) {
+  return (
+    <div className="radio-button">
+      <label className="radio-button-container">
+        {props.label}
+        <input type="radio" name={props.name} {...props} />
+        <span className="checkmark"></span>
+      </label>
+    </div>
+  )
+}
 
-export {Input, Textarea};
+
+export { Input, Textarea, RadioButton };
