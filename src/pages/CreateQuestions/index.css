@@ -2,3 +2,24 @@
   margin-top: 15px;
   margin-bottom: 15px;
 }
+
+.editor {
+  border: 1px solid var(--border-gray);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.editor-label {
+  margin-bottom: 10px;
+}
+
+.editor-label label  {
+  font-size: 1rem;
+  font-weight: 400;
+
+  color: var(--text);
+}
+
+.editor .editor-input {
+  margin-top: 20px;
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import Button from "../../components/Button";
+import { ButtonOne } from "../../components/Button";
 import { Input } from "../../components/Input";
 
 import './index.css';
@@ -39,7 +39,7 @@ export default function Login() {
             </div>
 
             <div className="input-block">
-              <Button
+              <ButtonOne
                 description="Entrar"
                 color="var(--green)"
                 link="/home"

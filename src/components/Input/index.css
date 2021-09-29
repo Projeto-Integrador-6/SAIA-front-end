@@ -28,7 +28,7 @@
   min-height: 71px;
   padding: 25px;
 
-  border: 1px solid #8b8989;
+  border: 1px solid var(--border-gray);
   border-radius: 5px;
 
   resize: vertical;

@@ -1,4 +1,5 @@
 import React from "react";
+import { ButtonTwo } from "../../components/Button";
 import FullCard from "../../components/FullCard";
 
 import { Input, Textarea } from "../../components/Input";
@@ -29,7 +30,7 @@ export default function CreateEducationalTest() {
           </div>
         </FullCard>
 
-        <FullCard title="Questões da avaliação">
+        <FullCard title="Questões da avaliação" button={<ButtonTwo name="Adicionar Questão"/>} >
 
         </FullCard>
       </form>

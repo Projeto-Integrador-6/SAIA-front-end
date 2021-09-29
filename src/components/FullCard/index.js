@@ -5,7 +5,12 @@ import './index.css';
 export default function FullCard({ ...props }) {
   return (
     <div className="full-card-container">
-      <h4>{props.title}</h4>
+      <div className="full-card-title">
+        <h4>{props.title}</h4>
+        {props.button && 
+          props.button
+        }
+      </div>
       <div className="full-card">
         {props.children}
       </div>

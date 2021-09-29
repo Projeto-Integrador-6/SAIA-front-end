@@ -1,6 +1,6 @@
 .sidebar {
   position: fixed;
-  width: 60px;
+  width: 80px;
   height: 100%;
   background: var(--green);
   overflow: hidden;
@@ -8,7 +8,6 @@
   transition: 0.4s;
 
   z-index: 9999999;
-
 }
 
 .sidebar.active {
@@ -23,29 +22,37 @@
   list-style: none;
 }
 
-.sidebar ul li{
+.sidebar ul.nav-toggle li, .sidebar ul.nav-icons li, .sidebar ul.nav-icons-left li {
   position: relative;
   width: 100%;
+  outline: none;
+}
 
-  margin-bottom: 10px;
+.sidebar .nav-toggle li {
+  margin-bottom: 20px;
+}
+
+
+.sidebar .nav-icons li, .sidebar ul.nav-icons-left li {
+  padding: 10px;
 }
 
 .sidebar ul li a, .toggle .toggle-btn {
   position: relative;
   width: 100%;
   display: flex;
-
-  font-family: 'Raleway', sans-serif;
-  
-  text-decoration: none;
   color: var(--white);
   transition: 0.5s background;
-  
+}
+
+.sidebar ul li a {
+  font-family: "Raleway", sans-serif;
+  text-decoration: none;
+  border-radius: 20px; 
 }
 
 .sidebar ul li a:hover {
   background: var(--green-dark);
-
   transition: 0.5s background;
 }
 
@@ -60,7 +67,7 @@
   
   white-space: nowrap;
 
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .sidebar ul li a .icon, .toggle .toggle-btn {
@@ -97,8 +104,8 @@
   position: relative;
 
   min-height: 90vh;
-  left: 60px;
-  width: calc(100% - 60px);
+  left: 80px;
+  width: calc(100% - 80px);
   transition: all 0.4s ease;
 }
 
