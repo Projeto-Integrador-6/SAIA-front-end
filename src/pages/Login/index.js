@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { ButtonOne } from "../../components/Button";
@@ -7,6 +7,11 @@ import { Input } from "../../components/Input";
 import './index.css';
 
 export default function Login() {
+
+  useEffect(() => {
+    document.title = `SAIA`
+  })
+
   return (
     <div className="login-container">
       <div className="side-image">

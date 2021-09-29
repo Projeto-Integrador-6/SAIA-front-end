@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import { Formik, Form } from 'formik';
 
@@ -14,6 +14,10 @@ import 'draft-js/dist/Draft.css';
 
 
 export default function CreateQuestions() {
+
+  useEffect(() => {
+    document.title = `SAIA - Criando Questão`
+  })
 
   const [alternativa, setAlternativa] = React.useState(
     () => EditorState.createEmpty(),

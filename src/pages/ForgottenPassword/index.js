@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ButtonOne } from "../../components/Button";
 import { Input } from "../../components/Input";
@@ -6,6 +6,11 @@ import { Input } from "../../components/Input";
 import './index.css';
 
 export default function ForgottenPassword() {
+
+  useEffect(() => {
+    document.title = `SAIA - Recuperação de Senha`
+  })
+
   return (
     <div className="login-container">
       <div className="side-image">

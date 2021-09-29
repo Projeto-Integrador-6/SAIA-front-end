@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ButtonTwo } from "../../components/Button";
 import FullCard from "../../components/FullCard";
 
@@ -9,6 +9,11 @@ import Sidebar from "../../components/Sidebar";
 import './index.css';
 
 export default function CreateEducationalTest() {
+
+  useEffect(() => {
+    document.title = `SAIA - Criando Avaliação`
+  })
+
   return (
     <Sidebar>
       <PageTitle title="Criando Avaliação" />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
@@ -38,6 +38,11 @@ const data = [
 ];
 
 export default function Results() {
+
+    useEffect(() => {
+        document.title = `SAIA - Resultados de `
+    })
+
     return (
         <Sidebar>
             <div className="results-container">

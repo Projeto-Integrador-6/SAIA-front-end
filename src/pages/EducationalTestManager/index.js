@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BiPlus, BiCog, BiFileBlank } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
@@ -9,6 +9,11 @@ import Sidebar from "../../components/Sidebar";
 import './index.css';
 
 export default function EducationalTest() {
+
+  useEffect(() => {
+    document.title = `SAIA - Avaliações`
+  })
+
   return (
     <Sidebar>
       <PageTitle title="Avaliações" />

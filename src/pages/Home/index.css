@@ -1,11 +1,10 @@
-.boxes-container{
-  
-}
-
 .boxes-navigation {
   margin-bottom: 60px;
 }
 .boxes-navigation .box-title{
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
   margin-bottom: 20px;
 }
 
