@@ -8,17 +8,15 @@ export default function TripleBox({...props}) {
 
     return(
         <div className="triple-box-container">
-            <div className="first-box">
+            <div className="triple-box">
                 <p className="box-title">{firstTitle}</p>
                 <p className="box-content" style={{color: firstContentColor}}>{firstContent}</p>
             </div>
-            <div className="vertical-line"></div>
-            <div className="second-box">
+            <div className="triple-box">
                 <p className="box-title">{secondTitle}</p>
                 <p className="box-content" style={{color: secondContentColor}}>{secondContent}</p>
             </div>
-            <div className="vertical-line"></div>
-            <div className="third-box">
+            <div className="triple-box">
                 <p className="box-title">{thirdTitle}</p>
                 <p className="box-content" style={{color: thirdContentColor}}>{thirdContent}</p>
             </div>
