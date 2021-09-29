@@ -41,26 +41,26 @@ export default function Sidebar({ ...props }) {
         <ul className="nav-icons">
           <li>
             <NavLink to="/home" activeStyle={{ background: 'var(--green-dark)' }}>
-              <span className="icon"><BiHomeAlt /></span>
-              <span className="title">Início</span>
+              <span className="side-icon"><BiHomeAlt /></span>
+              <span className="side-title">Início</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/manager/educational_test" activeStyle={{ background: 'var(--green-dark)' }}>
-              <span className="icon"><BiFile /></span>
-              <span className="title">Avaliações</span>
+              <span className="side-icon"><BiFile /></span>
+              <span className="side-title">Avaliações</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/manager/questions" activeStyle={{ background: 'var(--green-dark)' }}>
-              <span className="icon"><BiFileBlank /></span>
-              <span className="title">Questões</span>
+              <span className="side-icon"><BiFileBlank /></span>
+              <span className="side-title">Questões</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/manager/results" activeStyle={{ background: 'var(--green-dark)' }}>
-              <span className="icon"><BiCheck /></span>
-              <span className="title">Resultados</span>
+              <span className="side-icon"><BiCheck /></span>
+              <span className="side-title">Resultados</span>
             </NavLink>
           </li>
         </ul>
