@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 
 import './index.css';
 
-export default function Button({ ...props }) {
+function ButtonOne({ ...props }) {
+
   return (
     <>
       {props.link !== undefined
@@ -11,7 +12,7 @@ export default function Button({ ...props }) {
         <>
           <Link to={props.link}>
             <button
-              className="button"
+              className={"button-one"}
               style={{ background: props.color }}
             >
               {props.description}
@@ -21,7 +22,7 @@ export default function Button({ ...props }) {
         :
         <>
           <button
-            className="button"
+            className="button-one"
             style={{ background: props.color }}
             onClick={props.onClick}
           >
@@ -32,3 +33,19 @@ export default function Button({ ...props }) {
     </>
   )
 }
+
+function ButtonTwo({ ...props }) {
+  return (
+    <>
+      <button
+        className="button-two"
+        {...props}
+      >
+        {props.icon}
+        {props.name}
+      </button>
+    </>
+  )
+}
+
+export { ButtonOne, ButtonTwo }

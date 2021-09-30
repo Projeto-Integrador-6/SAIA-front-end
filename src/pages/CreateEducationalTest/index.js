@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { ButtonTwo } from "../../components/Button";
 import FullCard from "../../components/FullCard";
 
 import { Input, Textarea } from "../../components/Input";
@@ -8,6 +9,11 @@ import Sidebar from "../../components/Sidebar";
 import './index.css';
 
 export default function CreateEducationalTest() {
+
+  useEffect(() => {
+    document.title = `SAIA - Criando Avaliação`
+  })
+
   return (
     <Sidebar>
       <PageTitle title="Criando Avaliação" />
@@ -29,7 +35,7 @@ export default function CreateEducationalTest() {
           </div>
         </FullCard>
 
-        <FullCard title="Questões da avaliação">
+        <FullCard title="Questões da avaliação" button={<ButtonTwo name="Adicionar Questão"/>} >
 
         </FullCard>
       </form>

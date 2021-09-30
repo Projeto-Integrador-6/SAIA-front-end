@@ -1,0 +1,21 @@
+.editor-buttons {
+  display: flex;
+  column-gap: 5px;
+}
+
+.editor-buttons button {
+  width: 30px;
+  height: 30px;
+
+  border: none;
+  border-radius: 5px;
+  cursor: pointer; 
+
+  transition: 0.5s opacity;
+
+  margin-bottom: 10px;
+}
+
+.editor-buttons button:hover {
+  opacity: 0.8;
+}

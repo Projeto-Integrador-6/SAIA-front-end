@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Box from '../../components/Box'
 import PageTitle from '../../components/PageTitle';
@@ -7,7 +7,11 @@ import Sidebar from '../../components/Sidebar';
 import './index.css'
 
 export default function Home() {
-  
+
+  useEffect(() => {
+    document.title = `SAIA - Home`
+  })
+
   return (
     <Sidebar>
       <div className="home-container">

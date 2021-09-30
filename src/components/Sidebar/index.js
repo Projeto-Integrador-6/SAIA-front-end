@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-
 import { BiHomeAlt, BiMenu, BiFile, BiFileBlank, BiCheck } from "react-icons/bi";
+
+import Chatbot from "../Chatbot";
 
 import './index.css';
 
@@ -16,37 +17,38 @@ export default function Sidebar({ ...props }) {
   return (
     <>
       <div className={sidebar === true ? 'sidebar active' : 'sidebar'}>
-        <ul>
+        <ul className="nav-toggle">
           <li>
             <div className="toggle">
               <button className={sidebar === true ? 'toggle-btn active' : 'toggle-btn'} onClick={handleSidebar}><BiMenu /></button>
             </div>
           </li>
+        </ul>
+        <ul className="nav-icons">
           <li>
-            <NavLink to="/home" activeStyle={{ background: 'var(--green-dark)'}}>
-              <span className="icon"><BiHomeAlt /></span>
-              <span className="title">Início</span>
+            <NavLink to="/home" activeStyle={{ background: 'var(--green-dark)' }}>
+              <span className="side-icon"><BiHomeAlt /></span>
+              <span className="side-title">Início</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/manager/educational_test" activeStyle={{ background: 'var(--green-dark)'}}>
-              <span className="icon"><BiFile /></span>
-              <span className="title">Avaliações</span>
+            <NavLink to="/manager/educational_test" activeStyle={{ background: 'var(--green-dark)' }}>
+              <span className="side-icon"><BiFile /></span>
+              <span className="side-title">Avaliações</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/manager/questions" activeStyle={{ background: 'var(--green-dark)'}}>
-              <span className="icon"><BiFileBlank /></span>
-              <span className="title">Questões</span>
+            <NavLink to="/manager/questions" activeStyle={{ background: 'var(--green-dark)' }}>
+              <span className="side-icon"><BiFileBlank /></span>
+              <span className="side-title">Questões</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/manager/results" activeStyle={{ background: 'var(--green-dark)'}}>
-              <span className="icon"><BiCheck /></span>
-              <span className="title">Resultados</span>
+            <NavLink to="/manager/results" activeStyle={{ background: 'var(--green-dark)' }}>
+              <span className="side-icon"><BiCheck /></span>
+              <span className="side-title">Resultados</span>
             </NavLink>
           </li>
-          
         </ul>
       </div>
       <div className="body">
@@ -61,9 +63,11 @@ export default function Sidebar({ ...props }) {
 
         <div className="content">
           {props.children}
-        </div>
 
+        </div>
       </div>
+      
+      <Chatbot />
 
     </>
   )

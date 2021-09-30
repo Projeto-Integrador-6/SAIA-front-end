@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import Button from "../../components/Button";
+import { ButtonOne } from "../../components/Button";
 import { Input } from "../../components/Input";
 
 import './index.css';
 
 export default function ForgottenPassword() {
+
+  useEffect(() => {
+    document.title = `SAIA - Recuperação de Senha`
+  })
+
   return (
     <div className="login-container">
       <div className="side-image">
@@ -27,13 +32,13 @@ export default function ForgottenPassword() {
               />
             </div>
             <div className="button-spacing">
-              <Button
+              <ButtonOne
                 description="Solicitar"
                 color="var(--green)"
               />
             </div>
             <div className="button-spacing">
-              <Button
+              <ButtonOne
                 description="Voltar"
                 color="var(--red)"
                 link="/"

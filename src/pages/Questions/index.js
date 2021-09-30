@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BiPlus, BiCog } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
@@ -9,6 +9,11 @@ import Sidebar from "../../components/Sidebar";
 import './index.css';
 
 export default function Questions() {
+
+  useEffect(() => {
+    document.title = `SAIA - Questões`
+  })
+
   return (
     <Sidebar>
       <PageTitle title="Questões" />
