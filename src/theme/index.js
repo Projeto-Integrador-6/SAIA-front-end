@@ -3,7 +3,7 @@ import { createTheme } from '@material-ui/core/styles';
 const UiTheme = createTheme({
   typography: {
     fontFamily: [
-      'Roboto',
+      'Montserrat',
       'sans-serif'
     ].join(','),
     fontWeight: 400,

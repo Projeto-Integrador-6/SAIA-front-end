@@ -67,7 +67,7 @@ export default function Sidebar({ ...props }) {
         </div>
       </div>
       
-      <Chatbot />
+      {/* <Chatbot /> */}
 
     </>
   )
