@@ -28,20 +28,25 @@
     filter: brightness(90%);
 }
 
-@media screen and (max-width: 770px){
-    .triple-box-container {
-        display: grid;
-        grid-template-rows: repeat(3, 1fr);
-        height: 360px;
-    }
-  }
 
-@media screen and (min-width : 770px) {
+
+
+@media screen and (min-width : 770px), (max-width: 770px){
     .triple-box-container{
         display: grid;
-        grid-template-rows: repeat(3, 1fr);
+        grid-template-rows: repeat(n, 1fr);
         height: 360px;
     }
+    .triple-box:nth-child(1){
+        border-top-right-radius: 8px;
+        border-top-left-radius: 8px;
+    }
+    .triple-box:nth-child(3){
+        border-bottom-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+
+
 }
 
 @media screen and (min-width : 1080px) {
@@ -54,7 +59,17 @@
         height: 120px;
     }
     .triple-box:nth-child(-n+2){
-        border-right: 1px solid var(--line-color);
-        border-collapse: collapse;
+        border-right: 1px solid rgb(161, 161, 161);
+        
+    }
+    .triple-box:nth-child(1){
+        border-bottom-left-radius: 8px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 0px;
+    }
+    .triple-box:nth-child(3){
+        border-bottom-right-radius: 8px;
+        border-top-right-radius: 8px;
+        border-bottom-left-radius: 0px;
     }
 }

@@ -15,7 +15,7 @@
 @media screen and (max-width: 770px){
   .boxes-container {
     display: grid !important;
-    grid-template-columns: repeat(1,1fr) !important;
+    grid-template-rows: repeat(n,1fr) !important;
     gap: 20px;
     
   }
