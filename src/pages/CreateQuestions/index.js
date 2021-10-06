@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Editor, EditorState, RichUtils } from 'draft-js';
-import { Formik, Form } from 'formik';
+import { useFormik } from 'formik';
 
 import FullCard from "../../components/FullCard";
 import PageTitle from "../../components/PageTitle";
@@ -12,7 +12,6 @@ import { Input, RadioButton, Textarea } from "../../components/Input";
 import './index.css';
 import 'draft-js/dist/Draft.css';
 
-
 export default function CreateQuestions() {
 
   useEffect(() => {
@@ -21,6 +20,10 @@ export default function CreateQuestions() {
 
   const [alternativa, setAlternativa] = React.useState(
     () => EditorState.createEmpty(),
+    {
+      alternativa: [],
+      quantity: 1
+    }
   );
 
   const _onBoldMouseDown = (e) => {
@@ -38,67 +41,67 @@ export default function CreateQuestions() {
     setAlternativa(RichUtils.toggleInlineStyle(alternativa, 'UNDERLINE'))
   }
 
+  const create = useFormik({
+    initialValues: {
+      tipoQuestao: '',
+      alternativa: []
+    },
+    onSubmit: values => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
+
   return (
     <Sidebar>
       <PageTitle title="Criando Questão" />
-      <Formik
-        initialValues={{
-          tipoQuestao: '',
-          alternativa: []
-        }}
-        onSubmit={async (values) => {
+      <form>
+        <FullCard title="Tipo da questão">
+          <div className="input-block">
+            <RadioButton
+              label="Questão aberta"
+              name="tipoQuestao"
+              value="1"
+              onChange={create.handleChange}
+            />
+            <RadioButton
+              label="Questão fechada"
+              name="tipoQuestao"
+              value="2"
+              onChange={create.handleChange}
+            />
+          </div>
+        </FullCard>
 
-        }}
-      >
-        {({ values, handleChange }) => (
-          <Form>
-            <FullCard title="Tipo da questão">
-              <div className="input-block">
-                <RadioButton
-                  label="Questão aberta"
-                  name="tipoQuestao"
-                  value="1"
-                  onChange={handleChange}
-                />
-                <RadioButton
-                  label="Questão fechada"
-                  name="tipoQuestao"
-                  value="2"
-                  onChange={handleChange}
-                />
-              </div>
-            </FullCard>
-
-            {values.tipoQuestao !== "" &&
-              <FullCard title="Dados da questão">
-                <div className="input-block">
-                  <Input
-                    label="Nome da questão"
-                    type="text"
-                    placeholder="Digite o nome da questão"
-                  />
-                </div>
-                <div className="input-block">
-                  <Textarea
-                    label="Enunciado da questão"
-                    placeholder="Digite o enunciado da avaliação"
-                  />
-                </div>
-                <div className="input-block">
-                  <Input
-                    label="Tags"
-                    type="text"
-                    placeholder="Digite as tags da questão"
-                    data-role="taginput"
-                  />
-                </div>
-              </FullCard>
-            }
+        {create.values.tipoQuestao !== "" &&
+          <FullCard title="Dados da questão">
+            <div className="input-block">
+              <Input
+                label="Nome da questão"
+                type="text"
+                placeholder="Digite o nome da questão"
+              />
+            </div>
+            <div className="input-block">
+              <Textarea
+                label="Enunciado da questão"
+                placeholder="Digite o enunciado da avaliação"
+              />
+            </div>
+            <div className="input-block">
+              <Input
+                label="Tags"
+                type="text"
+                placeholder="Digite as tags da questão"
+                data-role="taginput"
+              />
+            </div>
+          </FullCard>
+        }
 
 
-            {values.tipoQuestao === "2" &&
-              <>
-                <FullCard title="Alternativas" button={<ButtonTwo name="Nova Alternativa" />}>
+        {create.values.tipoQuestao === "2" &&
+          <>
+            <FullCard title="Alternativas" button={<ButtonTwo name="Nova Alternativa" />}>
 
                   <div className="input-block">
                     <div className="editor-label">
@@ -117,25 +120,24 @@ export default function CreateQuestions() {
                           onChange={setAlternativa}
                           placeholder="Digite o conteúdo da alternativa"
                         />
-
                       </div>
                     </div>
                   </div>
+                
+              
 
-                </FullCard>
-              </>
-            }
+            </FullCard>
+          </>
+        }
 
-            <ButtonOne
-              description="Criar"
-              color="var(--green)"
-              width="200px"
-              type="submit"
-            />
+        <ButtonOne
+          description="Criar"
+          color="var(--green)"
+          width="200px"
+          type="submit"
+        />
 
-          </Form>
-        )}
-      </Formik>
+      </form>
 
 
     </Sidebar>
