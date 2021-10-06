@@ -23,6 +23,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CheckIcon from '@mui/icons-material/Check';
+import EventNoteIcon from '@mui/icons-material/EventNote';
 
 const drawerWidth = 240;
 
@@ -157,6 +158,13 @@ export default function Sidebar({ ...props }) {
               <InsertDriveFileIcon />
             </ListItemIcon>
             <ListItemText primary="Questões" />
+          </ListItem>
+
+          <ListItem button component={Link} to="/manager/enforcement" selected={location.pathname === '/manager/enforcement'}>
+            <ListItemIcon>
+              <EventNoteIcon />
+            </ListItemIcon>
+            <ListItemText primary="Aplicações" />
           </ListItem>
 
           <ListItem button component={Link} to="/manager/results" selected={location.pathname === '/manager/results'}>

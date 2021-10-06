@@ -4,6 +4,7 @@ import Sidebar from '../../components/Sidebar';
 import ListCard from '../../components/ListCard';
 import { Link } from 'react-router-dom';
 import { BiPlus, BiFileBlank, BiCog } from 'react-icons/bi';
+import { ButtonTwo } from '../../components/Button';
 
 export default function Enforcement() {
 
@@ -18,7 +19,7 @@ export default function Enforcement() {
                 <ListCard content={
                     <div className="educational-test-nav-buttons">
                         <Link to="enforcement/create">
-                            <button><BiPlus />Criar Questão</button>
+                            <ButtonTwo icon={<BiPlus/>} name="Criar Aplicação"/>
                         </Link>
                     </div>
                 } />
@@ -27,8 +28,8 @@ export default function Enforcement() {
                 <ListCard content="Aplicação de Algoritmos"
                     buttons={
                         <div className="educational-test-list-buttons">
-                            <button><BiFileBlank />Visualizar</button>
-                            <button><BiCog />Configurações</button>
+                            <ButtonTwo icon={<BiFileBlank/>} name="Visualizar"/>
+                            <ButtonTwo icon={<BiCog/>} name="Configurações"/>
                         </div>
                     } />
             </div>
