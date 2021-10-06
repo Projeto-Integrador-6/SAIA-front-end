@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { BiHomeAlt, BiMenu, BiFile, BiFileBlank, BiCheck } from "react-icons/bi";
+import { BiHomeAlt, BiMenu, BiFile, BiFileBlank, BiCalendar, BiCheck } from "react-icons/bi";
 
 import Chatbot from "../Chatbot";
 
@@ -41,6 +41,12 @@ export default function Sidebar({ ...props }) {
             <NavLink to="/manager/questions" activeStyle={{ background: 'var(--green-dark)' }}>
               <span className="side-icon"><BiFileBlank /></span>
               <span className="side-title">Questões</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/manager/enforcement" activeStyle={{ background: 'var(--green-dark)' }}>
+              <span className="side-icon"><BiCalendar /></span>
+              <span className="side-title">Aplicações</span>
             </NavLink>
           </li>
           <li>

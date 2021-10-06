@@ -42,3 +42,7 @@
   background: var(--green-light);
   color: var(--green-dark);
 }
+
+.button-one, .button-two {
+  margin-bottom: 30px;
+}
