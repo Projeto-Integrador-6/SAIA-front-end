@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Button, IconButton } from "@mui/material";
 
 import './index.css';
 
@@ -37,15 +38,27 @@ function ButtonOne({ ...props }) {
 function ButtonTwo({ ...props }) {
   return (
     <>
-      <button
+      <Button
         className="button-two"
+        color="primary"
+        disableElevation
+        startIcon={props.icon}
         {...props}
       >
-        {props.icon}
         {props.name}
-      </button>
+      </Button>
     </>
   )
 }
 
-export { ButtonOne, ButtonTwo }
+function Icon({...props}){
+  return (
+    <>
+    <IconButton color="primary" {...props}>
+      {props.icon}
+    </IconButton>
+    </>
+  )
+}
+
+export { ButtonOne, ButtonTwo, Icon }

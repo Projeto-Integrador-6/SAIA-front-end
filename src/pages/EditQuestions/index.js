@@ -7,16 +7,16 @@ import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
 import { ButtonOne, ButtonTwo } from "../../components/Button";
 import EditorButtons from "../../components/EditorButtons";
-import { Input, RadioButton, Textarea } from "../../components/Input";
+import { Input, RadioButton } from "../../components/Input";
 
-import './index.css';
+import '../CreateQuestions/index.css';
 import 'draft-js/dist/Draft.css';
 
 
-export default function CreateQuestions() {
+export default function EditQuestions() {
 
   useEffect(() => {
-    document.title = `SAIA - Criando Questão`
+    document.title = `SAIA - Editando Questão`
   })
 
   const [questao, setQuestao] = useState(
@@ -97,7 +97,7 @@ export default function CreateQuestions() {
 
   return (
     <Sidebar>
-      <PageTitle title="Criando Questão" />
+      <PageTitle title="Editando Questão" />
       <Formik
         initialValues={{
           tipoQuestao: '',
@@ -221,7 +221,7 @@ export default function CreateQuestions() {
             }
 
             <ButtonOne
-              description="Criar"
+              description="Confirmar Alterações"
               color="var(--green)"
               width="200px"
               type="submit"

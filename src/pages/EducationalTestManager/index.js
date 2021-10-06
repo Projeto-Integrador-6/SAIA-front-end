@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
-import { BiPlus, BiCog, BiFileBlank } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import CreateIcon from '@mui/icons-material/Create';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 import ListCard from "../../components/ListCard";
 import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
+import { ButtonTwo } from "../../components/Button";
 
 import './index.css';
 
@@ -22,7 +25,7 @@ export default function EducationalTest() {
         <ListCard content={
           <div className="educational-test-nav-buttons">
             <Link to="educational_test/create">
-              <button><BiPlus />Criar Avaliação</button>
+              <ButtonTwo icon={<AddIcon />} name="Criar Avaliação" />
             </Link>
           </div>
         } />
@@ -32,8 +35,10 @@ export default function EducationalTest() {
         <ListCard content="Avaliação de Algoritmos"
           buttons={
             <div className="educational-test-list-buttons">
-              <button><BiFileBlank/>Visualizar</button>
-              <button><BiCog/>Configurações</button>
+              <ButtonTwo icon={<RemoveRedEyeIcon />} name="Visualizar" />
+              <Link to="educational_test/edit">
+                <ButtonTwo icon={<CreateIcon />} name="Editar" />
+              </Link>
             </div>
           } />
       </div>

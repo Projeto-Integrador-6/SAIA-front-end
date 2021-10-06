@@ -7,40 +7,8 @@
   gap: 10px;
 }
 
-.educational-test-nav-buttons a {
+.educational-test-nav-buttons a, .educational-test-list-buttons a {
   text-decoration: none;
-}
-
-.educational-test-nav-buttons button, 
-.educational-test-list-buttons button {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 5px;
-  border-radius: 20px;
-  gap: 5px;
-
-  background: none;
-  border: 1px solid transparent;
-
-  color: var(--green);
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-
-
-  transition: all 0.4s ease;
-}
-
-.educational-test-list-buttons button svg, 
-.educational-test-nav-buttons button svg {
-  font-size: 1.3rem ;
-}
-
-.educational-test-nav-buttons button:hover, 
-.educational-test-list-buttons button:hover {
-  background: var(--green-light);
-  color: var(--green-dark);
 }
 
 .educational-test-list {
