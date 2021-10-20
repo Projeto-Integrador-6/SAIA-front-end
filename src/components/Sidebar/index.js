@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -27,6 +27,12 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+import { NavContext } from '../../contexts/NavContext';
+import { AuthContext } from '../../contexts/AuthContext';
+
+import './index.css';
 
 const drawerWidth = 240;
 
@@ -97,44 +103,40 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Sidebar({ ...props }) {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [openManager, setOpenManager] = useState(true);
+
+  const { user } = useContext(AuthContext);
+  const { openNav, openManager, handleClickNav, handleClickManager, loading } = useContext(NavContext);
 
   const location = useLocation();
-
-  const handleManager = () => {
-    setOpenManager(!openManager);
-  };
-
-  const handleDrawer = () => {
-    setOpen(!open);
-  };
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={openNav}>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawer}
+            onClick={handleClickNav}
             edge="start"
             sx={{
               marginRight: '36px',
-              ...(open && { display: 'none' }),
+              ...(openNav && { display: 'none' }),
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            SAIA
-          </Typography>
+          <div className="navbar-items">
+            <Typography variant="h6" noWrap component="div">
+              SAIA
+            </Typography>
+            <p>Olá, {user}</p>
+          </div>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={openNav}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawer}>
+          <IconButton onClick={handleClickNav}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
@@ -154,9 +156,16 @@ export default function Sidebar({ ...props }) {
             <ListItemText primary="Avaliações" />
           </ListItem>
 
+          <ListItem button component={Link} to="/profile" selected={location.pathname === '/profile'}>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Meu Perfil" />
+          </ListItem>
+
           <Divider />
 
-          <ListItemButton onClick={handleManager}>
+          <ListItemButton onClick={handleClickManager}>
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>

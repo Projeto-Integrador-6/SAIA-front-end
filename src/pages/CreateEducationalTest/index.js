@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
-import { ButtonTwo } from "../../components/Button";
-import FullCard from "../../components/FullCard";
+import React, { useEffect, useState } from "react";
+import DialogActions from '@mui/material/DialogActions';
 
+import { ButtonTwo } from "../../components/Button";
+import DialogBox from "../../components/DialogBox";
+import FullCard from "../../components/FullCard";
 import { Input, Textarea } from "../../components/Input";
 import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
@@ -9,6 +11,8 @@ import Sidebar from "../../components/Sidebar";
 import './index.css';
 
 export default function CreateEducationalTest() {
+
+  const [modalQuestion, setModalQuestion] = useState(false);
 
   useEffect(() => {
     document.title = `SAIA - Criando Avaliação`
@@ -35,10 +39,29 @@ export default function CreateEducationalTest() {
           </div>
         </FullCard>
 
-        <FullCard title="Questões da avaliação" button={<ButtonTwo name="Adicionar Questão"/>} >
+        <FullCard title="Questões da avaliação" button={<ButtonTwo name="Adicionar Questão" onClick={() => setModalQuestion(true)} />} >
 
         </FullCard>
       </form>
+
+      <DialogBox
+        open={modalQuestion}
+        onClose={() => setModalQuestion(false)}
+        title="Adicionando Questões"
+      >
+        <form>
+          <Input
+            name="questions"
+            label="Questões"
+            type="text"
+            placeholder="Procure por questões..."
+          />
+        </form>
+
+        <DialogActions>
+          <ButtonTwo name="Fechar" onClick={() => setModalQuestion(false)}/>
+        </DialogActions>
+      </DialogBox>
 
     </Sidebar>
   )

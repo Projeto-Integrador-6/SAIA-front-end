@@ -25,7 +25,7 @@ function ButtonOne({ ...props }) {
           <button
             className="button-one"
             style={{ background: props.color }}
-            onClick={props.onClick}
+            {...props}
           >
             {props.description}
           </button>

@@ -1,0 +1,27 @@
+.modal {
+  padding: 25px;
+  border-radius: 5px;
+}
+
+.modal-title {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 5px; 
+}
+
+.modal-title h4 {
+  font-size: 1.4rem;
+  color: var(--purple);
+  line-height: 35px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.modal-body form > div {
+  padding: 0px !important;
+  overflow-y: inherit;
+}
+
+.css-hlj6pa-MuiDialogActions-root {
+  margin-top: 20px;
+}

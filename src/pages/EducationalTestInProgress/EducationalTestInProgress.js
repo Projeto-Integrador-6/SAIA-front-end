@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import TimerIcon from '@mui/icons-material/Timer';
 
@@ -6,6 +7,7 @@ import { Icon } from "../../components/Button";
 
 import './index.css';
 import { Pagination } from "@mui/material";
+
 
 export default function EducationalTestInProgress() {
 
@@ -17,7 +19,9 @@ export default function EducationalTestInProgress() {
     <div className="educational-test-progress-container">
       <div className="educational-test-progress-header">
         <div className="educational-test-progress-btn-back">
+          <Link to="/educational_test">
             <Icon icon={<ArrowBackIcon />} size="large" />
+          </Link>
         </div>
 
         <div className="educational-test-progress-title">
@@ -26,13 +30,13 @@ export default function EducationalTestInProgress() {
         </div>
 
         <div className="educational-test-progress-coutdown">
-          <h4><TimerIcon/> 2:00</h4>
+          <h4><TimerIcon /> 2:00</h4>
         </div>
       </div>
 
       <div className="educational-test-progress-body">
         <div className="educational-test-progress-pagination">
-          <Pagination count={10} color="primary" size="large" boundaryCount={30}/>
+          <Pagination count={10} color="primary" size="large" boundaryCount={30} />
         </div>
 
         <div className="educational-test-progress-question">
