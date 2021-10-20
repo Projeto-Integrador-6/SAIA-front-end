@@ -1,17 +1,11 @@
-.div-filters{
-    display: flex;
-    justify-content: flex-end;
-}
-.enforcement-select{
-    width: 260px;
-    float: right;
+.results-resume, .results-chart, .boxes-container {
+    margin-bottom: 40px;
 }
 .title {
     font-size: 1rem;
     font-weight: 500;
     text-transform: uppercase;
-    margin-bottom: 30px;
-    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 .chart-container {

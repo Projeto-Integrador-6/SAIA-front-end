@@ -22,12 +22,13 @@ import ListItem from '@mui/material/ListItem';
 import HomeIcon from '@mui/icons-material/Home';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import DescriptionIcon from '@mui/icons-material/Description';
-import CheckIcon from '@mui/icons-material/Check';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 
 import { NavContext } from '../../contexts/NavContext';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -196,9 +197,16 @@ export default function Sidebar({ ...props }) {
 
             <ListItem button component={Link} to="/manager/results" selected={location.pathname === '/manager/results'}>
               <ListItemIcon>
-                <CheckIcon />
+                <ShowChartIcon />
               </ListItemIcon>
-              <ListItemText primary="Resultados" />
+              <ListItemText primary="Análise" />
+            </ListItem>
+
+            <ListItem button component={Link} to="/manager/general_results" selected={location.pathname === '/manager/general_results'}>
+              <ListItemIcon>
+                <AnalyticsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Análises Gerais" />
             </ListItem>
 
           </Collapse>

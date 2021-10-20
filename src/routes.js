@@ -16,6 +16,7 @@ import EditQuestions from "./pages/EditQuestions";
 import EditEducationalTest from "./pages/EditEducationalTest";
 import UserProfile from "./pages/UserProfile";
 import Results from './pages/Results';
+import GeneralResults from './pages/GeneralResults'
 
 import history from './history/index';
 
@@ -68,6 +69,7 @@ export default function Routes() {
         <PrivateRoute isPrivate path="/manager/enforcement/create" component={CreateEnforcement} />
         <PrivateRoute isPrivate path="/manager/enforcement" component={Enforcement} />
         <PrivateRoute isPrivate path="/manager/results" component={Results} />
+        <PrivateRoute isPrivate path="/manager/general_results" component={GeneralResults} />
         <NoAuthRoute path="/forgotten_password" component={ForgottenPassword} />
         <NoAuthRoute path="/" component={Login} />
       </Switch>
