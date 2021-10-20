@@ -40,7 +40,7 @@ const data = [
 export default function Results() {
 
     useEffect(() => {
-        document.title = `SAIA - Resultados de `
+        document.title = `SAIA - Resultados de Avaliação`
     })
 
     return (
@@ -64,7 +64,7 @@ export default function Results() {
                 <div className="results-chart">
                     <p className="title">GRÁFICO DE DESEMPENHO POR QUESTÃO</p>
                     <div className="chart-container">
-                        <ResponsiveContainer width="100%" height={400}>
+                        <ResponsiveContainer width="95%" height={400} style={{margin : "auto"}}>
                             <BarChart
                                 width={500}
                                 height={300}
