@@ -1,0 +1,12 @@
+.educational-test-student-nav {
+  margin-bottom: 20px;
+}
+
+.educational-test-student-nav-buttons, .educational-test-student-list-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.educational-test-student-nav-buttons a, .educational-test-student-buttons a {
+  text-decoration: none;
+}

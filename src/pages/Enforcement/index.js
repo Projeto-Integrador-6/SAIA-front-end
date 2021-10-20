@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+import AddIcon from '@mui/icons-material/Add';
+import CreateIcon from '@mui/icons-material/Create';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+
 import PageTitle from '../../components/PageTitle';
 import Sidebar from '../../components/Sidebar';
 import ListCard from '../../components/ListCard';
-import { Link } from 'react-router-dom';
-import { BiPlus, BiFileBlank, BiCog } from 'react-icons/bi';
 import { ButtonTwo } from '../../components/Button';
+
 
 export default function Enforcement() {
 
@@ -19,7 +24,7 @@ export default function Enforcement() {
                 <ListCard content={
                     <div className="educational-test-nav-buttons">
                         <Link to="enforcement/create">
-                            <ButtonTwo icon={<BiPlus/>} name="Criar Aplicação"/>
+                            <ButtonTwo icon={<AddIcon />} name="Criar Aplicação" />
                         </Link>
                     </div>
                 } />
@@ -28,8 +33,8 @@ export default function Enforcement() {
                 <ListCard content="Aplicação de Algoritmos"
                     buttons={
                         <div className="educational-test-list-buttons">
-                            <ButtonTwo icon={<BiFileBlank/>} name="Visualizar"/>
-                            <ButtonTwo icon={<BiCog/>} name="Configurações"/>
+                            <ButtonTwo icon={<RemoveRedEyeIcon />} name="Visualizar" />
+                            <ButtonTwo icon={<CreateIcon />} name="Editar" />
                         </div>
                     } />
             </div>

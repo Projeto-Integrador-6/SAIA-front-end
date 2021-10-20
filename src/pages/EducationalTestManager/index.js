@@ -11,7 +11,7 @@ import { ButtonTwo } from "../../components/Button";
 
 import './index.css';
 
-export default function EducationalTest() {
+export default function EducationalTestManager() {
 
   useEffect(() => {
     document.title = `SAIA - Avaliações`

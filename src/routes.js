@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import CreateEducationalTest from "./pages/CreateEducationalTest";
+import EducationalTest from "./pages/EducationalTest";
 import EducationalTestManager from "./pages/EducationalTestManager";
 import EducationalTestInProgress from "./pages/EducationalTestInProgress/EducationalTestInProgress";
 import ForgottenPassword from "./pages/ForgottenPassword";
@@ -23,6 +24,7 @@ export default function Routes() {
       <Switch>
         <Route path="/forgotten_password" component={ForgottenPassword} />
         <Route path="/home" component={Home} />
+        <Route path="/educational_test" component={EducationalTest} />
         <Route path="/manager/educational_test/edit" component={EditEducationalTest} />
         <Route path="/manager/educational_test/create" component={CreateEducationalTest} />
         <Route path="/manager/educational_test" component={EducationalTestManager} />

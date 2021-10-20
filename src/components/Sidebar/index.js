@@ -1,29 +1,32 @@
-import * as React from 'react';
-import { NavLink } from "react-router-dom";
-import { BiHomeAlt, BiMenu, BiFile, BiFileBlank, BiCalendar, BiCheck } from "react-icons/bi";
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import ListItemButton from '@mui/material/ListItemButton';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CheckIcon from '@mui/icons-material/Check';
 import EventNoteIcon from '@mui/icons-material/EventNote';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 const drawerWidth = 240;
 
@@ -95,15 +98,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function Sidebar({ ...props }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [openManager, setOpenManager] = useState(true);
 
   const location = useLocation();
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleManager = () => {
+    setOpenManager(!openManager);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleDrawer = () => {
+    setOpen(!open);
   };
 
   return (
@@ -114,7 +118,7 @@ export default function Sidebar({ ...props }) {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={handleDrawer}
             edge="start"
             sx={{
               marginRight: '36px',
@@ -130,12 +134,12 @@ export default function Sidebar({ ...props }) {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawer}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List component="nav">
           <ListItem button component={Link} to="/home" selected={location.pathname === '/home'}>
             <ListItemIcon>
               <HomeIcon />
@@ -143,37 +147,54 @@ export default function Sidebar({ ...props }) {
             <ListItemText primary="Home" />
           </ListItem>
 
-        </List>
-        <Divider />
-        <List>
-          <ListItem button component={Link} to="/manager/educational_test" selected={location.pathname === '/manager/educational_test'}>
+          <ListItem button component={Link} to="/educational_test" selected={location.pathname === '/educational_test'}>
             <ListItemIcon>
               <DescriptionIcon />
             </ListItemIcon>
             <ListItemText primary="Avaliações" />
           </ListItem>
 
-          <ListItem button component={Link} to="/manager/questions" selected={location.pathname === '/manager/questions'}>
-            <ListItemIcon>
-              <InsertDriveFileIcon />
-            </ListItemIcon>
-            <ListItemText primary="Questões" />
-          </ListItem>
+          <Divider />
 
-          <ListItem button component={Link} to="/manager/enforcement" selected={location.pathname === '/manager/enforcement'}>
+          <ListItemButton onClick={handleManager}>
             <ListItemIcon>
-              <EventNoteIcon />
+              <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Aplicações" />
-          </ListItem>
+            <ListItemText primary="Educador" />
+            {openManager ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={openManager} timeout="auto" unmountOnExit>
+            <ListItem button component={Link} to="/manager/educational_test" selected={location.pathname === '/manager/educational_test'}>
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Avaliações" />
+            </ListItem>
 
-          <ListItem button component={Link} to="/manager/results" selected={location.pathname === '/manager/results'}>
-            <ListItemIcon>
-              <CheckIcon />
-            </ListItemIcon>
-            <ListItemText primary="Resultados" />
-          </ListItem>
+            <ListItem button component={Link} to="/manager/questions" selected={location.pathname === '/manager/questions'}>
+              <ListItemIcon>
+                <InsertDriveFileIcon />
+              </ListItemIcon>
+              <ListItemText primary="Questões" />
+            </ListItem>
+
+            <ListItem button component={Link} to="/manager/enforcement" selected={location.pathname === '/manager/enforcement'}>
+              <ListItemIcon>
+                <EventNoteIcon />
+              </ListItemIcon>
+              <ListItemText primary="Aplicações" />
+            </ListItem>
+
+            <ListItem button component={Link} to="/manager/results" selected={location.pathname === '/manager/results'}>
+              <ListItemIcon>
+                <CheckIcon />
+              </ListItemIcon>
+              <ListItemText primary="Resultados" />
+            </ListItem>
+
+          </Collapse>
         </List>
+
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 5 }}>
         <DrawerHeader />
