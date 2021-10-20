@@ -6,10 +6,6 @@ import Sidebar from '../../components/Sidebar';
 import FullCard from '../../components/FullCard';
 import { ButtonOne } from '../../components/Button';
 
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DateTimePicker from '@mui/lab/DateTimePicker';
-
 export default function CreateEnforcement() {
 
     useEffect(() => {
@@ -52,10 +48,10 @@ export default function CreateEnforcement() {
         <Sidebar>
             <PageTitle title="Criando Aplicação" />
             <form>
-                <div className="enforcement-data">
+                <div className="enforcement-data-div">
                     <FullCard title="Dados da Aplicação">
                         <FormControl required={true} sx={{ m: 1, minWidth: 120 }}>
-                            <TextField id="" label="Avaliação" select helperText="Selecione a avaliação desejada">
+                            <TextField className="enforcement-select" label="Avaliação" select>
                                 {educationalTest.map((option) => (
                                     <MenuItem key={option.value} value={option.value}>
                                         {option.label}
@@ -64,7 +60,7 @@ export default function CreateEnforcement() {
                             </TextField>
                         </FormControl>
                         <FormControl required={true} sx={{ m: 1, minWidth: 120 }}>
-                            <TextField id="" label="Disciplina" select helperText="Selecione a disciplina desejada">
+                            <TextField className="enforcement-select" label="Disciplina" select >
                                 {subjects.map((option) => (
                                     <MenuItem key={option.value} value={option.value}>
                                         {option.label}
@@ -73,7 +69,7 @@ export default function CreateEnforcement() {
                             </TextField>
                         </FormControl>
                         <FormControl required={true} sx={{ m: 1, minWidth: 120 }}>
-                            <TextField id="" type="number" label="Valor" variant="outlined" helperText="Selecione o valor da aplicação desejado" />
+                            <TextField className="enforcement-select" type="number" label="Valor" variant="outlined" />
                         </FormControl>
                     </FullCard>
                 </div>

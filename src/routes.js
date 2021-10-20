@@ -15,6 +15,7 @@ import Enforcement from "./pages/Enforcement";
 import EditQuestions from "./pages/EditQuestions";
 import EditEducationalTest from "./pages/EditEducationalTest";
 import Results from './pages/Results';
+import GeneralResults from './pages/GeneralResults'
 
 import history from './history/index';
 
@@ -35,6 +36,7 @@ export default function Routes() {
         <Route path="/manager/enforcement" component={Enforcement} />
         <Route path="/educational_test/test" component={EducationalTestInProgress} />
         <Route path="/manager/results" component={Results} />
+        <Route path="/manager/general_results" component={GeneralResults} />
         <Route path="/" component={Login} />
       </Switch>
     </BrowserRouter>
