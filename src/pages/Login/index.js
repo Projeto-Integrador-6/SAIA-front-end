@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Formik, Form } from 'formik';
 
 import { ButtonOne } from "../../components/Button";
-import { Input } from "../../components/Input";
+import { FieldInput } from "../../components/Input";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -30,7 +30,7 @@ export default function Login() {
 
         <Formik
           initialValues={{
-            username: '',
+            email: '',
             password: ''
           }}
           onSubmit={async (values) => {
@@ -40,17 +40,17 @@ export default function Login() {
           {({ values, handleChange }) => (
             <Form className="login">
               <div className="input-block">
-                <Input
-                  name="username"
-                  label="Usuário"
-                  type="text"
-                  placeholder="Digite seu usuário"
-                  value={values.username}
+                <FieldInput
+                  name="email"
+                  label="E-mail"
+                  type="email"
+                  placeholder="Digite seu e-mail"
+                  value={values.email}
                   onChange={handleChange}
                 />
               </div>
               <div className="input-block">
-                <Input
+                <FieldInput
                   name="password"
                   label="Senha"
                   type="password"
@@ -59,7 +59,7 @@ export default function Login() {
                   onChange={handleChange}
                 >
                   <Link className="forgotten-password" to="/forgotten_password">Esqueceu a senha?</Link>
-                </Input>
+                </FieldInput>
               </div>
 
               <div className="input-block">

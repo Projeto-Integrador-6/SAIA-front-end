@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import { Formik, Form } from 'formik';
+import produce, { current, producer } from 'immer';
 
 import FullCard from "../../components/FullCard";
 import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
 import { ButtonOne, ButtonTwo } from "../../components/Button";
 import EditorButtons from "../../components/EditorButtons";
-import { Input, RadioButton, Textarea } from "../../components/Input";
+import { FieldInput, RadioButton, Textarea } from "../../components/Input";
+
+import api from '../../services/api';
 
 import './index.css';
 import 'draft-js/dist/Draft.css';
 
-
 export default function CreateQuestions() {
+
+  const [enunciado, setEnunciado] = useState(
+    () => EditorState.createEmpty(),
+  );
+
+  const [alternativa, setAlternativa] = useState([{}]);
+  const [contadorAlternativas, setContadorAlternativas] = useState(1)
+
 
   useEffect(() => {
     document.title = `SAIA - Criando Questão`
   })
-
-  const [questao, setQuestao] = useState(
-    () => EditorState.createEmpty(),
-  );
-
-  const [alternativa, setAlternativa] = useState(
-    () => EditorState.createEmpty(),
-  );
-
-  const [contadorAlternativas, setContadorAlternativas] = useState(1)
 
   const _onBoldMouseDown = (e, input) => {
     e.preventDefault();
@@ -37,7 +37,7 @@ export default function CreateQuestions() {
     }
 
     if (input === 'b') {
-      setQuestao(RichUtils.toggleInlineStyle(questao, 'BOLD'))
+      setEnunciado(RichUtils.toggleInlineStyle(enunciado, 'BOLD'))
     }
   }
 
@@ -49,7 +49,7 @@ export default function CreateQuestions() {
     }
 
     if (input === 'b') {
-      setQuestao(RichUtils.toggleInlineStyle(questao, 'ITALIC'))
+      setEnunciado(RichUtils.toggleInlineStyle(enunciado, 'ITALIC'))
     }
   }
 
@@ -61,50 +61,48 @@ export default function CreateQuestions() {
     }
 
     if (input === 'b') {
-      setQuestao(RichUtils.toggleInlineStyle(questao, 'UNDERLINE'))
+      setEnunciado(RichUtils.toggleInlineStyle(enunciado, 'UNDERLINE'))
     }
   }
 
   function handleContadorAlternativas(e, type) {
     if (contadorAlternativas < 7) {
-      if(type === 'a')
+      if (type === 'a')
         setContadorAlternativas(contadorAlternativas + 1);
-      
-      if(type === 'r')
+
+      if (type === 'r')
         setContadorAlternativas(contadorAlternativas - 1);
     }
   }
 
   function returnLetter(number) {
-    if (number === 0)
-      return 'A'
 
-    if (number === 1)
-      return 'B'
+    let letters = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-    if (number === 2)
-      return 'C'
-
-    if (number === 3)
-      return 'D'
-
-    if (number === 4)
-      return 'E'
-
-    if (number === 5)
-      return 'F'
+    return letters[number];
   }
+
+  // Pagamento de horário
+  async function create(idTipoQuestao, nome, enunciado, valor) {
+    try {
+      await api.post(`/questao`, { nome, enunciado, valor, idTipoQuestao });
+    } catch (err) {
+      console.log(err.response.data.error)
+    }
+  }
+
 
   return (
     <Sidebar>
       <PageTitle title="Criando Questão" />
       <Formik
         initialValues={{
-          tipoQuestao: '',
-          alternativa: []
+          idTipoQuestao: '',
+          nome: '',
+          valor: ''
         }}
         onSubmit={async (values) => {
-
+          create(values.idTipoQuestao, values.nome, enunciado.getCurrentContent(), values.valor);
         }}
       >
         {({ values, handleChange }) => (
@@ -113,24 +111,27 @@ export default function CreateQuestions() {
               <div className="input-block">
                 <RadioButton
                   label="Questão aberta"
-                  name="tipoQuestao"
+                  name="idTipoQuestao"
                   value="1"
                   onChange={handleChange}
                 />
                 <RadioButton
                   label="Questão fechada"
-                  name="tipoQuestao"
+                  name="idTipoQuestao"
                   value="2"
                   onChange={handleChange}
                 />
               </div>
             </FullCard>
 
-            {values.tipoQuestao !== "" &&
+            {values.idTipoQuestao !== "" &&
               <FullCard title="Dados da questão">
                 <div className="input-block">
-                  <Input
+                  <FieldInput
                     label="Nome da questão"
+                    name="nome"
+                    values={values.nome}
+                    onChange={handleChange}
                     type="text"
                     placeholder="Digite o nome da questão"
                   />
@@ -148,8 +149,8 @@ export default function CreateQuestions() {
 
                     <div className="editor-input">
                       <Editor
-                        editorState={questao}
-                        onChange={setQuestao}
+                        editorState={enunciado}
+                        onChange={setEnunciado}
                         placeholder="Digite o enunciado da questão"
                       />
 
@@ -157,8 +158,20 @@ export default function CreateQuestions() {
                   </div>
                 </div>
                 <div className="input-block">
-                  <Input
+                  <FieldInput
+                    label="Valor"
+                    name="valor"
+                    value={values.valor}
+                    onChange={handleChange}
+                    type="number"
+                    placeholder="Digite o valor da questão"
+                  />
+                </div>
+                <div className="input-block">
+                  <FieldInput
                     label="Tags"
+                    name={values.tags}
+                    onChange={handleChange}
                     type="text"
                     placeholder="Digite as tags da questão"
                     data-role="taginput"
@@ -167,18 +180,21 @@ export default function CreateQuestions() {
               </FullCard>
             }
 
-
-            {values.tipoQuestao === "2" &&
+            {values.idTipoQuestao === "2" &&
               <>
                 <FullCard title="Alternativas" button={
                   <ButtonTwo
-                    onClick={(e) => handleContadorAlternativas(e, 'a')}
+                    onClick={() => {
+                      setAlternativa(currentAlternative => [...currentAlternative, {
+                        texto: ''
+                      }])
+                    }}
                     name="Nova Alternativa"
-                    disabled={contadorAlternativas > 5}
+                    disabled={alternativa.length > 5}
                   />
                 }>
 
-                  {[...Array(contadorAlternativas)].map((_, i) =>
+                  {alternativa.map((_, i) =>
                     <div className="input-block">
                       <div className="editor-label">
                         <div className="editor-label-label">
@@ -194,29 +210,24 @@ export default function CreateQuestions() {
                           </div>
                         }
                       </div>
-                      <div className="editor">
-                        <EditorButtons>
-                          <button onMouseDown={e => { _onBoldMouseDown(e, 'a') }}>B</button>
-                          <button onMouseDown={e => { _onItalicMouseDown(e, 'a') }}><i>I</i></button>
-                          <button onMouseDown={e => { _onUnderlineMouseDown(e, 'a') }}>U</button>
-                        </EditorButtons>
-
-                        <div className="editor-input">
-                          <Editor
-                            editorState={alternativa}
-                            onChange={setAlternativa}
-                            placeholder="Digite o conteúdo da alternativa"
-                          />
-
-                        </div>
+                      <div className="alternative">
+                        <Textarea
+                          name="alternativa"
+                          value={i.alternativa}
+                          onChange={e => {
+                            const texto = e.target.value;
+                            setAlternativa(currentAlternative =>
+                              produce(currentAlternative, (v) => {
+                                v[i].texto = texto;
+                              })
+                            )
+                          }}
+                        />
                       </div>
                     </div>
-
                   )}
 
-
-
-                </FullCard>
+               </FullCard>
               </>
             }
 

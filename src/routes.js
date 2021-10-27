@@ -1,6 +1,8 @@
 import React, { useContext } from "react"
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
+import Loading from './components/Loading';
+
 import Login from './pages/Login';
 import Home from './pages/Home';
 import CreateEducationalTest from "./pages/CreateEducationalTest";
@@ -27,7 +29,7 @@ function NoAuthRoute({...rest}) {
   const { loading, user } = useContext(AuthContext);
 
   if (loading) {
-    return 'Carregando...'
+    return <Loading/>
   }
 
   if(user){
@@ -42,7 +44,7 @@ function PrivateRoute({ isPrivate, isManagement, isEmployee, isCustomer, ...rest
   const { loading, user } = useContext(AuthContext);
 
   if (loading) {
-    return 'Carregando...'
+    return <Loading/>
   }
 
   if (isPrivate && !user) {
@@ -60,6 +62,7 @@ export default function Routes() {
         <PrivateRoute isPrivate path="/profile" component={UserProfile} />
         <PrivateRoute isPrivate path="/educational_test/test" component={EducationalTestInProgress} />
         <PrivateRoute isPrivate path="/educational_test" component={EducationalTest} />
+        <PrivateRoute isPrivate path="/manager/educational_test/results" component={Results} />
         <PrivateRoute isPrivate path="/manager/educational_test/edit" component={EditEducationalTest} />
         <PrivateRoute isPrivate path="/manager/educational_test/create" component={CreateEducationalTest} />
         <PrivateRoute isPrivate path="/manager/educational_test" component={EducationalTestManager} />
@@ -68,7 +71,6 @@ export default function Routes() {
         <PrivateRoute isPrivate path="/manager/questions" component={Questions} />
         <PrivateRoute isPrivate path="/manager/enforcement/create" component={CreateEnforcement} />
         <PrivateRoute isPrivate path="/manager/enforcement" component={Enforcement} />
-        <PrivateRoute isPrivate path="/manager/results" component={Results} />
         <PrivateRoute isPrivate path="/manager/general_results" component={GeneralResults} />
         <NoAuthRoute path="/forgotten_password" component={ForgottenPassword} />
         <NoAuthRoute path="/" component={Login} />

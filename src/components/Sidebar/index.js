@@ -22,7 +22,6 @@ import ListItem from '@mui/material/ListItem';
 import HomeIcon from '@mui/icons-material/Home';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import DescriptionIcon from '@mui/icons-material/Description';
-import ShowChartIcon from '@mui/icons-material/ShowChart';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -131,7 +130,7 @@ export default function Sidebar({ ...props }) {
             <Typography variant="h6" noWrap component="div">
               SAIA
             </Typography>
-            <p>Olá, {user}</p>
+            <p>Olá, {user.name}</p>
           </div>
         </Toolbar>
       </AppBar>
@@ -193,13 +192,6 @@ export default function Sidebar({ ...props }) {
                 <EventNoteIcon />
               </ListItemIcon>
               <ListItemText primary="Aplicações" />
-            </ListItem>
-
-            <ListItem button component={Link} to="/manager/results" selected={location.pathname === '/manager/results'}>
-              <ListItemIcon>
-                <ShowChartIcon />
-              </ListItemIcon>
-              <ListItemText primary="Análise" />
             </ListItem>
 
             <ListItem button component={Link} to="/manager/general_results" selected={location.pathname === '/manager/general_results'}>

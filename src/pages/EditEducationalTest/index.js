@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ButtonTwo } from "../../components/Button";
 import FullCard from "../../components/FullCard";
 
-import { Input, Textarea } from "../../components/Input";
+import { FieldInput, Textarea } from "../../components/Input";
 import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
 
@@ -21,7 +21,7 @@ export default function EditEducationalTest() {
       <form>
         <FullCard title="Dados da avaliação">
           <div className="input-block">
-            <Input
+            <FieldInput
               label="Nome da avaliação"
               type="text"
               placeholder="Digite o nome da avaliação"

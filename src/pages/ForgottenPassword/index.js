@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { ButtonOne } from "../../components/Button";
-import { Input } from "../../components/Input";
+import { FieldInput } from "../../components/Input";
 
 import './index.css';
 
@@ -25,7 +25,7 @@ export default function ForgottenPassword() {
         <div>
           <form className="login">
             <div className="input-block">
-              <Input
+              <FieldInput
                 label="E-mail"
                 type="email"
                 placeholder="Digite seu e-mail"

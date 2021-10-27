@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import { ButtonTwo } from "../../components/Button";
 import DialogBox from "../../components/DialogBox";
 import FullCard from "../../components/FullCard";
-import { Input, Textarea } from "../../components/Input";
+import { FieldInput, Textarea } from "../../components/Input";
 import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
 
@@ -25,7 +25,7 @@ export default function CreateEducationalTest() {
       <form>
         <FullCard title="Dados da avaliação">
           <div className="input-block">
-            <Input
+            <FieldInput
               label="Nome da avaliação"
               type="text"
               placeholder="Digite o nome da avaliação"
@@ -50,7 +50,7 @@ export default function CreateEducationalTest() {
         title="Adicionando Questões"
       >
         <form>
-          <Input
+          <FieldInput
             name="questions"
             label="Questões"
             type="text"

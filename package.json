@@ -18,6 +18,8 @@
     "draft-js": "^0.11.7",
     "es6-shim": "^0.35.6",
     "formik": "^2.2.9",
+    "immer": "^9.0.6",
+    "jwt-decode": "^3.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",

@@ -10,17 +10,6 @@ import Box from '../../components/Box'
 
 import './index.css';
 
-let enforcements = [
-    {
-        value: "Avaliação de Algoritmos - 15/04",
-        label: "Avaliação de Algoritmos - 15/04"
-    },
-    {
-        value: "Comandos Básicos SQL - 17/10",
-        label: "Comandos Básicos SQL - 17/10"
-    }
-]
-
 const barChartData = [
     {
         name: 'Questão 1',
@@ -110,17 +99,6 @@ export default function Results() {
 
     return (
         <Sidebar>
-            <div className="div-filters">
-                <FormControl required={true} sx={{ m: 1, minWidth: 120 }}>
-                    <TextField className="enforcement-select" label="Avaliação" select helperText="SELECIONE A AVALIAÇÃO DESEJADA">
-                        {enforcements.map((option) => (
-                            <MenuItem key={option.value} value={option.value} >
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </FormControl>
-            </div>
             <div >
                 <PageTitle title="RESULTADOS DE AVALIAÇÃO: COMANDOS BÁSICOS DE SQL" />
                 <div className="results-resume">

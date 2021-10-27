@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import CreateIcon from '@mui/icons-material/Create';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 
 import PageTitle from '../../components/PageTitle';
 import Sidebar from '../../components/Sidebar';
@@ -33,6 +34,9 @@ export default function Enforcement() {
                 <ListCard content="Aplicação de Algoritmos"
                     buttons={
                         <div className="educational-test-list-buttons">
+                            <Link to="/manager/educational_test/results">
+                                <ButtonTwo icon={<ShowChartIcon />} name="Resultados" />
+                            </Link>
                             <ButtonTwo icon={<RemoveRedEyeIcon />} name="Visualizar" />
                             <ButtonTwo icon={<CreateIcon />} name="Editar" />
                         </div>

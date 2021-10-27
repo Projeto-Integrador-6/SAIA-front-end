@@ -7,6 +7,8 @@
   background: var(--white);
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
+
+  margin-bottom: 10px;
 }
 
 .list-card .list-info h4 {

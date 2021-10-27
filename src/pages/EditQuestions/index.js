@@ -7,7 +7,7 @@ import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
 import { ButtonOne, ButtonTwo } from "../../components/Button";
 import EditorButtons from "../../components/EditorButtons";
-import { Input, RadioButton } from "../../components/Input";
+import { FieldInput, RadioButton } from "../../components/Input";
 
 import '../CreateQuestions/index.css';
 import 'draft-js/dist/Draft.css';
@@ -129,7 +129,7 @@ export default function EditQuestions() {
             {values.tipoQuestao !== "" &&
               <FullCard title="Dados da questão">
                 <div className="input-block">
-                  <Input
+                  <FieldInput
                     label="Nome da questão"
                     type="text"
                     placeholder="Digite o nome da questão"
@@ -157,7 +157,7 @@ export default function EditQuestions() {
                   </div>
                 </div>
                 <div className="input-block">
-                  <Input
+                  <FieldInput
                     label="Tags"
                     type="text"
                     placeholder="Digite as tags da questão"
