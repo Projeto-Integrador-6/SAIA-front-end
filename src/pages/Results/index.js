@@ -10,6 +10,17 @@ import Box from '../../components/Box'
 
 import './index.css';
 
+let enforcements = [
+    {
+        value: "Avaliação de Algoritmos - 15/04",
+        label: "Avaliação de Algoritmos - 15/04"
+    },
+    {
+        value: "Comandos Básicos SQL - 17/10",
+        label: "Comandos Básicos SQL - 17/10"
+    }
+]
+
 const barChartData = [
     {
         name: 'Questão 1',
@@ -89,11 +100,6 @@ const radarChartData = [
         "Conteúdo": "Claúsalas Where",
         "Porcentagem": 60
     },
-]
-
-const enforcements = [
-    "COMANDOS BÁSICOS DE SQL - 14/10",
-    "ALGORITMOS II - 15/10"
 ]
 
 export default function Results() {
