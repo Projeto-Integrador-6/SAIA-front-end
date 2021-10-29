@@ -91,6 +91,11 @@ const radarChartData = [
     },
 ]
 
+const enforcements = [
+    "COMANDOS BÁSICOS DE SQL - 14/10",
+    "ALGORITMOS II - 15/10"
+]
+
 export default function Results() {
 
     useEffect(() => {
@@ -99,6 +104,17 @@ export default function Results() {
 
     return (
         <Sidebar>
+            <div className="div-filters">
+                <FormControl required={true} sx={{ m: 1, minWidth: 120 }}>
+                    <TextField className="enforcement-select" label="Avaliação" select helperText="SELECIONE A AVALIAÇÃO DESEJADA">
+                        {enforcements.map((option) => (
+                            <MenuItem key={option.value} value={option.value} >
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </FormControl>
+            </div>
             <div >
                 <PageTitle title="RESULTADOS DE AVALIAÇÃO: COMANDOS BÁSICOS DE SQL" />
                 <div className="results-resume">
