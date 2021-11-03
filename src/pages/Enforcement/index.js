@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
@@ -11,13 +11,21 @@ import Sidebar from '../../components/Sidebar';
 import ListCard from '../../components/ListCard';
 import { ButtonTwo } from '../../components/Button';
 
+import api from "../../services/api"
 
 export default function Enforcement() {
 
+    const [enforcements, setEnforcements] = useState([])
+
     useEffect(() => {
         document.title = `SAIA - Aplicações`
-    })
 
+        setTimeout(async () => {
+            const response = await api.get(`/aplicacao`)
+            setEnforcements(response.data)
+        }, 500)
+    }, [])
+ 
     return (
         <Sidebar>
             <PageTitle title="Aplicações" />
@@ -31,16 +39,10 @@ export default function Enforcement() {
                 } />
             </div>
             <div className="educational-test-list">
-                <ListCard content="Aplicação de Algoritmos"
-                    buttons={
-                        <div className="educational-test-list-buttons">
-                            <Link to="/manager/educational_test/results">
-                                <ButtonTwo icon={<ShowChartIcon />} name="Resultados" />
-                            </Link>
-                            <ButtonTwo icon={<RemoveRedEyeIcon />} name="Visualizar" />
-                            <ButtonTwo icon={<CreateIcon />} name="Editar" />
-                        </div>
-                    } />
+                {enforcements.forEach((enforcement) => (
+                    console.log("oi")
+                    ))
+                }
             </div>
         </Sidebar>
     )
