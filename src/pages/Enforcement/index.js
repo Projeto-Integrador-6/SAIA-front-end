@@ -23,9 +23,9 @@ export default function Enforcement() {
         setTimeout(async () => {
             const response = await api.get(`/aplicacao`)
             setEnforcements(response.data)
-        }, 500)
+        }, 0)
     }, [])
- 
+
     return (
         <Sidebar>
             <PageTitle title="Aplicações" />
@@ -39,9 +39,22 @@ export default function Enforcement() {
                 } />
             </div>
             <div className="educational-test-list">
-                {enforcements.forEach((enforcement) => (
-                    console.log("oi")
-                    ))
+                {enforcements.map((enforcement) => (
+                    <ListCard content={enforcement.value}
+                        buttons={
+                            <div className="educational-test-list-buttons">
+                                <Link to={`/manager/educational_test/results/${enforcement.idAplicacao}`}>
+                                    <ButtonTwo icon={<ShowChartIcon />} name="Resultados" />
+                                </Link>
+                                <Link to={`/manager/educational_test/${enforcement.idAvaliacao}`}>
+                                    <ButtonTwo icon={<RemoveRedEyeIcon />} name="Visualizar" />
+                                </Link>
+                                <Link to={`/manager/educational_test/${enforcement.idAvaliacao}`}>
+                                    <ButtonTwo icon={<CreateIcon />} name="Editar" />
+                                </Link>
+                            </div>
+                        } />
+                ))
                 }
             </div>
         </Sidebar>

@@ -20,7 +20,7 @@ export default function Home() {
           <p className="box-title">NAVEGAÇÃO</p>
           <div className="boxes-container">
             <Box title="AVALIAÇÕES" link="/educational_test" />
-            <Box title="ANÁLISE" link="/manager/results" />
+            <Box title="APLICAÇÕES" link="manager/enforcement" />
             <Box title="ANÁLISES GERAIS" link="/manager/general_results" />
           </div>
         </div>

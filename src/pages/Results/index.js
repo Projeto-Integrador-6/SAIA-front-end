@@ -280,14 +280,6 @@ export default function Results() {
                         </ResponsiveContainer>
                     </div>
                 </div>
-                <div>
-                    <p className="title">OUTROS</p>
-                    <div className="boxes-container">
-                        <Box title="VISUALIZAR RESPOSTA POR ALUNO" link="/avaliacoes" />
-                        <Box title="CRUZAR DADOS COM OUTRA AVALIAÇÃO" link="/alunos" />
-                        <Box title="VISUALIZAR AVALIAÇÃO" link="/teste" />
-                    </div>
-                </div>
             </div>
         </Sidebar>
     )

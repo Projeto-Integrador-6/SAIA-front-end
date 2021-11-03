@@ -1,17 +1,34 @@
-import React, { useEffect } from 'react';
-import PageTitle from '../../components/PageTitle';
-import { FormControl, MenuItem, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
+import { FormControl, MenuItem, TextField } from '@mui/material';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+
+import PageTitle from '../../components/PageTitle';
 import Sidebar from '../../components/Sidebar';
 import FullCard from '../../components/FullCard';
-import { ButtonOne } from '../../components/Button';
+import { ButtonOne, Icon } from '../../components/Button';
+
+import apiExternal from '../../services/external'
+import api from '../../services/api'
 
 export default function CreateEnforcement() {
 
+    const [subjects, setSubjects] = useState([])
+
+    /* const [educationalTest, setEducationalTest] = useState([]) */
+
     useEffect(() => {
         document.title = `SAIA - Criando Aplicação`
-    })
 
+        setTimeout(async () => {
+            const subjectsResponse = await apiExternal.get(`/disciplines`)
+            setSubjects(subjectsResponse.data)
+
+            /* const educationalTestResponse = await api.get(`/avaliacao`)
+            setSubjects(educationalTestResponse.data) */
+        }, 0)
+    }, [])
 
     let educationalTest = [
         {
@@ -28,24 +45,11 @@ export default function CreateEnforcement() {
         }
     ]
 
-    let subjects = [
-        {
-            value: "Algoritmos",
-            label: "Algoritmos"
-        },
-        {
-            value: "Banco de Dados II",
-            label: "Banco de Dados II"
-        },
-        {
-            value: "Desenvolvimento Web",
-            label: "Desenvolvimento Web"
-        }
-    ]
-
-
     return (
         <Sidebar>
+            <Link to='/manager/enforcement'>
+                <Icon icon={<KeyboardReturnIcon/>}></Icon>
+            </Link>
             <PageTitle title="Criando Aplicação" />
             <form>
                 <div className="enforcement-data-div">
@@ -53,7 +57,7 @@ export default function CreateEnforcement() {
                         <FormControl required={true} sx={{ m: 1, minWidth: 120 }}>
                             <TextField className="enforcement-select" label="Avaliação" select>
                                 {educationalTest.map((option) => (
-                                    <MenuItem key={option.value} value={option.value}>
+                                    <MenuItem key={option.id} value={option.value}>
                                         {option.label}
                                     </MenuItem>
                                 ))}
@@ -62,8 +66,8 @@ export default function CreateEnforcement() {
                         <FormControl required={true} sx={{ m: 1, minWidth: 120 }}>
                             <TextField className="enforcement-select" label="Disciplina" select >
                                 {subjects.map((option) => (
-                                    <MenuItem key={option.value} value={option.value}>
-                                        {option.label}
+                                    <MenuItem key={option.id} value={option.name}>
+                                        {option.name}
                                     </MenuItem>
                                 ))}
                             </TextField>
