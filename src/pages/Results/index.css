@@ -1,3 +1,11 @@
+.div-filters{
+    display: flex;
+    justify-content: flex-end;
+}
+.enforcement-select{
+    width: 260px;
+    float: right;
+}
 .title {
     font-size: 1rem;
     font-weight: 500;
