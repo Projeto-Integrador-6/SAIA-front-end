@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import Loading from './components/Loading';
 
@@ -24,12 +24,12 @@ import history from './history/index';
 
 import { AuthContext } from "./contexts/AuthContext";
 
-
+// Rotas permitidas enquanto estiver não estiver autenticado.
 function NoAuthRoute({...rest}) {
   const { loading, user } = useContext(AuthContext);
 
   if (loading) {
-    return <Loading/>
+    return <Loading/>;
   }
 
   if(user){
@@ -40,11 +40,11 @@ function NoAuthRoute({...rest}) {
 }
 
 // Rotas permitidas enquanto estiver estiver autenticado.
-function PrivateRoute({ isPrivate, isManagement, isEmployee, isCustomer, ...rest}) {
+function PrivateRoute({ isPrivate, ...rest}) {
   const { loading, user } = useContext(AuthContext);
 
   if (loading) {
-    return <Loading/>
+    return <Loading/>;
   }
 
   if (isPrivate && !user) {
@@ -56,7 +56,7 @@ function PrivateRoute({ isPrivate, isManagement, isEmployee, isCustomer, ...rest
 
 export default function Routes() {
   return (
-    <BrowserRouter history={history}>
+    <Router history={history}>
       <Switch>
         <PrivateRoute isPrivate path="/home" component={Home} />
         <PrivateRoute isPrivate path="/profile" component={UserProfile} />
@@ -75,6 +75,6 @@ export default function Routes() {
         <NoAuthRoute path="/forgotten_password" component={ForgottenPassword} />
         <NoAuthRoute path="/" component={Login} />
       </Switch>
-    </BrowserRouter>
+    </Router>
   )
 }

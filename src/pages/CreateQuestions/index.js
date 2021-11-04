@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Editor, EditorState, RichUtils } from 'draft-js';
+import React, { useContext, useEffect, useState } from "react";
+import { Autocomplete, Checkbox, Chip, DialogActions, FormControlLabel, TextField } from "@mui/material";
 import { Formik, Form } from 'formik';
 import produce, { current, producer } from 'immer';
 
@@ -7,102 +7,106 @@ import FullCard from "../../components/FullCard";
 import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
 import { ButtonOne, ButtonTwo } from "../../components/Button";
-import EditorButtons from "../../components/EditorButtons";
+import DialogBox from "../../components/DialogBox";
 import { FieldInput, RadioButton, Textarea } from "../../components/Input";
 
+import { SnackContext } from '../../contexts/SnackContext';
+
+import history from '../../history';
 import api from '../../services/api';
 
 import './index.css';
 import 'draft-js/dist/Draft.css';
 
+
 export default function CreateQuestions() {
+  const { setSnack } = useContext(SnackContext);
 
-  const [enunciado, setEnunciado] = useState(
-    () => EditorState.createEmpty(),
-  );
+  const [alternativas, setAlternativas] = useState([{}]);
+  const [tags, setTags] = useState([]);
+  const [tagQuestao, setTagQuestao] = useState([]);
+  const [isAlternativaCorreta, setIsAlternativaCorreta] = useState(false);
 
-  const [alternativa, setAlternativa] = useState([{}]);
-  const [contadorAlternativas, setContadorAlternativas] = useState(1)
+  const [modalTagCreate, setModalTagCreate] = useState(false);
+  const [modalTagList, setModalTagList] = useState(false);
+  const [currentTags, setCurrentTags] = useState([]);
 
+  const [status, setStatus] = useState(0);
 
   useEffect(() => {
-    document.title = `SAIA - Criando Questão`
-  })
+    document.title = `SAIA - Criando Questão`;
 
-  const _onBoldMouseDown = (e, input) => {
-    e.preventDefault();
+    setTimeout(async () => {
+      const response = await api.get(`/tag`)
+      setTags(response.data);
 
-    if (input === 'a') {
-      setAlternativa(RichUtils.toggleInlineStyle(alternativa, 'BOLD'))
-    }
+    }, 500)
+  }, [status])
 
-    if (input === 'b') {
-      setEnunciado(RichUtils.toggleInlineStyle(enunciado, 'BOLD'))
-    }
-  }
-
-  const _onItalicMouseDown = (e, input) => {
-    e.preventDefault();
-
-    if (input === 'a') {
-      setAlternativa(RichUtils.toggleInlineStyle(alternativa, 'ITALIC'))
-    }
-
-    if (input === 'b') {
-      setEnunciado(RichUtils.toggleInlineStyle(enunciado, 'ITALIC'))
-    }
-  }
-
-  const _onUnderlineMouseDown = (e, input) => {
-    e.preventDefault();
-
-    if (input === 'a') {
-      setAlternativa(RichUtils.toggleInlineStyle(alternativa, 'UNDERLINE'))
-    }
-
-    if (input === 'b') {
-      setEnunciado(RichUtils.toggleInlineStyle(enunciado, 'UNDERLINE'))
-    }
-  }
-
-  function handleContadorAlternativas(e, type) {
-    if (contadorAlternativas < 7) {
-      if (type === 'a')
-        setContadorAlternativas(contadorAlternativas + 1);
-
-      if (type === 'r')
-        setContadorAlternativas(contadorAlternativas - 1);
-    }
+  function handleContadorAlternativas(e, alternativa) {
+    alternativas.splice(alternativa, 1);
   }
 
   function returnLetter(number) {
-
     let letters = ['A', 'B', 'C', 'D', 'E', 'F'];
 
     return letters[number];
   }
 
-  // Pagamento de horário
-  async function create(idTipoQuestao, nome, enunciado, valor) {
+  // Cria Questão
+  async function create(values) {
+    let tags = tagQuestao;
+    
     try {
-      await api.post(`/questao`, { nome, enunciado, valor, idTipoQuestao });
+      if (values.idTipoQuestao === '1') {
+        await api.post(`/questao`, { ...values, tags });
+      }
+
+      if (values.idTipoQuestao === '2') {
+        console.log(alternativas)
+        await api.post(`/questao`, { ...values, alternativas, tags });
+      }
+
+      setSnack({ message: "Questão criada com sucesso.", type: 'success', open: true });
+      history.push("/manager/questions")
+
     } catch (err) {
-      console.log(err.response.data.error)
+      setSnack({ message: err.response.data.error, type: 'error', open: true });
     }
   }
 
+  // Cria Tag
+  async function createTag(values) {
+    try {
+      await api.post(`/tag`, { ...values });
+      setSnack({ message: "Tag criada com sucesso.", type: 'success', open: true });
+      setStatus(status + 1);
+    } catch (err) {
+      setSnack({ message: "Houve um problema durante a criação da tag.", type: 'error', open: true });
+    }
+  }
+
+  function handleAlternativa(e) {
+    setIsAlternativaCorreta(!false)
+  }
 
   return (
     <Sidebar>
       <PageTitle title="Criando Questão" />
       <Formik
         initialValues={{
-          idTipoQuestao: '',
           nome: '',
-          valor: ''
+          enunciado: '',
+          valor: '',
+          idTipoQuestao: ''
         }}
         onSubmit={async (values) => {
-          create(values.idTipoQuestao, values.nome, enunciado.getCurrentContent(), values.valor);
+          if (alternativas.length < 2 && values.idTipoQuestao === '2') {
+            setSnack({ message: "Uma questão precisa ter no mínimo 2 alternativas.", type: 'error', open: true });
+          }
+          else {
+            create(values);
+          }
         }}
       >
         {({ values, handleChange }) => (
@@ -137,25 +141,14 @@ export default function CreateQuestions() {
                   />
                 </div>
                 <div className="input-block">
-                  <div className="editor-label">
-                    <label>Enunciado da questão</label>
-                  </div>
-                  <div className="editor">
-                    <EditorButtons>
-                      <button onMouseDown={e => { _onBoldMouseDown(e, 'b') }}>B</button>
-                      <button onMouseDown={e => { _onItalicMouseDown(e, 'b') }}><i>I</i></button>
-                      <button onMouseDown={e => { _onUnderlineMouseDown(e, 'b') }}>U</button>
-                    </EditorButtons>
-
-                    <div className="editor-input">
-                      <Editor
-                        editorState={enunciado}
-                        onChange={setEnunciado}
-                        placeholder="Digite o enunciado da questão"
-                      />
-
-                    </div>
-                  </div>
+                  <Textarea
+                    label="Enunciado"
+                    name="enunciado"
+                    values={values.enunciado}
+                    onChange={handleChange}
+                    type="text"
+                    placeholder="Digite o enunciado da questão"
+                  />
                 </div>
                 <div className="input-block">
                   <FieldInput
@@ -168,14 +161,26 @@ export default function CreateQuestions() {
                   />
                 </div>
                 <div className="input-block">
-                  <FieldInput
-                    label="Tags"
-                    name={values.tags}
-                    onChange={handleChange}
-                    type="text"
-                    placeholder="Digite as tags da questão"
-                    data-role="taginput"
-                  />
+                  <div className="editor-label">
+                    <div className="editor-label-label">
+                      <p>Tags</p>
+                    </div>
+                    <div className="editor-label-button">
+                      <ButtonTwo
+                        name="Adicionar Tag"
+                        onClick={(e) => setModalTagList(true)}
+                      />
+                    </div>
+                  </div>
+                  <div className="chips-block">
+                    {tagQuestao.map((items) =>
+                      <Chip
+                        key={items.idTag}
+                        label={items.descricao}
+                        color="primary"
+                      />
+                    )}
+                  </div>
                 </div>
               </FullCard>
             }
@@ -185,49 +190,57 @@ export default function CreateQuestions() {
                 <FullCard title="Alternativas" button={
                   <ButtonTwo
                     onClick={() => {
-                      setAlternativa(currentAlternative => [...currentAlternative, {
-                        texto: ''
+                      setAlternativas(currentAlternative => [...currentAlternative, {
+                        descricao: '',
+                        isAlternativaCorreta: false
                       }])
                     }}
                     name="Nova Alternativa"
-                    disabled={alternativa.length > 5}
+                    disabled={alternativas.length > 5}
                   />
                 }>
 
-                  {alternativa.map((_, i) =>
-                    <div className="input-block">
+                  {alternativas.map((_, i) =>
+                    <div key={i} className="input-block">
                       <div className="editor-label">
                         <div className="editor-label-label">
-                          <label>Alternativa: {returnLetter(i)}</label>
+                          <p>Alternativa: {returnLetter(i)}</p>
                         </div>
-                        {i !== 0 &&
-                          <div className="editor-label-button">
-                            <ButtonTwo
-                              onClick={(e) => handleContadorAlternativas(e, 'r')}
-                              name="Remover Alternativa"
-                              color="error"
-                            />
-                          </div>
-                        }
+                        <div className="editor-label-button">
+                          <ButtonTwo
+                            onClick={(e) => handleContadorAlternativas(e, i)}
+                            name="Remover Alternativa"
+                            color="error"
+                          />
+                        </div>
+
                       </div>
                       <div className="alternative">
                         <Textarea
+                          key={i}
                           name="alternativa"
-                          value={i.alternativa}
+                          value={i.alternativas}
                           onChange={e => {
-                            const texto = e.target.value;
-                            setAlternativa(currentAlternative =>
+                            const descricao = e.target.value;
+                            setAlternativas(currentAlternative =>
                               produce(currentAlternative, (v) => {
-                                v[i].texto = texto;
+                                v[i].descricao = descricao;
+                                v[i].isAlternativaCorreta = isAlternativaCorreta;
                               })
                             )
                           }}
+                        />
+                        <FormControlLabel
+                          control={<Checkbox />}
+                          label="Alternativa Correta"
+                          value={isAlternativaCorreta}
+                          onChange={(e) => handleAlternativa(e)}
                         />
                       </div>
                     </div>
                   )}
 
-               </FullCard>
+                </FullCard>
               </>
             }
 
@@ -242,6 +255,77 @@ export default function CreateQuestions() {
         )}
       </Formik>
 
+      <DialogBox
+        open={modalTagList}
+        onClose={() => setModalTagList(false)}
+        title="Listando Tags"
+      >
+        <form>
+          <div className="input-block">
+            <Autocomplete
+              multiple
+              id="tags-outlined"
+              options={tags}
+              onChange={(val, values) => setCurrentTags(values)}
+              getOptionLabel={(option) => option.descricao}
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Tags"
+                />
+              )}
+            />
+          </div>
+          <div className="input-block">
+            <p className="p-spacing">Não encontrou a tag que procurava?</p>
+            <ButtonTwo
+              name="Criar nova tag"
+              onClick={() => { setModalTagCreate(true); setModalTagList(false) }}
+              variant="contained"
+            />
+          </div>
+        </form>
+
+        <DialogActions>
+          <ButtonTwo name="Adicionar" onClick={() => { setTagQuestao(currentTags); setModalTagList(false) }} />
+          <ButtonTwo name="Fechar" onClick={() => setModalTagList(false)} />
+        </DialogActions>
+      </DialogBox>
+
+      <DialogBox
+        open={modalTagCreate}
+        onClose={() => setModalTagCreate(false)}
+        title="Criando Tag"
+      >
+        <Formik
+          initialValues={{
+            descricao: ''
+          }}
+          onSubmit={async (values) => {
+            createTag(values);
+          }}
+        >
+          {({ values, handleChange }) => (
+            <Form>
+              <div className="input-block">
+                <TextField
+                  name="descricao"
+                  label="Descrição"
+                  value={values.descricao}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </div>
+              <DialogActions>
+                <ButtonTwo name="Criar" type="submit" onClick={() => { setModalTagCreate(false); setModalTagList(true) }}/>
+                <ButtonTwo name="Voltar" onClick={() => { setModalTagCreate(false); setModalTagList(true) }} />
+              </DialogActions>
+
+            </Form>
+          )}
+        </Formik>
+      </DialogBox>
 
     </Sidebar>
   )

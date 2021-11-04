@@ -103,7 +103,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Sidebar({ ...props }) {
   const theme = useTheme();
-
+  
   const { user } = useContext(AuthContext);
   const { openNav, openManager, handleClickNav, handleClickManager, loading } = useContext(NavContext);
 

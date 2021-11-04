@@ -10,10 +10,11 @@
 }
 
 .editor-label {
-  margin-bottom: 10px;
-
   display: flex;
+  align-items: center;
   justify-content: space-between;
+
+  margin-bottom: 5px;
 }
 
 .editor-label label  {
@@ -25,4 +26,13 @@
 
 .editor .editor-input {
   margin-top: 20px;
+}
+
+.p-spacing {
+  margin-bottom: 15px;
+}
+
+.chips-block {
+  display: flex;
+  gap: 5px;
 }

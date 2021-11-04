@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CreateIcon from '@mui/icons-material/Create';
 import AddIcon from '@mui/icons-material/Add';
@@ -9,12 +9,22 @@ import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
 import { ButtonTwo } from "../../components/Button";
 
+import api from '../../services/api';
+
 import './index.css';
 
 export default function EducationalTestManager() {
 
+  const [avalicao, setAvalicao] = useState([]);
+
   useEffect(() => {
-    document.title = `SAIA - Avaliações`
+    document.title = `SAIA - Avaliações`;
+
+    setTimeout(async () => {
+      const response = await api.get(`/avaliacao`);
+      setAvalicao(response.data);
+    }, 500)
+
   })
 
   return (
@@ -32,15 +42,17 @@ export default function EducationalTestManager() {
       </div>
 
       <div className="educational-test-list">
-        <ListCard content="Avaliação de Algoritmos"
-          buttons={
-            <div className="educational-test-list-buttons">
-              <ButtonTwo icon={<RemoveRedEyeIcon />} name="Visualizar" />
-              <Link to="educational_test/edit">
-                <ButtonTwo icon={<CreateIcon />} name="Editar" />
-              </Link>
-            </div>
-          } />
+        {avalicao.map((items =>
+          <ListCard content={items.nome}
+            buttons={
+              <div className="educational-test-list-buttons">
+                <ButtonTwo icon={<RemoveRedEyeIcon />} name="Visualizar" />
+                <Link to="educational_test/edit">
+                  <ButtonTwo icon={<CreateIcon />} name="Editar" />
+                </Link>
+              </div>
+            } />
+        ))}
       </div>
     </Sidebar>
   )

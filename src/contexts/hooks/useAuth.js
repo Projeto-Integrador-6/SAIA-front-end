@@ -1,9 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import jwtDecode from "jwt-decode";
+
+import { SnackContext } from '../SnackContext';
 
 import api from '../../services/external';
 
 export default function useAuth() {
+  const { setSnack } = useContext(SnackContext);
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -40,9 +43,7 @@ export default function useAuth() {
       api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`;
       setUser(response.data.user);
     } catch (res) {
-      if (res !== null) {
-        console.log(res.response.data.error)
-      }
+      setSnack({ message: res.response.data.message, type: 'error', open: true });
     }
   }
 
