@@ -96,8 +96,8 @@ export default function CreateEducationalTest() {
             <FullCard title="Questões da avaliação" button={<ButtonTwo name="Adicionar Questão" onClick={() => setModalQuestion(true)} />} >
               {questaoAvaliacao.map((items, i) =>
                 <div className="questions-list">
-                  <h3>{i} - {items.nome}</h3>
-                  <p>{items.enunciado}</p>
+                  <h4>{i} - {items.nome}</h4>
+                  <p>Enunciado: {items.enunciado}</p>
                   <p>Valor: {items.valor}</p>
                 </div>
               )}

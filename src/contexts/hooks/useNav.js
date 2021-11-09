@@ -2,11 +2,16 @@ import { useState } from 'react';
 
 export default function useNav() {
   const [openNav, setOpenNav] = useState(false);
+  const [openTeacher, setOpenTeacher] = useState(false);
   const [openManager, setOpenManager] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const handleClickNav = () => {
     setOpenNav(!openNav);
+  };
+
+  const handleClickTeacher = () => {
+    setOpenTeacher(!openTeacher);
   };
 
   const handleClickManager = () => {
@@ -17,5 +22,5 @@ export default function useNav() {
     setLoading(false);
   };
 
-  return { openNav, openManager, loading, handleClickNav, handleClickManager, stopLoading };
+  return { openNav, openTeacher, openManager, loading, handleClickNav, handleClickTeacher, handleClickManager, stopLoading };
 }

@@ -28,6 +28,9 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
+import SettingsIcon from '@mui/icons-material/Settings';
+import PersonIcon from '@mui/icons-material/Person';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 import { NavContext } from '../../contexts/NavContext';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -105,7 +108,14 @@ export default function Sidebar({ ...props }) {
   const theme = useTheme();
   
   const { user } = useContext(AuthContext);
-  const { openNav, openManager, handleClickNav, handleClickManager, loading } = useContext(NavContext);
+  const { openNav, 
+          openTeacher,
+          openManager, 
+          handleClickNav, 
+          handleClickTeacher,
+          handleClickManager, 
+          loading 
+        } = useContext(NavContext);
 
   const location = useLocation();
 
@@ -165,14 +175,14 @@ export default function Sidebar({ ...props }) {
 
           <Divider />
 
-          <ListItemButton onClick={handleClickManager}>
+          <ListItemButton onClick={handleClickTeacher}>
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Educador" />
-            {openManager ? <ExpandLess /> : <ExpandMore />}
+            {openTeacher ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
-          <Collapse in={openManager} timeout="auto" unmountOnExit>
+          <Collapse in={openTeacher} timeout="auto" unmountOnExit>
             <ListItem button component={Link} to="/manager/educational_test" selected={location.pathname === '/manager/educational_test'}>
               <ListItemIcon>
                 <DescriptionIcon />
@@ -200,8 +210,33 @@ export default function Sidebar({ ...props }) {
               </ListItemIcon>
               <ListItemText primary="Análises Gerais" />
             </ListItem>
-
+          
           </Collapse>
+
+          <ListItemButton onClick={handleClickManager}>
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Coordenador" />
+            {openManager ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={openManager} timeout="auto" unmountOnExit>
+            <ListItem button component={Link} to="" selected={location.pathname === ''}>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText primary="Usuários" />
+            </ListItem>
+
+            <ListItem button component={Link} to="" selected={location.pathname === ''}>
+              <ListItemIcon>
+                <ListAltIcon />
+              </ListItemIcon>
+              <ListItemText primary="Disciplinas" />
+            </ListItem>
+          
+          </Collapse>
+
         </List>
 
       </Drawer>
