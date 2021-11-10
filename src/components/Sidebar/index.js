@@ -140,7 +140,7 @@ export default function Sidebar({ ...props }) {
             <Typography variant="h6" noWrap component="div">
               SAIA
             </Typography>
-            <p>Olá, {user.name}</p>
+            <p>Olá, {user.nome}</p>
           </div>
         </Toolbar>
       </AppBar>
@@ -228,7 +228,7 @@ export default function Sidebar({ ...props }) {
               <ListItemText primary="Usuários" />
             </ListItem>
 
-            <ListItem button component={Link} to="" selected={location.pathname === ''}>
+            <ListItem button component={Link} to="/manager/subjects" selected={location.pathname === ''}>
               <ListItemIcon>
                 <ListAltIcon />
               </ListItemIcon>

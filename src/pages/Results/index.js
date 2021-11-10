@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line, LineChart, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 import { FormControl, MenuItem, TextField } from '@mui/material';
+
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 
 import Sidebar from '../../components/Sidebar'
 import TripleBox from '../../components/TripleBox'
 import PageTitle from '../../components/PageTitle'
 import Box from '../../components/Box'
+import { Icon } from '../../components/Button';
 
 import './index.css';
 
@@ -197,7 +201,7 @@ export default function Results() {
 
     return (
         <Sidebar>
-            <div className="div-filters">
+            {/* <div className="div-filters">
                 <FormControl required={true} sx={{ m: 1, minWidth: 120 }}>
                     <TextField className="enforcement-select" label="Avaliação" select>
                         {enforcements.map((option) => (
@@ -207,8 +211,10 @@ export default function Results() {
                         ))}
                     </TextField>
                 </FormControl>
-            </div>
-
+            </div> */}
+            <Link to='/manager/enforcement'>
+                <Icon icon={<KeyboardReturnIcon/>}></Icon>
+            </Link>
             <div >
                 <PageTitle title={enforcements[selectedEnforcement].label} />
                 <div className="results-resume">

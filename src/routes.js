@@ -19,10 +19,13 @@ import Questions from "./pages/Questions";
 import EditQuestions from "./pages/EditQuestions";
 
 import CreateEnforcement from "./pages/CreateEnforcement";
+import EditEnforcement from "./pages/EditEnforcement"
 import Enforcement from "./pages/Enforcement";
 
 import Users from './pages/Users';
 import NewUsers from './pages/NewUsers';
+
+import Subjects from './pages/Subjects'
 
 import Results from './pages/Results';
 import UserProfile from "./pages/UserProfile";
@@ -86,6 +89,7 @@ export default function Routes() {
 
         {/* Painel Educador - Aplicação Avaliação */}
         <PrivateRoute isPrivate path="/manager/enforcement/create" component={CreateEnforcement} />
+        <PrivateRoute isPrivate path="/manager/enforcement/edit" component={EditEnforcement} />
         <PrivateRoute isPrivate path="/manager/enforcement" component={Enforcement} />
 
         {/* Painel Educador - Resultados */}
@@ -97,7 +101,7 @@ export default function Routes() {
         <PrivateRoute isPrivate path="/manager/users" component={Users} />
 
         {/* Painel Coordenador - Disciplinas */}
-
+        <PrivateRoute isPrivate path="/manager/subjects" component={Subjects} />
 
         {/* Login */}
         <NoAuthRoute path="/" component={Login} />

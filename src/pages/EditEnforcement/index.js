@@ -11,7 +11,7 @@ import { ButtonOne, Icon } from '../../components/Button';
 
 import api from '../../services/api'
 
-export default function CreateEnforcement() {
+export default function EditEnforcement() {
 
     const [values, setValues] = useState({
         "dataInicio" : new Date(),

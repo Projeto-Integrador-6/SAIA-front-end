@@ -47,7 +47,7 @@ export default function Enforcement() {
                                 <Link to={`/manager/educational_test/${enforcement.idAvaliacao}`}>
                                     <ButtonTwo icon={<RemoveRedEyeIcon />} name="Visualizar" />
                                 </Link>
-                                <Link to={`/manager/educational_test/${enforcement.idAvaliacao}`}>
+                                <Link to={`/manager/enforcement/edit/${enforcement.idAplicacao}`}>
                                     <ButtonTwo icon={<CreateIcon />} name="Editar" />
                                 </Link>
                             </div>
