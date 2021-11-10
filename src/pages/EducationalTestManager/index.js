@@ -33,11 +33,9 @@ export default function EducationalTestManager() {
 
       <div className="educational-test-nav">
         <ListCard content={
-          <div className="educational-test-nav-buttons">
-            <Link to="educational_test/create">
-              <ButtonTwo icon={<AddIcon />} name="Criar Avaliação" />
-            </Link>
-          </div>
+          <Link to="educational_test/create">
+            <ButtonTwo icon={<AddIcon />} name="Criar Avaliação" />
+          </Link>
         } />
       </div>
 

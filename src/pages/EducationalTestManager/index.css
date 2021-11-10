@@ -1,12 +1,3 @@
-.educational-test-nav-buttons, .educational-test-list-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.educational-test-nav-buttons a, .educational-test-list-buttons a {
-  text-decoration: none;
-}
-
 .educational-test-list {
   display: flex;
   flex-direction: column;

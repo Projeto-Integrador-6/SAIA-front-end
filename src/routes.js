@@ -22,6 +22,7 @@ import CreateEnforcement from "./pages/CreateEnforcement";
 import Enforcement from "./pages/Enforcement";
 
 import Users from './pages/Users';
+import NewUsers from './pages/NewUsers';
 
 import Results from './pages/Results';
 import UserProfile from "./pages/UserProfile";
@@ -79,7 +80,7 @@ export default function Routes() {
         <PrivateRoute isPrivate path="/manager/educational_test" component={EducationalTestManager} />
 
         {/* Painel Educador - Questões */}
-        <PrivateRoute isPrivate path="/manager/questions/edit" component={EditQuestions} />
+        <PrivateRoute isPrivate path="/manager/questions/edit/:id" component={EditQuestions} />
         <PrivateRoute isPrivate path="/manager/questions/create" component={CreateQuestions} />
         <PrivateRoute isPrivate path="/manager/questions" component={Questions} />
 
@@ -92,6 +93,7 @@ export default function Routes() {
 
 
         {/* Painel Coordenador - Usuários */}
+        <PrivateRoute isPrivate path="/manager/users/create" component={NewUsers} />
         <PrivateRoute isPrivate path="/manager/users" component={Users} />
 
         {/* Painel Coordenador - Disciplinas */}
