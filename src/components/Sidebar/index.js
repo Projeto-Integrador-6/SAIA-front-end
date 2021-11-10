@@ -221,7 +221,7 @@ export default function Sidebar({ ...props }) {
             {openManager ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
           <Collapse in={openManager} timeout="auto" unmountOnExit>
-            <ListItem button component={Link} to="" selected={location.pathname === ''}>
+            <ListItem button component={Link} to="/manager/users" selected={location.pathname === '/manager/users'}>
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
