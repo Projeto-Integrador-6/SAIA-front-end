@@ -1,18 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid, ptBR } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 
+import CreateIcon from '@mui/icons-material/Create';
 import AddIcon from '@mui/icons-material/Add';
 
 import Sidebar from "../../components/Sidebar";
 import PageTitle from "../../components/PageTitle";
 import ListCard from "../../components/ListCard";
 import DataGridContainer from "../../components/DataGridContainer";
-import { ButtonTwo } from "../../components/Button";
+import { Icon, ButtonTwo } from "../../components/Button";
+
+import api from '../../services/api';
 
 import './index.css';
 
 export default function Users() {
+
+  const [usuarios, setUsuarios] = useState([])
+
+  useEffect(() => {
+    document.title = `SAIA - Usuários`
+
+    setTimeout(async () => {
+      const response = await api.get(`/usuario`)
+      setUsuarios(response.data);
+    }, 500)
+
+  }, [])
 
   const columns = [
     {
@@ -36,41 +51,41 @@ export default function Users() {
     {
       field: 'acoes',
       headerName: 'Ações',
-      minWidth: 150
+      minWidth: 150,
+      renderCell: (user) => {
+        return (
+          <>
+            <Link to="">
+              <Icon icon={<CreateIcon />} />
+            </Link>
+          </>
+        )
+      }
     }
   ];
-
-  const rows = [
-    { id: 1, nome: 'Snow', email: 'Jon@gmail.com', categoria: 'Aluno' },
-    { id: 2, nome: 'Snow', email: 'Jon@gmail.com', categoria: 'Aluno' },
-    { id: 3, nome: 'Snow', email: 'Jon@gmail.com', categoria: 'Aluno' },
-    { id: 4, nome: 'Snow', email: 'Jon@gmail.com', categoria: 'Professor' },
-    { id: 5, nome: 'Snow', email: 'Jon@gmail.com', categoria: 'Aluno' },
-  ];
-
 
   return (
     <Sidebar>
       <PageTitle title="Usuários" />
 
       <ListCard content={
-        <div className="educational-test-nav-buttons">
-          <Link to="educational_test/create">
-            <ButtonTwo icon={<AddIcon />} name="Novo Usuário" />
-          </Link>
-        </div>
+        <Link to="users/create">
+          <ButtonTwo icon={<AddIcon />} name="Novo Usuário" />
+        </Link>
       } />
 
       <DataGridContainer>
         <DataGrid
+          getRowId={(r) => r.idUsuario}
           autoHeight={true}
-          rows={rows}
+          rows={usuarios}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
           localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
           hideFooterSelectedRowCount={true}
           selectionModel={false}
+
         />
       </DataGridContainer>
     </Sidebar>

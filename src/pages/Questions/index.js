@@ -33,11 +33,9 @@ export default function Questions() {
 
       <div className="educational-test-nav">
         <ListCard content={
-          <div className="educational-test-nav-buttons">
-            <Link to="questions/create">
-              <ButtonTwo icon={<AddIcon />} name="Criar Questão" />
-            </Link>
-          </div>
+          <Link to="questions/create">
+            <ButtonTwo icon={<AddIcon />} name="Criar Questão" />
+          </Link>
         } />
       </div>
 
@@ -46,7 +44,7 @@ export default function Questions() {
           <ListCard content={items.nome}
             buttons={
               <div className="educational-test-list-buttons">
-                <Link to="questions/edit">
+                <Link to={`questions/edit/${items.idQuestao}`}>
                   <ButtonTwo icon={<CreateIcon />} name="Editar" />
                 </Link>
               </div>

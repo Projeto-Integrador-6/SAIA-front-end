@@ -43,7 +43,7 @@ export default function useAuth() {
       api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`;
       setUser(response.data.usuario);
     } catch (res) {
-      setSnack({ message: res.response.data.message, type: 'error', open: true });
+      setSnack({ message: res.response.data.error, type: 'error', open: true });
     }
   }
 

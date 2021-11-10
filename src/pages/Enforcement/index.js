@@ -31,11 +31,9 @@ export default function Enforcement() {
             <PageTitle title="Aplicações" />
             <div className="educational-test-nav">
                 <ListCard content={
-                    <div className="educational-test-nav-buttons">
-                        <Link to="enforcement/create">
-                            <ButtonTwo icon={<AddIcon />} name="Criar Aplicação" />
-                        </Link>
-                    </div>
+                    <Link to="enforcement/create">
+                        <ButtonTwo icon={<AddIcon />} name="Criar Aplicação" />
+                    </Link>
                 } />
             </div>
             <div className="educational-test-list">

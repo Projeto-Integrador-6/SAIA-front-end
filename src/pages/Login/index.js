@@ -31,7 +31,7 @@ export default function Login() {
         <Formik
           initialValues={{
             email: '',
-            password: ''
+            senha: ''
           }}
           onSubmit={async (values) => {
             handleLogin(values);
@@ -51,11 +51,11 @@ export default function Login() {
               </div>
               <div className="input-block">
                 <FieldInput
-                  name="password"
+                  name="senha"
                   label="Senha"
                   type="password"
                   placeholder="Digite sua senha"
-                  value={values.password}
+                  value={values.senha}
                   onChange={handleChange}
                 >
                   <Link className="forgotten-password" to="/forgotten_password">Esqueceu a senha?</Link>

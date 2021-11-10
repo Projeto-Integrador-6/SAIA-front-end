@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Autocomplete, Checkbox, Chip, DialogActions, FormControlLabel, TextField } from "@mui/material";
 import { Formik, Form } from 'formik';
-import produce, { current, producer } from 'immer';
+import produce from 'immer';
+import { generate } from 'shortid';
 
 import FullCard from "../../components/FullCard";
 import PageTitle from "../../components/PageTitle";
@@ -43,9 +44,6 @@ export default function CreateQuestions() {
     }, 500)
   }, [status])
 
-  function handleContadorAlternativas(e, alternativa) {
-    alternativas.splice(alternativa, 1);
-  }
 
   function returnLetter(number) {
     let letters = ['A', 'B', 'C', 'D', 'E', 'F'];
@@ -56,7 +54,7 @@ export default function CreateQuestions() {
   // Cria Questão
   async function create(values) {
     let tags = tagQuestao;
-    
+
     try {
       if (values.idTipoQuestao === '1') {
         await api.post(`/questao`, { ...values, tags });
@@ -191,6 +189,7 @@ export default function CreateQuestions() {
                   <ButtonTwo
                     onClick={() => {
                       setAlternativas(currentAlternative => [...currentAlternative, {
+                        id: generate(),
                         descricao: '',
                         isAlternativaCorreta: false
                       }])
@@ -200,45 +199,53 @@ export default function CreateQuestions() {
                   />
                 }>
 
-                  {alternativas.map((_, i) =>
-                    <div key={i} className="input-block">
-                      <div className="editor-label">
-                        <div className="editor-label-label">
-                          <p>Alternativa: {returnLetter(i)}</p>
-                        </div>
-                        <div className="editor-label-button">
-                          <ButtonTwo
-                            onClick={(e) => handleContadorAlternativas(e, i)}
-                            name="Remover Alternativa"
-                            color="error"
-                          />
-                        </div>
+                  {alternativas.map((a, index) => {
+                    return (
+                      <div key={index} >
+                        <div className="input-block">
+                          <div className="editor-label">
+                            <div className="editor-label-label">
+                              <p>Alternativa: {returnLetter(index)}</p>
+                            </div>
+                            <div className="editor-label-button">
+                              <ButtonTwo
+                                onClick={() => {
+                                  setAlternativas(currentAlternative =>
+                                    currentAlternative.filter(x => x.id !== a.id)
+                                  );
+                                }}
+                                name="Remover Alternativa"
+                                color="error"
+                              />
+                            </div>
 
+                          </div>
+                          <div className="alternative">
+                            <Textarea
+                              name="alternativa"
+                              value={a.alternativas}
+                              onChange={e => {
+                                const descricao = e.target.value;
+                                setAlternativas(currentAlternative =>
+                                  produce(currentAlternative, v => {
+                                    v[index].descricao = descricao;
+                                    v[index].isAlternativaCorreta = isAlternativaCorreta;
+                                  })
+                                )
+                              }}
+                            />
+                            <FormControlLabel
+                              control={<Checkbox />}
+                              label="Alternativa Correta"
+                              value={isAlternativaCorreta}
+                              onChange={(e) => handleAlternativa(e)}
+                            />
+                          </div>
+                        </div>
+                        
                       </div>
-                      <div className="alternative">
-                        <Textarea
-                          key={i}
-                          name="alternativa"
-                          value={i.alternativas}
-                          onChange={e => {
-                            const descricao = e.target.value;
-                            setAlternativas(currentAlternative =>
-                              produce(currentAlternative, (v) => {
-                                v[i].descricao = descricao;
-                                v[i].isAlternativaCorreta = isAlternativaCorreta;
-                              })
-                            )
-                          }}
-                        />
-                        <FormControlLabel
-                          control={<Checkbox />}
-                          label="Alternativa Correta"
-                          value={isAlternativaCorreta}
-                          onChange={(e) => handleAlternativa(e)}
-                        />
-                      </div>
-                    </div>
-                  )}
+                    )
+                  })}
 
                 </FullCard>
               </>
@@ -318,7 +325,7 @@ export default function CreateQuestions() {
                 />
               </div>
               <DialogActions>
-                <ButtonTwo name="Criar" type="submit" onClick={() => { setModalTagCreate(false); setModalTagList(true) }}/>
+                <ButtonTwo name="Criar" type="submit" onClick={() => { setModalTagCreate(false); setModalTagList(true) }} />
                 <ButtonTwo name="Voltar" onClick={() => { setModalTagCreate(false); setModalTagList(true) }} />
               </DialogActions>
 
