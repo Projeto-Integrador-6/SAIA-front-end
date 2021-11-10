@@ -3,7 +3,7 @@ import jwtDecode from "jwt-decode";
 
 import { SnackContext } from '../SnackContext';
 
-import api from '../../services/external';
+import api from '../../services/api';
 
 export default function useAuth() {
   const { setSnack } = useContext(SnackContext);
@@ -37,11 +37,11 @@ export default function useAuth() {
 
   async function handleLogin(values) {
     try {
-      const response = await api.post('/api/login', { ...values });
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+      const response = await api.post('/login', { ...values });
+      localStorage.setItem('user', JSON.stringify(response.data.usuario));
       localStorage.setItem('token', response.data.token);
       api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`;
-      setUser(response.data.user);
+      setUser(response.data.usuario);
     } catch (res) {
       setSnack({ message: res.response.data.message, type: 'error', open: true });
     }
