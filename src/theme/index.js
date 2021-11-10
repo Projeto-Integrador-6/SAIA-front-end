@@ -1,4 +1,6 @@
 import { createTheme } from '@material-ui/core/styles';
+import { ptBR } from '@mui/x-data-grid';
+import { bgBG as coreBgBG } from '@mui/material/locale';
 
 const UiTheme = createTheme({
   typography: {
@@ -25,6 +27,9 @@ const UiTheme = createTheme({
       contrastText: '#FFFFFF'
     }
   },
-});
+},
+  ptBR,
+  coreBgBG
+);
 
 export default UiTheme;
