@@ -25,6 +25,7 @@ import Enforcement from "./pages/Enforcement";
 import Users from './pages/Users';
 
 import Subjects from './pages/Subjects'
+import CreateSubject from './pages/CreateSubject'
 
 import Results from './pages/Results';
 import UserProfile from "./pages/UserProfile";
@@ -99,7 +100,9 @@ export default function Routes() {
         <PrivateRoute isPrivate path="/manager/users" component={Users} />
 
         {/* Painel Coordenador - Disciplinas */}
+        <PrivateRoute isPrivate path="/manager/subjects/create" component={CreateSubject} />
         <PrivateRoute isPrivate path="/manager/subjects" component={Subjects} />
+        
 
         {/* Login */}
         <NoAuthRoute path="/" component={Login} />
