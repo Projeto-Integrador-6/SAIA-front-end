@@ -40,7 +40,7 @@ export default function Enforcement() {
             </div>
             <div className="educational-test-list">
                 {enforcements.map((enforcement) => (
-                    <ListCard content={enforcement.value}
+                    <ListCard content={enforcement.nome}
                         buttons={
                             <div className="educational-test-list-buttons">
                                 <Link to={`/manager/educational_test/results/${enforcement.idAplicacao}`}>

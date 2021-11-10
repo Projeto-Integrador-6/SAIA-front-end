@@ -16,7 +16,7 @@ export default function CreateEnforcement() {
 
     const [subjects, setSubjects] = useState([])
 
-    /* const [educationalTest, setEducationalTest] = useState([]) */
+    const [educationalTest, setEducationalTest] = useState([])
 
     useEffect(() => {
         document.title = `SAIA - Criando Aplicação`
@@ -25,25 +25,10 @@ export default function CreateEnforcement() {
             const subjectsResponse = await apiExternal.get(`/disciplines`)
             setSubjects(subjectsResponse.data)
 
-            /* const educationalTestResponse = await api.get(`/avaliacao`)
-            setSubjects(educationalTestResponse.data) */
+            const educationalTestResponse = await api.get(`/avaliacao`)
+            setEducationalTest(educationalTestResponse.data)
         }, 0)
     }, [])
-
-    let educationalTest = [
-        {
-            value: "Avaliação de Algoritmos",
-            label: "Avaliação de Algoritmos"
-        },
-        {
-            value: "Avaliação de Banco de Dados II",
-            label: "Avaliação de Banco de Dados II"
-        },
-        {
-            value: "Avaliação de Desenvolvimento Web",
-            label: "Avaliação de Desenvolvimento Web"
-        }
-    ]
 
     return (
         <Sidebar>
@@ -57,8 +42,8 @@ export default function CreateEnforcement() {
                         <FormControl required={true} sx={{ m: 1, minWidth: 120 }}>
                             <TextField className="enforcement-select" label="Avaliação" select>
                                 {educationalTest.map((option) => (
-                                    <MenuItem key={option.id} value={option.value}>
-                                        {option.label}
+                                    <MenuItem key={option.id} value={option.nome}>
+                                        {option.nome}
                                     </MenuItem>
                                 ))}
                             </TextField>
