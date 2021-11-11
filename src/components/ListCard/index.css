@@ -15,7 +15,7 @@
   font-weight: 400;
 }
 
-.list-info a {
+.list-info a, .list-btn a {
   text-decoration: none !important;
 }
 
