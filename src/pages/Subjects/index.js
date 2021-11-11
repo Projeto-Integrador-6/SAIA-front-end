@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState }  from "react";
 import { DataGrid, ptBR } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 
@@ -10,9 +10,25 @@ import ListCard from "../../components/ListCard";
 import DataGridContainer from "../../components/DataGridContainer";
 import { ButtonTwo } from "../../components/Button";
 
+import api from '../../services/api'
+
 import './index.css';
 
 export default function Subjects() {
+
+  const [subjects, setSubjects] = useState([])
+
+  useEffect(() => {
+    document.title = `SAIA - Disciplinas`
+
+    setTimeout(async () => {
+        const subjectsResponse = await api.get(`/disciplina`)
+        setSubjects(subjectsResponse.data)
+
+    }, 0)
+}, [])
+
+console.log(subjects)
 
   const columns = [
     {
@@ -28,14 +44,9 @@ export default function Subjects() {
     }
   ];
 
-  const rows = [
-    { id: 1, nome: 'Algoritmos I' },
-    { id: 2, nome: 'Banco de Dados I' },
-    { id: 3, nome: 'Banco de Dados II' },
-    { id: 4, nome: 'Desenvolvimento de Sistemas' },
-    { id: 5, nome: 'Estruturas de Dados' },
-  ];
-
+  subjects.map((subject) => {
+    subject.id = subject.idDisciplina;
+  })
 
   return (
     <Sidebar>
@@ -43,7 +54,7 @@ export default function Subjects() {
 
       <ListCard content={
         <div className="educational-test-nav-buttons">
-          <Link to="manager/subjects/create">
+          <Link to="/manager/subjects/create">
             <ButtonTwo icon={<AddIcon />} name="Nova Disciplina"/>
           </Link>
         </div>
@@ -52,7 +63,7 @@ export default function Subjects() {
       <DataGridContainer>
         <DataGrid
           autoHeight={true}
-          rows={rows}
+          rows={subjects}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
