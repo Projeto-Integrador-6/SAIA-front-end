@@ -8,6 +8,7 @@ import { FieldInput } from "../../components/Input";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import './index.css';
+import { TextField } from "@mui/material";
 
 export default function Login() {
   const { handleLogin } = useContext(AuthContext);
@@ -31,7 +32,7 @@ export default function Login() {
         <Formik
           initialValues={{
             email: '',
-            senha: ''
+            password: ''
           }}
           onSubmit={async (values) => {
             handleLogin(values);
@@ -40,7 +41,7 @@ export default function Login() {
           {({ values, handleChange }) => (
             <Form className="login">
               <div className="input-block">
-                <FieldInput
+                <TextField
                   name="email"
                   label="E-mail"
                   type="email"
@@ -50,16 +51,15 @@ export default function Login() {
                 />
               </div>
               <div className="input-block">
-                <FieldInput
-                  name="senha"
+                <TextField
+                  name="password"
                   label="Senha"
                   type="password"
                   placeholder="Digite sua senha"
-                  value={values.senha}
+                  value={values.password}
                   onChange={handleChange}
-                >
-                  <Link className="forgotten-password" to="/forgotten_password">Esqueceu a senha?</Link>
-                </FieldInput>
+                />
+                <Link className="forgotten-password" to="/forgotten_password">Esqueceu a senha?</Link>
               </div>
 
               <div className="input-block">

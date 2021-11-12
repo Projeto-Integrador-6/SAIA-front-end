@@ -3,6 +3,7 @@ import { Autocomplete, Checkbox, Chip, DialogActions, FormControlLabel, TextFiel
 import { Formik, Form } from 'formik';
 import produce from 'immer';
 import { useParams } from "react-router-dom";
+import { generate } from 'shortid';
 
 import FullCard from "../../components/FullCard";
 import PageTitle from "../../components/PageTitle";
@@ -24,7 +25,7 @@ export default function EditQuestions() {
   const { setSnack } = useContext(SnackContext);
 
   const [questao, setQuestao] = useState([]);
-  const [alternativas, setAlternativas] = useState([{}]);
+  const [alternativas, setAlternativas] = useState([]);
   const [tags, setTags] = useState([]);
   const [tagQuestao, setTagQuestao] = useState([]);
   const [isAlternativaCorreta, setIsAlternativaCorreta] = useState(false);
@@ -44,7 +45,24 @@ export default function EditQuestions() {
       setQuestao(loadQuestao.data.questao);
 
       if (loadQuestao.data.alternativas !== undefined) {
-        setAlternativas(loadQuestao.data.alternativas);
+
+        for (let i = 0; i < loadQuestao.data.alternativas.length; i++) {
+
+          setAlternativas(currentAlternative => [...currentAlternative, {
+            idAlternativa: generate(),
+            descricao: '',
+            isAlternativaCorreta: false
+          }])
+
+          setAlternativas(currentAlternative =>
+            produce(currentAlternative, (v) => {
+              v[i].idAlternativa = loadQuestao.data.alternativas[i].idAlternativa;
+              v[i].descricao = loadQuestao.data.alternativas[i].descricao;
+              v[i].isAlternativaCorreta = loadQuestao.data.alternativas[i].isAlternativaCorreta;
+            })
+          )
+        }
+
       }
 
       if (loadQuestao.data.tags !== undefined) {
@@ -52,15 +70,11 @@ export default function EditQuestions() {
       }
 
       const loadTagCreated = await api.get('/tag');
-      setTags(loadTagCreated .data);
+      setTags(loadTagCreated.data);
 
       setLoading(false);
     }, 500)
   }, [id])
-
-  function handleContadorAlternativas(e, alternativa) {
-    alternativas.splice(alternativa, 1);
-  }
 
   function returnLetter(number) {
     let letters = ['A', 'B', 'C', 'D', 'E', 'F'];
@@ -99,10 +113,6 @@ export default function EditQuestions() {
     } catch (err) {
       setSnack({ message: "Houve um problema durante a criação da tag.", type: 'error', open: true });
     }
-  }
-
-  function handleAlternativa(e) {
-    setIsAlternativaCorreta(!false)
   }
 
   return (
@@ -188,6 +198,7 @@ export default function EditQuestions() {
                       <ButtonTwo
                         onClick={() => {
                           setAlternativas(currentAlternative => [...currentAlternative, {
+                            idAlternativa: generate(),
                             descricao: '',
                             isAlternativaCorreta: false
                           }])
@@ -197,46 +208,61 @@ export default function EditQuestions() {
                       />
                     }>
 
-                      {alternativas.map((_, i) =>
-                        <div key={i} className="input-block">
-                          <div className="editor-label">
-                            <div className="editor-label-label">
-                              <p>Alternativa: {returnLetter(i)}</p>
-                            </div>
-                            <div className="editor-label-button">
-                              <ButtonTwo
-                                onClick={(e) => handleContadorAlternativas(e, i)}
-                                name="Remover Alternativa"
-                                color="error"
-                              />
-                            </div>
+                      {alternativas.map((a, index) => {
+                        return (
+                          <div key={index}>
+                            <div className="input-block">
+                              <div className="editor-label">
+                                <div className="editor-label-label">
+                                  <p>Alternativa: {returnLetter(index)}</p>
+                                </div>
+                                <div className="editor-label-button">
+                                  <ButtonTwo
+                                    onClick={() => {
+                                      setAlternativas(currentAlternative =>
+                                        currentAlternative.filter(x => x.idAlternativa !== a.idAlternativa)
+                                      );
+                                    }}
+                                    name="Remover Alternativa"
+                                    color="error"
+                                  />
+                                </div>
 
+                              </div>
+                              <div className="alternative">
+                                <Textarea
+                                  name="alternativa"
+                                  value={alternativas[index].descricao}
+                                  onChange={e => {
+                                    const descricao = e.target.value;
+                                    setAlternativas(currentAlternative =>
+                                      produce(currentAlternative, v => {
+                                        v[index].descricao = descricao;
+                                      })
+                                    );
+                                  }
+                                  }
+                                />
+                                <FormControlLabel
+                                  control={<Checkbox />}
+                                  label="Alternativa Correta"
+                                  value={isAlternativaCorreta}
+                                  checked={alternativas[index].isAlternativaCorreta}
+                                  onChange={e => {
+                                    setAlternativas(currentAlternative =>
+                                      produce(currentAlternative, (v) => {
+                                        v[index].isAlternativaCorreta = isAlternativaCorreta;
+                                      })
+                                    );
+                                    setIsAlternativaCorreta(!isAlternativaCorreta);
+                                  }}
+                                />
+                              </div>
+                              <div>{JSON.stringify(alternativas, null, 2)}</div>
+                            </div>
                           </div>
-                          <div className="alternative">
-                            <Textarea
-                              key={i}
-                              name="alternativa"
-                              value={alternativas[i].descricao}
-                              onChange={e => {
-                                const descricao = e.target.value;
-                                setAlternativas(currentAlternative =>
-                                  produce(currentAlternative, (v) => {
-                                    v[i].descricao = descricao;
-                                    v[i].isAlternativaCorreta = isAlternativaCorreta;
-                                  })
-                                )
-                              }}
-                            />
-                            <FormControlLabel
-                              control={<Checkbox />}
-                              label="Alternativa Correta"
-                              value={isAlternativaCorreta}
-                              onChange={(e) => handleAlternativa(e)}
-                            />
-                          </div>
-                          <div>{JSON.stringify(alternativas, null, 2)}</div>
-                        </div>
-                      )}
+                        )
+                      })}
 
                     </FullCard>
                   </>
