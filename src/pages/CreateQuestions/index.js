@@ -53,9 +53,9 @@ export default function CreateQuestions() {
 
   // Cria Questão
   async function create(values) {
-    let tags = tagQuestao;
-
     try {
+      let tags = tagQuestao;
+      
       if (values.idTipoQuestao === '1') {
         await api.post(`/questao`, { ...values, tags });
       }
