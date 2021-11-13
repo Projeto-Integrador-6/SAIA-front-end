@@ -44,10 +44,6 @@ console.log(subjects)
     }
   ];
 
-  subjects.map((subject) => {
-    subject.id = subject.idDisciplina;
-  })
-
   return (
     <Sidebar>
       <PageTitle title="Disciplinas" />
@@ -70,6 +66,7 @@ console.log(subjects)
           localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
           hideFooterSelectedRowCount={true}
           selectionModel={false}
+          getRowId={(r) => r.idDisciplina}
         />
       </DataGridContainer>
     </Sidebar>
