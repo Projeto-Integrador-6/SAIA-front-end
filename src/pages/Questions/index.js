@@ -21,8 +21,8 @@ export default function Questions() {
     document.title = `SAIA - Questões`
 
     setTimeout(async () => {
-      const response = await api.get(`/questao`)
-      setQuestoes(response.data)
+      const response = await api.get('/questao');
+      setQuestoes(response.data.result)
     }, 500)
 
   }, [])

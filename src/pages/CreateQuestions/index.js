@@ -53,9 +53,9 @@ export default function CreateQuestions() {
 
   // Cria Questão
   async function create(values) {
-    let tags = tagQuestao;
-
     try {
+      let tags = tagQuestao;
+      
       if (values.idTipoQuestao === '1') {
         await api.post(`/questao`, { ...values, tags });
       }
@@ -85,7 +85,7 @@ export default function CreateQuestions() {
   }
 
   function handleAlternativa(e) {
-    setIsAlternativaCorreta(!false)
+    setIsAlternativaCorreta(!isAlternativaCorreta)
   }
 
   return (
@@ -189,7 +189,7 @@ export default function CreateQuestions() {
                   <ButtonTwo
                     onClick={() => {
                       setAlternativas(currentAlternative => [...currentAlternative, {
-                        id: generate(),
+                        idAlternativa: generate(),
                         descricao: '',
                         isAlternativaCorreta: false
                       }])
@@ -211,7 +211,7 @@ export default function CreateQuestions() {
                               <ButtonTwo
                                 onClick={() => {
                                   setAlternativas(currentAlternative =>
-                                    currentAlternative.filter(x => x.id !== a.id)
+                                    currentAlternative.filter(x => x.idAlternativa !== a.idAlternativa)
                                   );
                                 }}
                                 name="Remover Alternativa"
@@ -241,6 +241,8 @@ export default function CreateQuestions() {
                               onChange={(e) => handleAlternativa(e)}
                             />
                           </div>
+
+                          <div>{JSON.stringify(alternativas, null, 2)}</div>
                         </div>
                         
                       </div>

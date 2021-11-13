@@ -70,6 +70,7 @@ export default function Routes() {
   return (
     <Router history={history}>
       <Switch>
+        {/* Outros */}
         <PrivateRoute isPrivate path="/home" component={Home} />
         <PrivateRoute isPrivate path="/profile" component={UserProfile} />
 
@@ -104,10 +105,10 @@ export default function Routes() {
         {/* Painel Coordenador - Disciplinas */}
         <PrivateRoute isPrivate path="/manager/subjects/create" component={CreateSubject} />
         <PrivateRoute isPrivate path="/manager/subjects" component={Subjects} />
-        
 
         {/* Login */}
         <NoAuthRoute path="/" component={Login} />
+        
       </Switch>
     </Router>
   )
