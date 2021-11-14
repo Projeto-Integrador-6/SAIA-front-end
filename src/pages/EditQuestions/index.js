@@ -28,7 +28,6 @@ export default function EditQuestions() {
   const [tags, setTags] = useState([]);
   const [newTagQuestao, setNewTagQuestao] = useState([]);
   const [oldTagQuestao, setOldTagQuestao] = useState([]);
-  const [isAlternativaCorreta, setIsAlternativaCorreta] = useState(false);
 
   const [modalTagCreate, setModalTagCreate] = useState(false);
   const [modalTagList, setModalTagList] = useState(false);
@@ -80,7 +79,7 @@ export default function EditQuestions() {
 
       setLoading(false);
     }, 500)
-  }, [id])
+  }, [])
 
   function returnLetter(number) {
     let letters = ['A', 'B', 'C', 'D', 'E', 'F'];
@@ -88,7 +87,7 @@ export default function EditQuestions() {
     return letters[number];
   }
 
-  // CRIA QUESTÃO
+  // EDITA QUESTÃO
   async function edit(values) {
     try {
       let tags = newTagQuestao;
@@ -137,12 +136,11 @@ export default function EditQuestions() {
 
   return (
     <Sidebar>
-      <PageTitle title="Editando Questão" />
       {loading ?
         <LoadingProgress />
         :
         <>
-
+          <PageTitle title="Editando Questão" />
           <Formik
             enableReinitialize
             initialValues={questao}
@@ -237,41 +235,44 @@ export default function EditQuestions() {
                         return (
                           <div key={index}>
                             <div className="input-block">
-                              <TextField
-                                label={'Alternativa ' + returnLetter(index)}
-                                name="alternativa"
-                                value={alternativas[index].descricao}
-                                onChange={e => {
-                                  const descricao = e.target.value;
-                                  setAlternativas(currentAlternative =>
-                                    produce(currentAlternative, v => {
-                                      v[index].descricao = descricao;
-                                    })
-                                  );
-                                }}
-                                fullWidth
-                                multiline
-                                rows={3}
-                              />
-                              <FormControlLabel
-                                control={<Checkbox />}
-                                label="Alternativa Correta"
-                                value={isAlternativaCorreta}
-                                checked={alternativas[index].isAlternativaCorreta}
-                                onChange={e => {
-                                  setAlternativas(currentAlternative =>
-                                    produce(currentAlternative, (v) => {
-                                      v[index].isAlternativaCorreta = isAlternativaCorreta;
-                                    })
-                                  );
-                                  setIsAlternativaCorreta(!isAlternativaCorreta);
-                                }}
-                              />
+                              <div className="editor-buttons">
+                                <FormControlLabel
+                                  control={<Checkbox />}
+                                  label="Alternativa Correta"
+                                  value={alternativas[index].isAlternativaCorreta}
+                                  checked={alternativas[index].isAlternativaCorreta}
+                                  onChange={e => {
+                                    setAlternativas(currentAlternative =>
+                                      produce(currentAlternative, (v) => {
+                                        v[index].isAlternativaCorreta = !alternativas[index].isAlternativaCorreta;
+                                      })
+                                    );
+                                  }}
+                                />
+                              </div>
+                              <>
+                                <TextField
+                                  label={'Alternativa ' + returnLetter(index)}
+                                  name="alternativa"
+                                  value={alternativas[index].descricao}
+                                  onChange={e => {
+                                    const descricao = e.target.value;
+                                    setAlternativas(currentAlternative =>
+                                      produce(currentAlternative, v => {
+                                        v[index].descricao = descricao;
+                                      })
+                                    );
+                                  }}
+                                  fullWidth
+                                  multiline
+                                  rows={3}
+                                />
+
+                              </>
                             </div>
                           </div>
                         )
                       })}
-                      <div>{JSON.stringify(alternativas, null, 2)}</div>
                     </FullCard>
                   </>
                 }
@@ -285,7 +286,7 @@ export default function EditQuestions() {
               </Form>
             )}
           </Formik>
-          
+
           {/* MODAL: LISTANDO TAGS */}
           <DialogBox
             open={modalTagList}
@@ -299,6 +300,7 @@ export default function EditQuestions() {
                   id="tags-outlined"
                   options={tags}
                   onChange={(val, values) => setCurrentTags(values)}
+                  getOptionSelected={(option, value) => option.idTag === value.idTag}
                   getOptionLabel={(option) => option.descricao}
                   filterSelectedOptions
                   noOptionsText={'Não há tags para mostrar'}
@@ -325,7 +327,7 @@ export default function EditQuestions() {
               <ButtonTwo name="Fechar" onClick={() => setModalTagList(false)} />
             </DialogActions>
           </DialogBox>
-          
+
           {/* MODAL: CRIAR TAGS */}
           <DialogBox
             open={modalTagCreate}
