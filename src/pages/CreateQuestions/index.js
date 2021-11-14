@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Autocomplete, Checkbox, Chip, DialogActions, FormControlLabel, TextField } from "@mui/material";
+import { Autocomplete, Checkbox, Chip, DialogActions, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { Formik, Form } from 'formik';
 import produce from 'immer';
 import { generate } from 'shortid';
@@ -9,7 +9,6 @@ import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
 import { ButtonOne, ButtonTwo } from "../../components/Button";
 import DialogBox from "../../components/DialogBox";
-import { FieldInput, RadioButton, Textarea } from "../../components/Input";
 
 import { SnackContext } from '../../contexts/SnackContext';
 
@@ -26,7 +25,6 @@ export default function CreateQuestions() {
   const [alternativas, setAlternativas] = useState([{}]);
   const [tags, setTags] = useState([]);
   const [tagQuestao, setTagQuestao] = useState([]);
-  const [isAlternativaCorreta, setIsAlternativaCorreta] = useState(false);
 
   const [modalTagCreate, setModalTagCreate] = useState(false);
   const [modalTagList, setModalTagList] = useState(false);
@@ -55,7 +53,7 @@ export default function CreateQuestions() {
   async function create(values) {
     try {
       let tags = tagQuestao;
-      
+
       if (values.idTipoQuestao === '1') {
         await api.post(`/questao`, { ...values, tags });
       }
@@ -84,8 +82,19 @@ export default function CreateQuestions() {
     }
   }
 
-  function handleAlternativa(e) {
-    setIsAlternativaCorreta(!isAlternativaCorreta)
+  // ADICIONA NOVAS TAGS AO ARRAY "NEWTAGQUESTAO"
+  function addTags(values) {
+    let tag = []
+
+    for (let i = 0; i < tagQuestao.length; i++) {
+      tag.push(tagQuestao[i])
+    }
+
+    for (let i = 0; i < values.length; i++) {
+        tag.push(values[i])     
+    }
+
+    setTagQuestao(tag)
   }
 
   return (
@@ -111,59 +120,58 @@ export default function CreateQuestions() {
           <Form>
             <FullCard title="Tipo da questão">
               <div className="input-block">
-                <RadioButton
-                  label="Questão aberta"
+
+                <RadioGroup
+                  defaultValue=""
                   name="idTipoQuestao"
-                  value="1"
                   onChange={handleChange}
-                />
-                <RadioButton
-                  label="Questão fechada"
-                  name="idTipoQuestao"
-                  value="2"
-                  onChange={handleChange}
-                />
+                >
+                  <FormControlLabel value="1" control={<Radio />} label="Questão Aberta" />
+                  <FormControlLabel value="2" control={<Radio />} label="Questão Fechada" />
+                </RadioGroup>
               </div>
             </FullCard>
 
             {values.idTipoQuestao !== "" &&
               <FullCard title="Dados da questão">
                 <div className="input-block">
-                  <FieldInput
-                    label="Nome da questão"
+                  <TextField
+                    label="Nome"
                     name="nome"
-                    values={values.nome}
+                    value={values.nome}
                     onChange={handleChange}
                     type="text"
-                    placeholder="Digite o nome da questão"
+                    fullWidth
                   />
                 </div>
                 <div className="input-block">
-                  <Textarea
+                  <TextField
                     label="Enunciado"
                     name="enunciado"
-                    values={values.enunciado}
+                    value={values.enunciado}
                     onChange={handleChange}
                     type="text"
-                    placeholder="Digite o enunciado da questão"
+                    fullWidth
+                    multiline
+                    rows={5}
                   />
                 </div>
                 <div className="input-block">
-                  <FieldInput
+                  <TextField
                     label="Valor"
                     name="valor"
                     value={values.valor}
                     onChange={handleChange}
                     type="number"
-                    placeholder="Digite o valor da questão"
+                    fullWidth
                   />
                 </div>
                 <div className="input-block">
-                  <div className="editor-label">
-                    <div className="editor-label-label">
+                  <div className="editor-buttons">
+                    <div className="editor-buttons-label">
                       <p>Tags</p>
                     </div>
-                    <div className="editor-label-button">
+                    <div className="editor-buttons-button">
                       <ButtonTwo
                         name="Adicionar Tag"
                         onClick={(e) => setModalTagList(true)}
@@ -203,11 +211,23 @@ export default function CreateQuestions() {
                     return (
                       <div key={index} >
                         <div className="input-block">
-                          <div className="editor-label">
-                            <div className="editor-label-label">
-                              <p>Alternativa: {returnLetter(index)}</p>
+                          <div className="editor-buttons">
+                            <div className="editor-buttons-1">
+                              <FormControlLabel
+                                control={<Checkbox />}
+                                label="Alternativa Correta"
+                                value={alternativas[index].isAlternativaCorreta}
+                                onChange={e => {
+                                  setAlternativas(currentAlternative =>
+                                    produce(currentAlternative, (v) => {
+                                      v[index].isAlternativaCorreta = !alternativas[index].isAlternativaCorreta;
+                                    })
+                                  );
+
+                                }}
+                              />
                             </div>
-                            <div className="editor-label-button">
+                            <div className="editor-buttons-2">
                               <ButtonTwo
                                 onClick={() => {
                                   setAlternativas(currentAlternative =>
@@ -220,31 +240,26 @@ export default function CreateQuestions() {
                             </div>
 
                           </div>
-                          <div className="alternative">
-                            <Textarea
+                          <>
+                            <TextField
+                              label={'Alternativa ' + returnLetter(index)}
                               name="alternativa"
-                              value={a.alternativas}
+                              value={alternativas[index].descricao}
                               onChange={e => {
                                 const descricao = e.target.value;
                                 setAlternativas(currentAlternative =>
                                   produce(currentAlternative, v => {
                                     v[index].descricao = descricao;
-                                    v[index].isAlternativaCorreta = isAlternativaCorreta;
                                   })
-                                )
+                                );
                               }}
+                              fullWidth
+                              multiline
+                              rows={3}
                             />
-                            <FormControlLabel
-                              control={<Checkbox />}
-                              label="Alternativa Correta"
-                              value={isAlternativaCorreta}
-                              onChange={(e) => handleAlternativa(e)}
-                            />
-                          </div>
-
-                          <div>{JSON.stringify(alternativas, null, 2)}</div>
+                          </>
                         </div>
-                        
+
                       </div>
                     )
                   })}
@@ -256,7 +271,6 @@ export default function CreateQuestions() {
             <ButtonOne
               description="Criar"
               color="var(--green)"
-              width="200px"
               type="submit"
             />
 
@@ -276,6 +290,7 @@ export default function CreateQuestions() {
               id="tags-outlined"
               options={tags}
               onChange={(val, values) => setCurrentTags(values)}
+              getOptionSelected={(option, value) => option.idTag === value.idTag}
               getOptionLabel={(option) => option.descricao}
               filterSelectedOptions
               renderInput={(params) => (
@@ -297,7 +312,7 @@ export default function CreateQuestions() {
         </form>
 
         <DialogActions>
-          <ButtonTwo name="Adicionar" onClick={() => { setTagQuestao(currentTags); setModalTagList(false) }} />
+          <ButtonTwo name="Adicionar" onClick={() => { addTags(currentTags); setModalTagList(false) }} />
           <ButtonTwo name="Fechar" onClick={() => setModalTagList(false)} />
         </DialogActions>
       </DialogBox>
