@@ -2,8 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Formik, Form } from 'formik';
 
-import { ButtonOne } from "../../components/Button";
-import { FieldInput } from "../../components/Input";
+import { ButtonLogin } from "../../components/Button";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -63,7 +62,7 @@ export default function Login() {
               </div>
 
               <div className="input-block">
-                <ButtonOne
+                <ButtonLogin
                   description="Entrar"
                   color="var(--green)"
                   type="submit"

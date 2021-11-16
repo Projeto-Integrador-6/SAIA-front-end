@@ -12,7 +12,7 @@ export default function useAuth() {
   const [userType, setUserType] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Tipos de Usuário
+  // TIPOS DE USUÁRIO
   function type(value){
     let types = ['Aluno', 'Professor', 'Coordenador'];
 

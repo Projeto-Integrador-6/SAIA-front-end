@@ -23,7 +23,8 @@ import EditEnforcement from "./pages/EditEnforcement"
 import Enforcement from "./pages/Enforcement";
 
 import Users from './pages/Users';
-import NewUsers from './pages/NewUsers';
+import CreateUsers from './pages/CreateUsers';
+import EditUsers from './pages/EditUsers';
 
 import Subjects from './pages/Subjects'
 import CreateSubject from './pages/CreateSubject'
@@ -99,7 +100,8 @@ export default function Routes() {
 
 
         {/* Painel Coordenador - Usuários */}
-        <PrivateRoute isPrivate path="/manager/users/create" component={NewUsers} />
+        <PrivateRoute isPrivate path="/manager/users/update/:id" component={EditUsers} />
+        <PrivateRoute isPrivate path="/manager/users/create" component={CreateUsers} />
         <PrivateRoute isPrivate path="/manager/users" component={Users} />
 
         {/* Painel Coordenador - Disciplinas */}

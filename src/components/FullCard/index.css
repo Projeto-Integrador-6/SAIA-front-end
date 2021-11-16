@@ -1,7 +1,7 @@
 .full-card-container .full-card-title {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  flex-direction: column;
   margin-bottom: 20px;
 }
 
@@ -25,4 +25,12 @@
 
 .full-card-container .full-card-no-body {
   margin-bottom: 40px;
+}
+
+@media screen and (min-width: 768px){
+  .full-card-container .full-card-title {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
 }
