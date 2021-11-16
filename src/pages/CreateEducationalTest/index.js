@@ -5,18 +5,20 @@ import { Formik, Form } from 'formik';
 import { ButtonOne, ButtonTwo } from "../../components/Button";
 import DialogBox from "../../components/DialogBox";
 import FullCard from "../../components/FullCard";
-import { FieldInput, Textarea } from "../../components/Input";
 import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
 
+import { AuthContext } from '../../contexts/AuthContext';
 import { SnackContext } from '../../contexts/SnackContext';
 
 import history from '../../history';
 import api from '../../services/api';
 
 import './index.css';
+import SimpleCard from "../../components/SimpleCard";
 
 export default function CreateEducationalTest() {
+  const { user } = useContext(AuthContext);
   const { setSnack } = useContext(SnackContext);
 
   const [modalQuestion, setModalQuestion] = useState(false);
@@ -30,30 +32,45 @@ export default function CreateEducationalTest() {
     document.title = `SAIA - Criando Avaliação`;
 
     setTimeout(async () => {
-      const response = await api.get(`/questao`)
-      setQuestoes(response.data)
+      const response = await api.get(`/questao/user/${user.idUsuario}`)
+      setQuestoes(response.data.result)
     }, 500)
-
   }, [])
 
-    // Cria Avalicao
-    async function create(values) {
+  // CRIA AVALIAÇÃO
+  async function create(values) {
+    try {
+      let idUsuario = user.idUsuario;
       let questoes = currentQuestoes;
-      
-      try {
-        await api.post(`/avaliacao`, { ...values, questoes });
-        
-        setSnack({ message: "Avaliação criada com sucesso.", type: 'success', open: true });
-        history.push("/manager/educational_test")
-  
-      } catch (err) {
-        setSnack({ message: "Houve um problema durante a criação da avaliação.", type: 'error', open: true });
-      }
+
+      await api.post(`/avaliacao`, { idUsuario, ...values, questoes });
+
+      setSnack({ message: "Avaliação criada com sucesso.", type: 'success', open: true });
+      history.push("/manager/educational_test")
+
+    } catch (err) {
+      setSnack({ message: "Houve um problema durante a criação da avaliação.", type: 'error', open: true });
     }
+  }
+
+  // ADICIONA NOVAS TAGS AO ARRAY "QUESTAOAVALIACAO"
+  function addQuestion(values) {
+    let question = []
+
+    for (let i = 0; i < questaoAvaliacao.length; i++) {
+      question.push(questaoAvaliacao[i])
+    }
+
+    for (let i = 0; i < values.length; i++) {
+      question.push(values[i])
+    }
+
+    setQuestaoAvaliacao(question);
+  }
 
   return (
     <Sidebar>
-      <PageTitle title="Criando Avaliação" />
+      <PageTitle title="Criando Avaliação" backLink="/manager/educational_test" />
 
       <Formik
         initialValues={{
@@ -73,40 +90,56 @@ export default function CreateEducationalTest() {
           <Form>
             <FullCard title="Dados da avaliação">
               <div className="input-block">
-                <FieldInput
+                <TextField
                   name="nome"
-                  values={values.nome}
+                  value={values.nome}
                   onChange={handleChange}
                   label="Nome da avaliação"
                   type="text"
-                  placeholder="Digite o nome da avaliação"
+                  fullWidth
                 />
               </div>
               <div className="input-block">
-                <Textarea
+                <TextField
                   name="descricao"
-                  values={values.descricao}
+                  value={values.descricao}
                   onChange={handleChange}
                   label="Descrição da avaliação"
-                  placeholder="Digite a descrição da avaliação"
+                  fullWidth
+                  multiline
+                  rows={5}
                 />
               </div>
             </FullCard>
 
-            <FullCard title="Questões da avaliação" button={<ButtonTwo name="Adicionar Questão" onClick={() => setModalQuestion(true)} />} >
-              {questaoAvaliacao.map((items, i) =>
-                <div className="questions-list">
-                  <h4>{i} - {items.nome}</h4>
-                  <p>Enunciado: {items.enunciado}</p>
-                  <p>Valor: {items.valor}</p>
-                </div>
+            <FullCard title="Questões da avaliação" button={<ButtonTwo name="Adicionar Questão" onClick={() => setModalQuestion(true)} />} noBody={true} >
+              {questaoAvaliacao.map((items, index) =>
+                <SimpleCard
+                  key={items.idQuestao}
+                  buttons={
+                    <ButtonTwo
+                      onClick={() => {
+                        setQuestaoAvaliacao(currentQuestion =>
+                          currentQuestion.filter(x => x.idQuestao !== items.idQuestao)
+                        );
+                      }}
+                      name="Remover Questão"
+                      color="error"
+                    />
+                  }
+                >
+                  <div className="questions-list">
+                    <h4>{items.nome}</h4>
+                    <p>Enunciado: {items.enunciado}</p>
+                    <p>Valor: {items.valor}</p>
+                  </div>
+                </SimpleCard>
               )}
             </FullCard>
 
             <ButtonOne
               description="Criar"
               color="var(--green)"
-              width="200px"
               type="submit"
             />
 
@@ -128,6 +161,7 @@ export default function CreateEducationalTest() {
               onChange={(val, values) => setCurrentQuestoes(values)}
               getOptionLabel={(option) => option.nome}
               filterSelectedOptions
+              noOptionsText={'Não há questões para mostrar'}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -139,7 +173,7 @@ export default function CreateEducationalTest() {
         </form>
 
         <DialogActions>
-          <ButtonTwo name="Adicionar" onClick={() => {setModalQuestion(false); setQuestaoAvaliacao(currentQuestoes)}} />
+          <ButtonTwo name="Adicionar" onClick={() => { setModalQuestion(false); addQuestion(currentQuestoes) }} />
           <ButtonTwo name="Fechar" onClick={() => setModalQuestion(false)} />
         </DialogActions>
       </DialogBox>

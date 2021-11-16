@@ -106,16 +106,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Sidebar({ ...props }) {
   const theme = useTheme();
-  
-  const { user } = useContext(AuthContext);
-  const { openNav, 
-          openTeacher,
-          openManager, 
-          handleClickNav, 
-          handleClickTeacher,
-          handleClickManager, 
-          loading 
-        } = useContext(NavContext);
+
+  const { user, userType } = useContext(AuthContext);
+  const { openNav,
+    openTeacher,
+    openManager,
+    handleClickNav,
+    handleClickTeacher,
+    handleClickManager
+  } = useContext(NavContext);
 
   const location = useLocation();
 
@@ -140,7 +139,7 @@ export default function Sidebar({ ...props }) {
             <Typography variant="h6" noWrap component="div">
               SAIA
             </Typography>
-            <p>Olá, {user.nome}</p>
+            <p>Olá, {user.nome} [{userType.descricao}]</p>
           </div>
         </Toolbar>
       </AppBar>
@@ -152,6 +151,8 @@ export default function Sidebar({ ...props }) {
         </DrawerHeader>
         <Divider />
         <List component="nav">
+
+
           <ListItem button component={Link} to="/home" selected={location.pathname === '/home'}>
             <ListItemIcon>
               <HomeIcon />
@@ -159,6 +160,7 @@ export default function Sidebar({ ...props }) {
             <ListItemText primary="Home" />
           </ListItem>
 
+          {/* ROTA PERMITIDA PARA ALUNOS */}
           <ListItem button component={Link} to="/educational_test" selected={location.pathname === '/educational_test'}>
             <ListItemIcon>
               <DescriptionIcon />
@@ -166,6 +168,7 @@ export default function Sidebar({ ...props }) {
             <ListItemText primary="Avaliações" />
           </ListItem>
 
+          {/* ROTAS PERMITIDAS PARA TODOS */}
           <ListItem button component={Link} to="/profile" selected={location.pathname === '/profile'}>
             <ListItemIcon>
               <AccountCircleIcon />
@@ -173,8 +176,10 @@ export default function Sidebar({ ...props }) {
             <ListItemText primary="Meu Perfil" />
           </ListItem>
 
+
           <Divider />
 
+          {/* ROTAS PERMITIDAS PARA PROFESSORES E COORDENADOR */}
           <ListItemButton onClick={handleClickTeacher}>
             <ListItemIcon>
               <DashboardIcon />
@@ -210,9 +215,10 @@ export default function Sidebar({ ...props }) {
               </ListItemIcon>
               <ListItemText primary="Análises Gerais" />
             </ListItem>
-          
+
           </Collapse>
 
+          {/* ROTAS PERMITIDAS PARA COORDENADORES */}
           <ListItemButton onClick={handleClickManager}>
             <ListItemIcon>
               <SettingsIcon />
@@ -234,7 +240,7 @@ export default function Sidebar({ ...props }) {
               </ListItemIcon>
               <ListItemText primary="Disciplinas" />
             </ListItem>
-          
+
           </Collapse>
 
         </List>

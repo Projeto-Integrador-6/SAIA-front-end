@@ -50,10 +50,7 @@ export default function CreateEnforcement() {
 
     return (
         <Sidebar>
-            <Link to='/manager/enforcement'>
-                <Icon icon={<KeyboardReturnIcon/>}></Icon>
-            </Link>
-            <PageTitle title="Criando Aplicação" />
+            <PageTitle title="Criando Aplicação" backLink="/manager/enforcement" />
             <form onSubmit={async () => create(values)}>
                 <div className="enforcement-data-div">
                     <FullCard title="Dados da Aplicação">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import CreateIcon from '@mui/icons-material/Create';
@@ -9,11 +9,14 @@ import ListCard from "../../components/ListCard";
 import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
 
+import { AuthContext } from '../../contexts/AuthContext';
+
 import api from '../../services/api';
 
 import './index.css';
 
 export default function Questions() {
+  const { user } = useContext(AuthContext);
 
   const [questoes, setQuestoes] = useState([])
 
@@ -21,7 +24,7 @@ export default function Questions() {
     document.title = `SAIA - Questões`
 
     setTimeout(async () => {
-      const response = await api.get('/questao');
+      const response = await api.get(`/questao/user/${user.idUsuario}`);
       setQuestoes(response.data.result)
     }, 500)
 
@@ -44,7 +47,7 @@ export default function Questions() {
           <ListCard content={items.nome}
             buttons={
               <div className="educational-test-list-buttons">
-                <Link to={`questions/edit/${items.idQuestao}`}>
+                <Link to={`questions/update/${items.idQuestao}`}>
                   <ButtonTwo icon={<CreateIcon />} name="Editar" />
                 </Link>
               </div>

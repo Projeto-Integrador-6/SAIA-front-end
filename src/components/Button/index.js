@@ -13,7 +13,7 @@ function ButtonOne({ ...props }) {
         <>
           <Link to={props.link}>
             <button
-              className={"button-one"}
+              className="button-one"
               style={{ background: props.color }}
             >
               {props.description}

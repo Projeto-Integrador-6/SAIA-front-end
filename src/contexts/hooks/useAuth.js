@@ -7,24 +7,35 @@ import api from '../../services/api';
 
 export default function useAuth() {
   const { setSnack } = useContext(SnackContext);
-
+  
   const [user, setUser] = useState(null);
+  const [userType, setUserType] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Tipos de Usuário
+  function type(value){
+    let types = ['Aluno', 'Professor', 'Coordenador'];
+
+    return types[value];
+  }
 
   useEffect(() => {
     async function loadData() {
-      const user = localStorage.getItem('user');
       const token = localStorage.getItem('token');
+      
+      if (token) {
+        let tokenDecoded = jwtDecode(token);      
+        tokenDecoded.usuario.password = null;
 
-      if (user && token) {
         await new Promise(resolve => setTimeout(resolve, 1000))
 
-        if (jwtDecode(token).exp < Date.now() / 1000) {
+        if (tokenDecoded.exp < Date.now() / 1000) {
           handleLogout();
         }
 
         else {
-          setUser(JSON.parse(user));
+          setUser(tokenDecoded.usuario);
+          setUserType({ id: tokenDecoded.usuario.tipoUsuario, descricao: type(tokenDecoded.usuario.tipoUsuario) });
           api.defaults.headers['Authorization'] = `Bearer ${token}`;
           setLoading(false);
         }
@@ -38,10 +49,12 @@ export default function useAuth() {
   async function handleLogin(values) {
     try {
       const response = await api.post('/login', { ...values });
-      localStorage.setItem('user', JSON.stringify(response.data.usuario));
       localStorage.setItem('token', response.data.token);
       api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`;
+
+      response.data.usuario.password = null;
       setUser(response.data.usuario);
+      setUserType({ id: response.data.usuario.tipoUsuario, descricao: type(response.data.usuario.tipoUsuario) });
     } catch (res) {
       setSnack({ message: res.response.data.error, type: 'error', open: true });
     }
@@ -52,5 +65,5 @@ export default function useAuth() {
     setUser(null);
   }
 
-  return { user, loading, handleLogin, handleLogout };
+  return { user, userType, loading, handleLogin, handleLogout };
 }

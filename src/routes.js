@@ -52,7 +52,7 @@ function NoAuthRoute({...rest}) {
 }
 
 // Rotas permitidas enquanto estiver estiver autenticado.
-function PrivateRoute({ isPrivate, ...rest}) {
+function PrivateRoute({ isPrivate, ...rest }) {
   const { loading, user } = useContext(AuthContext);
 
   if (loading) {
@@ -80,12 +80,12 @@ export default function Routes() {
 
         {/* Painel Educador - Avaliações */}
         <PrivateRoute isPrivate path="/manager/educational_test/results" component={Results} />
-        <PrivateRoute isPrivate path="/manager/educational_test/edit" component={EditEducationalTest} />
+        <PrivateRoute isPrivate path="/manager/educational_test/update/:id" component={EditEducationalTest} />
         <PrivateRoute isPrivate path="/manager/educational_test/create" component={CreateEducationalTest} />
         <PrivateRoute isPrivate path="/manager/educational_test" component={EducationalTestManager} />
 
         {/* Painel Educador - Questões */}
-        <PrivateRoute isPrivate path="/manager/questions/edit/:id" component={EditQuestions} />
+        <PrivateRoute isPrivate path="/manager/questions/update/:id" component={EditQuestions} />
         <PrivateRoute isPrivate path="/manager/questions/create" component={CreateQuestions} />
         <PrivateRoute isPrivate path="/manager/questions" component={Questions} />
 
