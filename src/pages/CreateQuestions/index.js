@@ -10,6 +10,7 @@ import Sidebar from "../../components/Sidebar";
 import { ButtonOne, ButtonTwo } from "../../components/Button";
 import DialogBox from "../../components/DialogBox";
 
+import { AuthContext } from '../../contexts/AuthContext';
 import { SnackContext } from '../../contexts/SnackContext';
 
 import history from '../../history';
@@ -20,6 +21,7 @@ import 'draft-js/dist/Draft.css';
 
 
 export default function CreateQuestions() {
+  const { user } = useContext(AuthContext);
   const { setSnack } = useContext(SnackContext);
 
   const [alternativas, setAlternativas] = useState([{}]);
@@ -53,9 +55,10 @@ export default function CreateQuestions() {
   async function create(values) {
     try {
       let tags = tagQuestao;
+      let idUsuario = user.idUsuario;
 
       if (values.idTipoQuestao === '1') {
-        await api.post(`/questao`, { ...values, tags });
+        await api.post(`/questao`, { idUsuario, ...values, tags });
       }
 
       if (values.idTipoQuestao === '2') {
@@ -71,7 +74,7 @@ export default function CreateQuestions() {
     }
   }
 
-  // Cria Tag
+  // CRIA TAG
   async function createTag(values) {
     try {
       await api.post(`/tag`, { ...values });
@@ -99,7 +102,7 @@ export default function CreateQuestions() {
 
   return (
     <Sidebar>
-      <PageTitle title="Criando Questão" />
+      <PageTitle title="Criando Questão" backLink="/manager/questions" />
       <Formik
         initialValues={{
           nome: '',
@@ -293,6 +296,7 @@ export default function CreateQuestions() {
               getOptionSelected={(option, value) => option.idTag === value.idTag}
               getOptionLabel={(option) => option.descricao}
               filterSelectedOptions
+              noOptionsText={'Não há tags para mostrar'}
               renderInput={(params) => (
                 <TextField
                   {...params}

@@ -140,13 +140,12 @@ export default function EditQuestions() {
         <LoadingProgress />
         :
         <>
-          <PageTitle title="Editando Questão" />
+          <PageTitle title="Editando Questão"  backLink="/manager/questions" />
           <Formik
             enableReinitialize
             initialValues={questao}
             onSubmit={async (values) => {
               edit(values);
-
             }}
           >
             {({ values, handleChange }) => (
@@ -185,11 +184,11 @@ export default function EditQuestions() {
                     />
                   </div>
                   <div className="input-block">
-                    <div className="editor-label">
-                      <div className="editor-label-label">
+                    <div className="editor-buttons">
+                      <div className="editor-buttons-label">
                         <p>Tags</p>
                       </div>
-                      <div className="editor-label-button">
+                      <div className="editor-buttons-button">
                         <ButtonTwo
                           name="Adicionar Tag"
                           onClick={(e) => setModalTagList(true)}

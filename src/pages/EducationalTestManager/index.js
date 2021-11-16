@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import CreateIcon from '@mui/icons-material/Create';
 import AddIcon from '@mui/icons-material/Add';
@@ -9,23 +9,26 @@ import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
 import { ButtonTwo } from "../../components/Button";
 
+import { AuthContext } from '../../contexts/AuthContext';
+
 import api from '../../services/api';
 
 import './index.css';
 
 export default function EducationalTestManager() {
+  const { user } = useContext(AuthContext);
 
-  const [avalicao, setAvalicao] = useState([]);
+  const [avaliacao, setAvaliacao] = useState([]);
 
   useEffect(() => {
     document.title = `SAIA - Avaliações`;
 
     setTimeout(async () => {
-      const response = await api.get(`/avaliacao`);
-      setAvalicao(response.data);
+      const response = await api.get(`/avaliacao/user/${user.idUsuario}`);
+      setAvaliacao(response.data.result);
     }, 500)
 
-  })
+  }, [])
 
   return (
     <Sidebar>
@@ -40,12 +43,14 @@ export default function EducationalTestManager() {
       </div>
 
       <div className="educational-test-list">
-        {avalicao.map((items =>
-          <ListCard content={items.nome}
+        {avaliacao.map((items =>
+          <ListCard 
+            key={items.idAvaliacao}
+            content={items.nome}
             buttons={
               <div className="educational-test-list-buttons">
                 <ButtonTwo icon={<RemoveRedEyeIcon />} name="Visualizar" />
-                <Link to="educational_test/edit">
+                <Link to={`educational_test/update/${items.idAvaliacao}`}>
                   <ButtonTwo icon={<CreateIcon />} name="Editar" />
                 </Link>
               </div>

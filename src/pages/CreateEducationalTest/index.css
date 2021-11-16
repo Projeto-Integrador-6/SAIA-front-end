@@ -4,7 +4,11 @@
 }
 
 .questions-list {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
   line-height: 30px;
+}
+
+.questions-list h4 {
+  text-transform: uppercase;
 }

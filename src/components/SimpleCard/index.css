@@ -1,8 +1,9 @@
-.list-card {
+.simple-card {
   width: 100%;
   height: auto;
   max-height: 180px;
-  padding: 35px;
+
+  padding: 20px;
 
   background: var(--white);
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
@@ -11,25 +12,24 @@
   margin-bottom: 20px;
 }
 
-.list-card .list-info h4 {
-  font-weight: 400;
-}
-
-.list-info a, .list-btn a {
-  text-decoration: none !important;
-}
-
-.list-card .list-btn .educational-test-list-buttons {
+.simple-card-items {
+  width: 100%;
   display: flex;
-  column-gap: 20px;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 @media screen and (min-width: 770px){
-  .list-card {
+  .simple-card {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center !important;
-    height: 40px !important;
+    height: auto;
+  }
+
+  .simple-card-items {
+    flex-direction: row !important;
+    align-items: center !important;
   }
 }

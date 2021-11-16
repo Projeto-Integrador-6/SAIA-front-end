@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { Space, Table } from 'antd';
+import { DataGrid, ptBR } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 
 import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
 import { ButtonTwo } from "../../components/Button";
+import DataGridContainer from "../../components/DataGridContainer";
 
 import './index.css';
 
@@ -18,44 +19,33 @@ export default function EducationalTest() {
     {
       title: 'Avaliação',
       dataIndex: 'avaliacao',
-      key: 'avaliacao'
+      id: 'avaliacao'
     },
     {
       title: 'Disciplina',
       dataIndex: 'disciplina',
-      key: 'disciplina'
+      id: 'disciplina'
     },
     {
       title: 'Início',
       dataIndex: 'inicio',
-      key: 'inicio'
+      id: 'inicio'
     },
     {
       title: 'Fim',
       dataIndex: 'fim',
-      key: 'fim'
+      id: 'fim'
     },
     {
       title: 'Valor',
       dataIndex: 'valor',
-      key: 'valor'
-    },
-    {
-      title: 'Ação',
-      key: 'acao',
-      render: () => (
-        <Space size="middle">
-          <Link to="/educational_test/test" style={{ textDecoration: 'none'}}>
-            <ButtonTwo name="Acessar" />
-          </Link>
-        </Space>
-      ),
-    },
+      id: 'valor'
+    }
   ];
 
   const rows = [
     {
-      key: '1',
+      id: '1',
       avaliacao: 'Avaliação de Algoritmos',
       disciplina: 'Algoritmos',
       inicio: '31/10/2021 09:00',
@@ -63,7 +53,7 @@ export default function EducationalTest() {
       valor: '10 pontos'
     },
     {
-      key: '2',
+      id: '2',
       avaliacao: 'Avaliação de Algoritmos',
       disciplina: 'Algoritmos',
       inicio: '31/10/2021 09:00',
@@ -71,7 +61,7 @@ export default function EducationalTest() {
       valor: '10 pontos'
     },
     {
-      key: '3',
+      id: '3',
       avaliacao: 'Avaliação de Algoritmos',
       disciplina: 'Algoritmos',
       inicio: '31/10/2021 09:00',
@@ -79,7 +69,7 @@ export default function EducationalTest() {
       valor: '10 pontos'
     },
     {
-      key: '4',
+      id: '4',
       avaliacao: 'Avaliação de Algoritmos',
       disciplina: 'Algoritmos',
       inicio: '31/10/2021 09:00',
@@ -87,7 +77,7 @@ export default function EducationalTest() {
       valor: '10 pontos'
     },
     {
-      key: '5',
+      id: '5',
       avaliacao: 'Avaliação de Algoritmos',
       disciplina: 'Algoritmos',
       inicio: '31/10/2021 09:00',
@@ -95,7 +85,7 @@ export default function EducationalTest() {
       valor: '10 pontos'
     },
     {
-      key: '6',
+      id: '6',
       avaliacao: 'Avaliação de Algoritmos',
       disciplina: 'Algoritmos',
       inicio: '31/10/2021 09:00',
@@ -108,12 +98,19 @@ export default function EducationalTest() {
     <Sidebar>
       <PageTitle title="Avaliações" />
 
-      <div className="educational-test-student-list">
-        <Table
-          dataSource={rows}
-          columns={columns}
-        />
-      </div>
+        <DataGridContainer>
+          <DataGrid
+            autoHeight={true}
+            rows={rows}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
+            hideFooterSelectedRowCount={true}
+            selectionModel={false}
+          />
+        </DataGridContainer>
+
     </Sidebar>
   )
 }

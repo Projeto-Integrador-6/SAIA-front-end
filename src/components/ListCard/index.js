@@ -4,7 +4,7 @@ import './index.css';
 
 export default function ListCard({ ...props }) {
   return (
-    <div className="list-card">
+    <div key={props.key} className="list-card">
       <div className="list-info">
         <h4>{props.content}</h4>
       </div>

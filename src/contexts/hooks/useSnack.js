@@ -6,7 +6,7 @@ import MuiAlert from '@mui/material/Alert';
 export default function useSnack() {
   const [snack, setSnack] = useState({
     message: '',
-    type: '',
+    type: 'success',
     open: false,
   });
 

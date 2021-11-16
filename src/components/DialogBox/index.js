@@ -14,7 +14,6 @@ export default function DialogBox({ title, children, footer, ...props }) {
   return (
     <Dialog
       {...props}
-      disableBackdropClick
       fullWidth
       TransitionComponent={Transition}
       maxWidth="sm"
