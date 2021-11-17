@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
@@ -11,18 +11,20 @@ import Sidebar from '../../components/Sidebar';
 import ListCard from '../../components/ListCard';
 import { ButtonTwo } from '../../components/Button';
 
+import { AuthContext } from '../../contexts/AuthContext';
 import api from "../../services/api"
 
 export default function Enforcement() {
 
+    const { user } = useContext(AuthContext);
     const [enforcements, setEnforcements] = useState([])
 
     useEffect(() => {
         document.title = `SAIA - Aplicações`
 
         setTimeout(async () => {
-            const response = await api.get(`/aplicacao`)
-            setEnforcements(response.data)
+            const response = await api.get(`/aplicacao/user/${user.idUsuario}`)
+            setEnforcements(response.data.result)
         }, 0)
     }, [])
 

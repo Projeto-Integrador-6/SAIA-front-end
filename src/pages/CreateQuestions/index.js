@@ -62,8 +62,8 @@ export default function CreateQuestions() {
       }
 
       if (values.idTipoQuestao === '2') {
-        console.log(alternativas)
-        await api.post(`/questao`, { ...values, alternativas, tags });
+        
+        await api.post(`/questao`, {idUsuario, ...values, alternativas, tags });
       }
 
       setSnack({ message: "Questão criada com sucesso.", type: 'success', open: true });

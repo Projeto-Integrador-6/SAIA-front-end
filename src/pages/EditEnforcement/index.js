@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { FormControl, MenuItem, TextField, Select, InputLabel } from '@mui/material';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import { Formik, Form } from 'formik';
 
 import LoadingProgress from "../../components/LoadingProgress";
 
@@ -11,28 +12,22 @@ import Sidebar from '../../components/Sidebar';
 import FullCard from '../../components/FullCard';
 import { ButtonOne, Icon } from '../../components/Button';
 
+import { AuthContext } from '../../contexts/AuthContext';
+import { SnackContext } from '../../contexts/SnackContext';
+
+import history from '../../history';
 import api from '../../services/api'
 
 export default function EditEnforcement() {
 
-    let { id } = useParams();
+    const { user } = useContext(AuthContext);
+    const { setSnack } = useContext(SnackContext);
 
-    const [values, setValues] = useState({
-        "dataInicio": new Date(),
-        "dataFim": new Date(),
-        "nome": "Aplicação de Teste 02"
-    })
+    let { id } = useParams();
 
     const [educationalTests, setEducationalTests] = useState([])
     const [enforcement, setEnforcement] = useState({})
     const [loading, setLoading] = useState(true);
-
-    function handleChange(name, value) {
-        setValues((prevState) => ({
-            ...prevState,
-            [name]: value
-        }))
-    };
 
     useEffect(() => {
         document.title = `SAIA - Criando Aplicação`
@@ -41,16 +36,22 @@ export default function EditEnforcement() {
             const enforcementResponse = await api.get(`/aplicacao/${id}`)
             setEnforcement(enforcementResponse.data)
 
-            const educationalTestResponse = await api.get(`/avaliacao`)
-            setEducationalTests(educationalTestResponse.data)
+            const educationalTestResponse = await api.get(`/avaliacao/user/${user.idUsuario}`)
+            setEducationalTests(educationalTestResponse.data.result)
 
             setLoading(false);
         }, 500)
     }, [])
 
     async function edit(values) {
+        try {
+            await api.put(`/aplicacao/${enforcement.idAplicacao}`, { ...values })
+            setSnack({ message: "Aplicação atualizada com sucesso.", type: 'success', open: true });
+            history.push("/manager/enforcement")
 
-        await api.put(`/aplicacao`, { ...values })
+        } catch (err) {
+            setSnack({ message: err.response.data.error, type: 'error', open: true });
+        }
     }
 
     return (
@@ -63,39 +64,63 @@ export default function EditEnforcement() {
                         <Icon icon={<KeyboardReturnIcon />}></Icon>
                     </Link>
                     <PageTitle title="Editando Aplicação" />
-                    <form onSubmit={async () => edit(values)}>
-                        <div className="enforcement-data-div">
-                            <FullCard title="Dados da Aplicação">
-                                <FormControl required sx={{ m: 1, minWidth: 120 }}>
-                                    <InputLabel id="educational-test-label">Avaliação</InputLabel>
-                                    <Select className="enforcement-select" label="Avaliação" labelId="educational-test-label">
-                                        {educationalTests.map((option) => (
-                                            <MenuItem key={option.idAvaliacao} value={option.nome} onClick={() => handleChange("idAvaliacao", option.idAvaliacao)}>
-                                                {option.nome}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                                <FormControl required sx={{ m: 1, minWidth: 120 }}>
-                                    <TextField
-                                        id="enforcement-value"
-                                        className="enforcement-select"
-                                        type="number"
-                                        label="Valor"
-                                        variant="outlined"
-                                        defaultValue={enforcement.valor}
-                                    />
-                                </FormControl>
-                            </FullCard>
-                        </div>
-                        <ButtonOne
-                            description="Criar"
-                            color="var(--green)"
-                            width="200px"
-                            type="submit"
-                            onClick={() => handleChange("valor", document.querySelector("#enforcement-value").value)}
-                        />
-                    </form>
+                    <Formik
+                        initialValues={{
+                            dataInicio: enforcement.dataInicio,
+                            dataFim: enforcement.dataFim,
+                            nome: enforcement.nome,
+                            valor: enforcement.valor,
+                            idAvaliacao: enforcement.idAvaliacao
+                        }}
+                        onSubmit={async (values) => {
+                            edit(values);
+                        }}
+                    >
+                        {({ values, handleChange }) => (
+                            <Form >
+                                <div className="enforcement-data-div">
+                                    <FullCard title="Dados da Aplicação">
+                                        <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                                            <InputLabel id="educational-test-label">Avaliação</InputLabel>
+                                            <Select
+                                                className="enforcement-select"
+                                                label="Avaliação"
+                                                labelId="educational-test-label"
+                                                name="idAvaliacao"
+                                                onChange={handleChange}
+                                                value={values.idAvaliacao}
+                                                disabled
+                                            >
+                                                {educationalTests.map((option) => (
+                                                    <MenuItem key={option.idAvaliacao} value={option.idAvaliacao}>
+                                                        {option.nome}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
+                                        <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                                            <TextField
+                                                id="enforcement-value"
+                                                className="enforcement-select"
+                                                type="number"
+                                                label="Valor"
+                                                variant="outlined"
+                                                name="valor"
+                                                onChange={handleChange}
+                                                value={values.valor}
+                                            />
+                                        </FormControl>
+                                    </FullCard>
+                                </div>
+                                <ButtonOne
+                                    description="Criar"
+                                    color="var(--green)"
+                                    width="200px"
+                                    type="submit"
+                                />
+                            </Form>
+                        )}
+                    </Formik>
                 </>
             }
         </Sidebar>
