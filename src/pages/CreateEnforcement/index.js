@@ -92,15 +92,17 @@ export default function CreateEnforcement() {
                                         onChange={handleChange}
                                     />
                                 </FormControl>
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                    <DatePicker
-                                        label="Data"
-                                        name="dataInicio"
-                                        value={values.dataInicio}
-                                        onChange={value => setFieldValue("dataInicio", value) }
-                                        renderInput={(params) => <TextField {...params} />}
-                                    />
-                                </LocalizationProvider>
+                                <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                        <DatePicker
+                                            label="Data"
+                                            name="dataInicio"
+                                            value={values.dataInicio}
+                                            onChange={value => setFieldValue("dataInicio", value)}
+                                            renderInput={(params) => <TextField {...params} />}
+                                        />
+                                    </LocalizationProvider>
+                                </FormControl>
                             </FullCard>
                         </div>
                         <ButtonOne

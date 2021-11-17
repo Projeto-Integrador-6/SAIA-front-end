@@ -34,7 +34,7 @@ export default function EditEnforcement() {
 
         setTimeout(async () => {
             const enforcementResponse = await api.get(`/aplicacao/${id}`)
-            setEnforcement(enforcementResponse.data)
+            setEnforcement(enforcementResponse.data.aplicacao)
 
             const educationalTestResponse = await api.get(`/avaliacao/user/${user.idUsuario}`)
             setEducationalTests(educationalTestResponse.data.result)
@@ -77,7 +77,7 @@ export default function EditEnforcement() {
                         }}
                     >
                         {({ values, handleChange }) => (
-                            <Form >
+                            <Form>
                                 <div className="enforcement-data-div">
                                     <FullCard title="Dados da Aplicação">
                                         <FormControl required sx={{ m: 1, minWidth: 120 }}>
