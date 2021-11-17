@@ -4,6 +4,21 @@ import { Button, IconButton } from "@mui/material";
 
 import './index.css';
 
+function ButtonLogin({ ...props }) {
+
+  return (
+    <>
+      <button
+        className="button-login"
+        style={{ background: props.color }}
+        {...props}
+      >
+        {props.description}
+      </button> 
+    </>
+  )
+}
+
 function ButtonOne({ ...props }) {
 
   return (
@@ -61,4 +76,4 @@ function Icon({...props}){
   )
 }
 
-export { ButtonOne, ButtonTwo, Icon }
+export { ButtonLogin, ButtonOne, ButtonTwo, Icon }

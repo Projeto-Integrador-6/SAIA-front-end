@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { DataGrid, ptBR } from '@mui/x-data-grid';
+import { GridOverlay, DataGrid, ptBR } from '@mui/x-data-grid';
+import LinearProgress from '@mui/material/LinearProgress';
 import { Link } from "react-router-dom";
 
 import CreateIcon from '@mui/icons-material/Create';
 import AddIcon from '@mui/icons-material/Add';
 
+import LoadingProgress from "../../components/LoadingProgress";
 import Sidebar from "../../components/Sidebar";
 import PageTitle from "../../components/PageTitle";
 import ListCard from "../../components/ListCard";
@@ -19,15 +21,26 @@ export default function Users() {
 
   const [usuarios, setUsuarios] = useState([])
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     document.title = `SAIA - Usuários`
 
     setTimeout(async () => {
       const response = await api.get(`/usuario`)
-      setUsuarios(response.data);
+      setUsuarios(response.data.result);
+
+      setLoading(false);
     }, 500)
 
   }, [])
+
+    // TIPOS DE USUÁRIO
+    function type(value){
+      let types = ['Aluno', 'Professor', 'Coordenador'];
+  
+      return types[value];
+    }
 
   const columns = [
     {
@@ -43,10 +56,15 @@ export default function Users() {
       flex: 1
     },
     {
-      field: 'categoria',
+      field: 'tipoUsuario',
       headerName: 'Categoria',
       minWidth: 150,
-      flex: 1
+      flex: 1,
+      renderCell: (category) => {
+        return (
+          type(category.row.tipoUsuario)
+        )
+      }
     },
     {
       field: 'acoes',
@@ -55,7 +73,7 @@ export default function Users() {
       renderCell: (user) => {
         return (
           <>
-            <Link to="">
+            <Link to={`users/update/${user.row.idUsuario}`}>
               <Icon icon={<CreateIcon />} />
             </Link>
           </>
@@ -63,6 +81,16 @@ export default function Users() {
       }
     }
   ];
+
+  function CustomLoadingOverlay() {
+    return (
+      <GridOverlay>
+        <div style={{ position: 'absolute', top: 0, width: '100%' }}>
+          <LinearProgress />
+        </div>
+      </GridOverlay>
+    );
+  }
 
   return (
     <Sidebar>
@@ -85,7 +113,7 @@ export default function Users() {
           localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
           hideFooterSelectedRowCount={true}
           selectionModel={false}
-
+          loading={loading}
         />
       </DataGridContainer>
     </Sidebar>

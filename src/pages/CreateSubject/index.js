@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import { Textarea } from "../../components/Input";
+import { TextField } from "@mui/material";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 
 import PageTitle from '../../components/PageTitle';
@@ -14,18 +13,18 @@ import api from '../../services/api'
 export default function CreateSubject() {
 
     const [values, setValues] = useState({
-        "dataInicio" : new Date(),
-	    "dataFim": new Date(),
-        "nome" : "Aplicação de Teste 02"
+        "dataInicio": new Date(),
+        "dataFim": new Date(),
+        "nome": "Aplicação de Teste 02"
     })
 
-    function handleChange(name,value){
+    function handleChange(name, value) {
         setValues((prevState) => ({
             ...prevState,
-            [name] : value
+            [name]: value
         }))
     };
-    
+
     // const [subjects, setSubjects] = useState([])
 
     const [educationalTests, setEducationalTests] = useState([])
@@ -34,32 +33,34 @@ export default function CreateSubject() {
         document.title = `SAIA - Criando Disciplina`
 
         setTimeout(async () => {
-            
+
         }, 500)
     }, [])
 
     async function create(values) {
 
-        await api.post(`/disciplina`, {...values})
+        await api.post(`/disciplina`, { ...values })
     }
 
     return (
         <Sidebar>
-            <Link to='/manager/subjects'>
-                <Icon icon={<KeyboardReturnIcon/>}></Icon>
-            </Link>
-            <PageTitle title="Criando Disciplina" />
+            <PageTitle title="Criando Disciplina" backLink="manager/subjects" />
             <form onSubmit={async () => create(values)}>
                 <div className="enforcement-data-div">
                     <FullCard title="Dados da Disciplina">
-                        <Textarea
-                        label="Nome"
-                        name="nome"
-                        values={values.nome}
-                        onChange={handleChange}
-                        type="text"
-                        placeholder="Digite o nome da disciplina">
-                        </Textarea>
+                        <div className="input-block">
+                            <TextField
+                                label="Nome"
+                                name="nome"
+                                value={values.nome}
+                                onChange={handleChange}
+                                type="text"
+                                placeholder="Digite o nome da disciplina"
+                                fullWidth
+                                multiline
+                                rows={2}
+                            />
+                        </div>
                     </FullCard>
                 </div>
                 <ButtonOne
