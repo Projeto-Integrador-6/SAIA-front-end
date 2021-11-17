@@ -50,7 +50,7 @@ export default function EditUsers() {
         <LoadingProgress />
         :
         <>
-          <PageTitle title="Criando Usuário" />
+          <PageTitle title="Editando Usuário" />
 
           <Formik
             enableReinitialize

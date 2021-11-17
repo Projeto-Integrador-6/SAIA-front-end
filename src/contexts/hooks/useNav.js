@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function useNav() {
-  const [openNav, setOpenNav] = useState(false);
+  const [openNav, setOpenNav] = useState(true);
   const [openTeacher, setOpenTeacher] = useState(false);
   const [openManager, setOpenManager] = useState(false);
   const [loading, setLoading] = useState(true);
