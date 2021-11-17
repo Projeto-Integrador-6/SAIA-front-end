@@ -67,7 +67,7 @@ export default function CreateEnforcement() {
                     create(values);
                 }}
             >
-                {({ values, handleChange }) => (
+                {({ values, handleChange, setFieldValue }) => (
                     <Form >
                         <div className="enforcement-data-div">
                             <FullCard title="Dados da Aplicação">
@@ -97,7 +97,7 @@ export default function CreateEnforcement() {
                                         label="Data"
                                         name="dataInicio"
                                         value={values.dataInicio}
-                                        onChange={handleChange}
+                                        onChange={value => setFieldValue("dataInicio", value) }
                                         renderInput={(params) => <TextField {...params} />}
                                     />
                                 </LocalizationProvider>
@@ -106,7 +106,6 @@ export default function CreateEnforcement() {
                         <ButtonOne
                             description="Criar"
                             color="var(--green)"
-                            width="200px"
                             type="submit"
                         />
                     </Form>
