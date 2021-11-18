@@ -26,6 +26,7 @@ export default function CreateEnforcement() {
     const { setSnack } = useContext(SnackContext);
 
     const [educationalTests, setEducationalTests] = useState([])
+    const [subjects, setSubjects] = useState([])
 
     useEffect(() => {
         document.title = `SAIA - Criando Aplicação`
@@ -34,6 +35,9 @@ export default function CreateEnforcement() {
 
             const educationalTestResponse = await api.get(`/avaliacao/user/${user.idUsuario}`)
             setEducationalTests(educationalTestResponse.data.result)
+
+            const subjectsResponse = await api.get(`/disciplina`)
+            setSubjects(subjectsResponse.data)
 
         }, 500)
     }, [])
@@ -64,7 +68,8 @@ export default function CreateEnforcement() {
                     dataInicio: new Date(),
                     dataFim: new Date(),
                     nome: '',
-                    idAvaliacao: ''
+                    idAvaliacao: '',
+                    idDisciplina: ''
                 }}
                 onSubmit={async (values) => {
                     create(values);
@@ -85,6 +90,21 @@ export default function CreateEnforcement() {
                                         >
                                             {educationalTests.map((option) => (
                                                 <MenuItem key={option.idAvaliacao} value={option.idAvaliacao}>
+                                                    {option.nome}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+                                    </div>
+                                    <div className="display-block">
+                                        <TextField
+                                            className="subject-select"
+                                            label="Disciplina"
+                                            name="idDisciplina"
+                                            onChange={handleChange}
+                                            select
+                                        >
+                                            {subjects.map((option) => (
+                                                <MenuItem key={option.idDisciplina} value={option.idDisciplina}>
                                                     {option.nome}
                                                 </MenuItem>
                                             ))}

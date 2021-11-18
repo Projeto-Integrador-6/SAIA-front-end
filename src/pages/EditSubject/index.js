@@ -38,7 +38,7 @@ export default function CreateSubject() {
     async function edit(values) {
 
         try {
-            await api.put(`/disciplina${subject.idDisciplina}`, { ...values })
+            await api.put(`/disciplina/${subject.idDisciplina}`, { ...values })
             setSnack({ message: "Disciplina atualizada com sucesso.", type: 'success', open: true });
             history.push("/manager/subjects")
         } catch (err) {
