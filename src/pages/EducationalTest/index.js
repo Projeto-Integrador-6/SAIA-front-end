@@ -1,96 +1,81 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataGrid, ptBR } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 import PageTitle from "../../components/PageTitle";
 import Sidebar from "../../components/Sidebar";
-import { ButtonTwo } from "../../components/Button";
+import { Icon } from "../../components/Button";
 import DataGridContainer from "../../components/DataGridContainer";
+
+import { AuthContext } from '../../contexts/AuthContext';
+
+import api from '../../services/api';
 
 import './index.css';
 
 export default function EducationalTest() {
+  const { user } = useContext(AuthContext);
+
+  const [aplicacao, setAplicacao] = useState([])
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title = `SAIA - Avaliações`
-  })
+
+    setTimeout(async () => {
+      const response = await api.get(`/aplicacao/disciplina/${user.idUsuario}`)
+      setAplicacao(response.data.result);
+
+      setLoading(false);
+    }, 500)
+
+  }, [])
 
   const columns = [
     {
-      title: 'Avaliação',
-      dataIndex: 'avaliacao',
-      id: 'avaliacao'
-    },
-    {
-      title: 'Disciplina',
-      dataIndex: 'disciplina',
-      id: 'disciplina'
-    },
-    {
-      title: 'Início',
-      dataIndex: 'inicio',
-      id: 'inicio'
-    },
-    {
-      title: 'Fim',
-      dataIndex: 'fim',
-      id: 'fim'
-    },
-    {
-      title: 'Valor',
-      dataIndex: 'valor',
-      id: 'valor'
-    }
-  ];
+      field: 'nome',
+      headerName: 'Avaliação',
+      width: 350
 
-  const rows = [
-    {
-      id: '1',
-      avaliacao: 'Avaliação de Algoritmos',
-      disciplina: 'Algoritmos',
-      inicio: '31/10/2021 09:00',
-      fim: '31/10/2021 09:00',
-      valor: '10 pontos'
     },
     {
-      id: '2',
-      avaliacao: 'Avaliação de Algoritmos',
-      disciplina: 'Algoritmos',
-      inicio: '31/10/2021 09:00',
-      fim: '31/10/2021 09:00',
-      valor: '10 pontos'
+      field: 'disciplina',
+      headerName: 'Disciplina',
+      minWidth: 150,
+      flex: 1
     },
     {
-      id: '3',
-      avaliacao: 'Avaliação de Algoritmos',
-      disciplina: 'Algoritmos',
-      inicio: '31/10/2021 09:00',
-      fim: '31/10/2021 09:00',
-      valor: '10 pontos'
+      field: 'dataInicio',
+      headerName: 'Início',
+      minWidth: 150,
+      flex: 1
     },
     {
-      id: '4',
-      avaliacao: 'Avaliação de Algoritmos',
-      disciplina: 'Algoritmos',
-      inicio: '31/10/2021 09:00',
-      fim: '31/10/2021 09:00',
-      valor: '10 pontos'
+      field: 'dataFim',
+      headerName: 'Fim',
+      minWidth: 150,
+      flex: 1
     },
     {
-      id: '5',
-      avaliacao: 'Avaliação de Algoritmos',
-      disciplina: 'Algoritmos',
-      inicio: '31/10/2021 09:00',
-      fim: '31/10/2021 09:00',
-      valor: '10 pontos'
+      field: 'valor',
+      headerName: 'Valor',
+      minWidth: 150,
+      flex: 1
     },
     {
-      id: '6',
-      avaliacao: 'Avaliação de Algoritmos',
-      disciplina: 'Algoritmos',
-      inicio: '31/10/2021 09:00',
-      fim: '31/10/2021 09:00',
-      valor: '10 pontos'
+      field: 'acoes',
+      headerName: 'Ações',
+      minWidth: 150,
+      renderCell: (user) => {
+        return (
+          <>
+            <Link to={`educational_test/open_test/${user.row.idAplicacao}`}>
+              <Icon icon={<PlayArrowIcon />} />
+            </Link>
+          </>
+        )
+      }
     }
   ];
 
@@ -98,18 +83,20 @@ export default function EducationalTest() {
     <Sidebar>
       <PageTitle title="Avaliações" />
 
-        <DataGridContainer>
-          <DataGrid
-            autoHeight={true}
-            rows={rows}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
-            hideFooterSelectedRowCount={true}
-            selectionModel={false}
-          />
-        </DataGridContainer>
+      <DataGridContainer>
+        <DataGrid
+          getRowId={(r) => r.idAplicacao}
+          autoHeight={true}
+          rows={aplicacao}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
+          hideFooterSelectedRowCount={true}
+          selectionModel={false}
+          loading={loading}
+        />
+      </DataGridContainer>
 
     </Sidebar>
   )
