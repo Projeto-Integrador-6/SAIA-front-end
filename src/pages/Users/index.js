@@ -19,7 +19,7 @@ import './index.css';
 
 export default function Users() {
 
-  const [usuarios, setUsuarios] = useState([])
+  const [usuarios, setUsuarios] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
@@ -81,16 +81,6 @@ export default function Users() {
       }
     }
   ];
-
-  function CustomLoadingOverlay() {
-    return (
-      <GridOverlay>
-        <div style={{ position: 'absolute', top: 0, width: '100%' }}>
-          <LinearProgress />
-        </div>
-      </GridOverlay>
-    );
-  }
 
   return (
     <Sidebar>

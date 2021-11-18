@@ -77,7 +77,7 @@ export default function Routes() {
         <PrivateRoute isPrivate path="/profile" component={UserProfile} />
 
         {/* Avaliação (Alunos) */}
-        <PrivateRoute isPrivate path="/educational_test/test" component={EducationalTestInProgress} />
+        <PrivateRoute isPrivate path="/educational_test/open_test/:id" component={EducationalTestInProgress} />
         <PrivateRoute isPrivate path="/educational_test" component={EducationalTest} />
 
         {/* Painel Educador - Avaliações */}
