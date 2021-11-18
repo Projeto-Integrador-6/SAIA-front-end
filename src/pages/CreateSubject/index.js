@@ -1,33 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+
 import { TextField } from "@mui/material";
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import { Formik, Form } from 'formik';
 
 import PageTitle from '../../components/PageTitle';
 import Sidebar from '../../components/Sidebar';
 import FullCard from '../../components/FullCard';
-import { ButtonOne, Icon } from '../../components/Button';
+import { ButtonOne } from '../../components/Button';
 
+import { SnackContext } from '../../contexts/SnackContext';
+
+import history from '../../history';
 import api from '../../services/api'
 
 export default function CreateSubject() {
 
-    const [values, setValues] = useState({
-        "dataInicio": new Date(),
-        "dataFim": new Date(),
-        "nome": "Aplicação de Teste 02"
-    })
-
-    function handleChange(name, value) {
-        setValues((prevState) => ({
-            ...prevState,
-            [name]: value
-        }))
-    };
-
-    // const [subjects, setSubjects] = useState([])
-
-    const [educationalTests, setEducationalTests] = useState([])
+    const { setSnack } = useContext(SnackContext);
 
     useEffect(() => {
         document.title = `SAIA - Criando Disciplina`
@@ -39,37 +27,52 @@ export default function CreateSubject() {
 
     async function create(values) {
 
+        try {
         await api.post(`/disciplina`, { ...values })
+        setSnack({ message: "Disciplina criada com sucesso.", type: 'success', open: true });
+            history.push("/manager/subjects")
+        } catch (err) {
+            setSnack({ message: err.response.data.message, type: 'error', open: true })
+        }
     }
 
     return (
         <Sidebar>
             <PageTitle title="Criando Disciplina" backLink="manager/subjects" />
-            <form onSubmit={async () => create(values)}>
-                <div className="enforcement-data-div">
-                    <FullCard title="Dados da Disciplina">
-                        <div className="input-block">
-                            <TextField
-                                label="Nome"
-                                name="nome"
-                                value={values.nome}
-                                onChange={handleChange}
-                                type="text"
-                                placeholder="Digite o nome da disciplina"
-                                fullWidth
-                                multiline
-                                rows={2}
-                            />
+            <Formik
+                initialValues={{
+                    nome: '',
+                }}
+                onSubmit={async (values) => {
+                    create(values);
+                }}
+            >
+                {({ values, handleChange}) => (
+                    <Form >
+                        <div className="enforcement-data-div">
+                            <FullCard title="Dados da Disciplina">
+                                <div className="input-block">
+                                    <TextField
+                                        label="Disciplina"
+                                        name="nome"
+                                        value={values.nome}
+                                        onChange={handleChange}
+                                        type="text"
+                                        placeholder="Digite o nome da disciplina"
+                                        fullWidth
+                                    />
+                                </div>
+                            </FullCard>
                         </div>
-                    </FullCard>
-                </div>
-                <ButtonOne
-                    description="Criar"
-                    color="var(--green)"
-                    width="200px"
-                    type="submit"
-                />
-            </form>
+                        <ButtonOne
+                            description="Criar"
+                            color="var(--green)"
+                            width="200px"
+                            type="submit"
+                        />
+                    </Form>
+                )}
+            </Formik>
         </Sidebar>
     )
 }

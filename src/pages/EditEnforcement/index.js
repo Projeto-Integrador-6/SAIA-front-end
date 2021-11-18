@@ -1,9 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { FormControl, MenuItem, TextField, Select, InputLabel } from '@mui/material';
+import { MenuItem, TextField} from '@mui/material';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { Formik, Form } from 'formik';
+
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import ptBrLocale from 'date-fns/locale/pt-BR';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 
 import LoadingProgress from "../../components/LoadingProgress";
 
@@ -34,7 +39,7 @@ export default function EditEnforcement() {
 
         setTimeout(async () => {
             const enforcementResponse = await api.get(`/aplicacao/${id}`)
-            setEnforcement(enforcementResponse.data)
+            setEnforcement(enforcementResponse.data.aplicacao)
 
             const educationalTestResponse = await api.get(`/avaliacao/user/${user.idUsuario}`)
             setEducationalTests(educationalTestResponse.data.result)
@@ -76,44 +81,67 @@ export default function EditEnforcement() {
                             edit(values);
                         }}
                     >
-                        {({ values, handleChange }) => (
-                            <Form >
+                        {({ values, handleChange, setFieldValue }) => (
+                            <Form>
                                 <div className="enforcement-data-div">
                                     <FullCard title="Dados da Aplicação">
-                                        <FormControl required sx={{ m: 1, minWidth: 120 }}>
-                                            <InputLabel id="educational-test-label">Avaliação</InputLabel>
-                                            <Select
-                                                className="enforcement-select"
-                                                label="Avaliação"
-                                                labelId="educational-test-label"
-                                                name="idAvaliacao"
-                                                onChange={handleChange}
-                                                value={values.idAvaliacao}
-                                                disabled
-                                            >
-                                                {educationalTests.map((option) => (
-                                                    <MenuItem key={option.idAvaliacao} value={option.idAvaliacao}>
-                                                        {option.nome}
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-                                        <FormControl required sx={{ m: 1, minWidth: 120 }}>
-                                            <TextField
-                                                id="enforcement-value"
-                                                className="enforcement-select"
-                                                type="number"
-                                                label="Valor"
-                                                variant="outlined"
-                                                name="valor"
-                                                onChange={handleChange}
-                                                value={values.valor}
-                                            />
-                                        </FormControl>
+                                        <div className="data-form">
+                                            <div className="display-block">
+                                                <TextField
+                                                    className="enforcement-select"
+                                                    label="Avaliação"
+                                                    name="idAvaliacao"
+                                                    onChange={handleChange}
+                                                    value={values.idAvaliacao}
+                                                    disabled
+                                                    select
+                                                >
+                                                    {educationalTests.map((option) => (
+                                                        <MenuItem key={option.idAvaliacao} value={option.idAvaliacao}>
+                                                            {option.nome}
+                                                        </MenuItem>
+                                                    ))}
+                                                </TextField>
+                                            </div>
+                                            <div className="display-block">
+                                                <TextField
+                                                    id="enforcement-value"
+                                                    className="enforcement-select"
+                                                    type="number"
+                                                    label="Valor"
+                                                    variant="outlined"
+                                                    name="valor"
+                                                    onChange={handleChange}
+                                                    value={values.valor}
+                                                />
+                                            </div>
+                                            <div className="display-block">
+                                                <LocalizationProvider dateAdapter={AdapterDateFns} locale={ptBrLocale}>
+                                                    <DatePicker
+                                                        label="Data Inicio"
+                                                        name="dataInicio"
+                                                        value={values.dataInicio}
+                                                        onChange={value => setFieldValue("dataInicio", value)}
+                                                        renderInput={(params) => <TextField {...params} />}
+                                                    />
+                                                </LocalizationProvider>
+                                            </div>
+                                            <div className="display-block">
+                                                <LocalizationProvider dateAdapter={AdapterDateFns} locale={ptBrLocale}>
+                                                    <DatePicker
+                                                        label="Data Fim"
+                                                        name="dataFim"
+                                                        value={values.dataFim}
+                                                        onChange={value => setFieldValue("dataFim", value)}
+                                                        renderInput={(params) => <TextField {...params} />}
+                                                    />
+                                                </LocalizationProvider>
+                                            </div>
+                                        </div>
                                     </FullCard>
                                 </div>
                                 <ButtonOne
-                                    description="Criar"
+                                    description="Atualizar"
                                     color="var(--green)"
                                     width="200px"
                                     type="submit"

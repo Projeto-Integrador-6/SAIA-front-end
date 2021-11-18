@@ -3,12 +3,13 @@ import { DataGrid, ptBR } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 
 import AddIcon from '@mui/icons-material/Add';
+import CreateIcon from '@mui/icons-material/Create';
 
 import Sidebar from "../../components/Sidebar";
 import PageTitle from "../../components/PageTitle";
 import ListCard from "../../components/ListCard";
 import DataGridContainer from "../../components/DataGridContainer";
-import { ButtonTwo } from "../../components/Button";
+import { Icon, ButtonTwo } from "../../components/Button";
 
 import api from '../../services/api'
 
@@ -28,8 +29,6 @@ export default function Subjects() {
     }, 0)
 }, [])
 
-console.log(subjects)
-
   const columns = [
     {
       field: 'nome',
@@ -41,6 +40,20 @@ console.log(subjects)
       field: 'acoes',
       headerName: 'Ações',
       minWidth: 150
+    },
+    {
+      field: 'acoes',
+      headerName: 'Ações',
+      minWidth: 150,
+      renderCell: (subjects) => {
+        return (
+          <>
+            <Link to={`subjects/edit/${subjects.row.idDisciplina}`}>
+              <Icon icon={<CreateIcon />} />
+            </Link>
+          </>
+        )
+      }
     }
   ];
 
