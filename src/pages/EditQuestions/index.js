@@ -92,14 +92,8 @@ export default function EditQuestions() {
     try {
       let tags = newTagQuestao;
 
-      if (values.idTipoQuestao === 1) {
-        await api.put(`/questao/${id}`, { ...values, tags });
-      }
-
-      if (values.idTipoQuestao === 2) {
-        await api.put(`/questao/${id}`, { ...values, alternativas, tags });
-      }
-
+      await api.put(`/questao/${id}`, { ...values, alternativas, tags });
+      
       setSnack({ message: "Questão atualizada com sucesso.", type: 'success', open: true });
       history.push("/manager/questions")
 
@@ -296,6 +290,7 @@ export default function EditQuestions() {
               <div className="input-block">
                 <Autocomplete
                   multiple
+                  disableCloseOnSelect
                   id="tags-outlined"
                   options={tags}
                   onChange={(val, values) => setCurrentTags(values)}

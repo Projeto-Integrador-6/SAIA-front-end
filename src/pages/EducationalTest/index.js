@@ -32,6 +32,22 @@ export default function EducationalTest() {
 
   }, [])
 
+  function formatDateDayFrist(date) {
+    var d = new Date(date);
+    d = new Date(d.getTime() + d.getTimezoneOffset() * 60000)
+
+    var month = '' + (d.getMonth() + 1);
+    var day = '' + (d.getDate());
+    var year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [day, month, year].join('/');
+  }
+
   const columns = [
     {
       field: 'nome',
@@ -49,13 +65,23 @@ export default function EducationalTest() {
       field: 'dataInicio',
       headerName: 'Início',
       minWidth: 150,
-      flex: 1
+      flex: 1,
+      renderCell: (date) => {
+        return(
+          formatDateDayFrist(date.row.dataInicio)
+        )
+      }
     },
     {
       field: 'dataFim',
       headerName: 'Fim',
       minWidth: 150,
-      flex: 1
+      flex: 1,
+      renderCell: (date) => {
+        return(
+          formatDateDayFrist(date.row.dataFim)
+        )
+      }
     },
     {
       field: 'valor',

@@ -60,8 +60,8 @@ export default function EducationalTestInProgress() {
     setPage(value);
   };
 
-  async function save(event) {
-    event.preventDefault();
+  async function save(e) {
+    e.preventDefault();
     try {
       let idAplicacao = id;
       let idUsuario = user.idUsuario;
@@ -110,7 +110,7 @@ export default function EducationalTestInProgress() {
 
             <div className="educational-test-progress-question">
 
-              <form onSubmit={save}>
+              <form onSubmit={save} method="POST">
                 <div className="educational-test-question-container">
                   {avaliacao.questaos
                     .map((items, index) => (
@@ -142,7 +142,7 @@ export default function EducationalTestInProgress() {
                           </>
 
                         </div>
-                        <div>{JSON.stringify(resposta, null, 2)}</div>
+
                       </div>
                     ))}
                   <ButtonOne
