@@ -141,7 +141,7 @@ export default function CreateQuestions() {
               </div>
               <div className="input-block">
                 <TextField
-                  label="Valor"
+                  label="Pontuação"
                   name="valor"
                   value={values.valor}
                   onChange={handleChange}
