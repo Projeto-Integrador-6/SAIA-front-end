@@ -7,13 +7,13 @@ import api from '../../services/api';
 
 export default function useAuth() {
   const { setSnack } = useContext(SnackContext);
-  
+
   const [user, setUser] = useState(null);
   const [userType, setUserType] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // TIPOS DE USUÁRIO
-  function type(value){
+  function type(value) {
     let types = ['Aluno', 'Professor', 'Coordenador'];
 
     return types[value];
@@ -22,9 +22,9 @@ export default function useAuth() {
   useEffect(() => {
     async function loadData() {
       const token = localStorage.getItem('token');
-      
+
       if (token) {
-        let tokenDecoded = jwtDecode(token);      
+        let tokenDecoded = jwtDecode(token);
         tokenDecoded.usuario.password = null;
 
         await new Promise(resolve => setTimeout(resolve, 1000))
@@ -56,7 +56,9 @@ export default function useAuth() {
       setUser(response.data.usuario);
       setUserType({ id: response.data.usuario.tipoUsuario, descricao: type(response.data.usuario.tipoUsuario) });
     } catch (res) {
-      setSnack({ message: res.response.data.error, type: 'error', open: true });
+      if (!res.response) {
+        setSnack({ message: res.response.data.error, type: 'error', open: true });
+      }
     }
   }
 

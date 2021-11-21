@@ -156,6 +156,7 @@ export default function CreateEducationalTest() {
           <div className="input-block">
             <Autocomplete
               multiple
+              disableCloseOnSelect
               id="tags-outlined"
               options={questoes}
               onChange={(val, values) => setCurrentQuestoes(values)}

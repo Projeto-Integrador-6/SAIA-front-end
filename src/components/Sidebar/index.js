@@ -14,6 +14,10 @@ import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { Tooltip } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -26,18 +30,18 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonIcon from '@mui/icons-material/Person';
 import ListAltIcon from '@mui/icons-material/ListAlt';
+import Logout from '@mui/icons-material/Logout';
 
 import { NavContext } from '../../contexts/NavContext';
 import { AuthContext } from '../../contexts/AuthContext';
 
 import './index.css';
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -107,7 +111,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function Sidebar({ ...props }) {
   const theme = useTheme();
 
-  const { user, userType } = useContext(AuthContext);
+  const { user, handleLogout } = useContext(AuthContext);
   const { openNav,
     openTeacher,
     openManager,
@@ -116,7 +120,18 @@ export default function Sidebar({ ...props }) {
     handleClickManager
   } = useContext(NavContext);
 
+
   const location = useLocation();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -139,7 +154,60 @@ export default function Sidebar({ ...props }) {
             <Typography variant="h6" noWrap component="div">
               SAIA
             </Typography>
-            <p>Olá, {user.nome} [{userType.descricao}]</p>
+            <>
+              <Tooltip title="Configurações da conta">
+                <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
+                  <Avatar sx={{ width: 32, height: 32 }}>{user.nome[0]}</Avatar>
+                </IconButton>
+              </Tooltip>
+              <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: 'visible',
+                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                    mt: 1.5,
+                    '& .MuiAvatar-root': {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    '&:before': {
+                      content: '""',
+                      display: 'block',
+                      position: 'absolute',
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: 'background.paper',
+                      transform: 'translateY(-50%) rotate(45deg)',
+                      zIndex: 0,
+                    },
+                  },
+                }}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+              >
+                <Link to="/profile" className="nav-avatar-link">
+                  <MenuItem>
+                    <Avatar /> Meu Perfil
+                  </MenuItem>
+                </Link>
+                <Divider />
+                <MenuItem onClick={handleLogout}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Sair
+                </MenuItem>
+              </Menu>
+            </>
           </div>
         </Toolbar>
       </AppBar>
@@ -151,7 +219,6 @@ export default function Sidebar({ ...props }) {
         </DrawerHeader>
         <Divider />
         <List component="nav">
-
 
           <ListItem button component={Link} to="/home" selected={location.pathname === '/home'}>
             <ListItemIcon>
@@ -167,15 +234,6 @@ export default function Sidebar({ ...props }) {
             </ListItemIcon>
             <ListItemText primary="Avaliações" />
           </ListItem>
-
-          {/* ROTAS PERMITIDAS PARA TODOS */}
-          <ListItem button component={Link} to="/profile" selected={location.pathname === '/profile'}>
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Meu Perfil" />
-          </ListItem>
-
 
           <Divider />
 
@@ -218,6 +276,8 @@ export default function Sidebar({ ...props }) {
 
           </Collapse>
 
+          <Divider />
+
           {/* ROTAS PERMITIDAS PARA COORDENADORES */}
           <ListItemButton onClick={handleClickManager}>
             <ListItemIcon>
@@ -242,6 +302,8 @@ export default function Sidebar({ ...props }) {
             </ListItem>
 
           </Collapse>
+
+          <Divider />
 
         </List>
 

@@ -4,3 +4,8 @@
   align-items: center;
   width: 100%;
 }
+
+.nav-avatar-link {
+  text-decoration: none;
+  color: var(--text);
+}

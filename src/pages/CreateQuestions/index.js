@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Autocomplete, Checkbox, Chip, DialogActions, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
+import { Autocomplete, Checkbox, Chip, DialogActions, FormControlLabel, TextField } from "@mui/material";
 import { Formik, Form } from 'formik';
 import produce from 'immer';
 import { generate } from 'shortid';
@@ -57,15 +57,8 @@ export default function CreateQuestions() {
       let tags = tagQuestao;
       let idUsuario = user.idUsuario;
 
-      if (values.idTipoQuestao === '1') {
-        await api.post(`/questao`, { idUsuario, ...values, tags });
-      }
-
-      if (values.idTipoQuestao === '2') {
-        
-        await api.post(`/questao`, {idUsuario, ...values, alternativas, tags });
-      }
-
+      await api.post(`/questao`, { idUsuario, ...values, alternativas, tags });
+    
       setSnack({ message: "Questão criada com sucesso.", type: 'success', open: true });
       history.push("/manager/questions")
 
@@ -94,7 +87,7 @@ export default function CreateQuestions() {
     }
 
     for (let i = 0; i < values.length; i++) {
-        tag.push(values[i])     
+      tag.push(values[i])
     }
 
     setTagQuestao(tag)
@@ -107,8 +100,7 @@ export default function CreateQuestions() {
         initialValues={{
           nome: '',
           enunciado: '',
-          valor: '',
-          idTipoQuestao: ''
+          valor: ''
         }}
         onSubmit={async (values) => {
           if (alternativas.length < 2 && values.idTipoQuestao === '2') {
@@ -121,155 +113,142 @@ export default function CreateQuestions() {
       >
         {({ values, handleChange }) => (
           <Form>
-            <FullCard title="Tipo da questão">
-              <div className="input-block">
 
-                <RadioGroup
-                  defaultValue=""
-                  name="idTipoQuestao"
+
+
+            <FullCard title="Dados da questão">
+              <div className="input-block">
+                <TextField
+                  label="Nome"
+                  name="nome"
+                  value={values.nome}
                   onChange={handleChange}
-                >
-                  <FormControlLabel value="1" control={<Radio />} label="Questão Aberta" />
-                  <FormControlLabel value="2" control={<Radio />} label="Questão Fechada" />
-                </RadioGroup>
+                  type="text"
+                  fullWidth
+                />
+              </div>
+              <div className="input-block">
+                <TextField
+                  label="Enunciado"
+                  name="enunciado"
+                  value={values.enunciado}
+                  onChange={handleChange}
+                  type="text"
+                  fullWidth
+                  multiline
+                  rows={5}
+                />
+              </div>
+              <div className="input-block">
+                <TextField
+                  label="Pontuação"
+                  name="valor"
+                  value={values.valor}
+                  onChange={handleChange}
+                  type="number"
+                  fullWidth
+                />
+              </div>
+              <div className="input-block">
+                <div className="editor-buttons">
+                  <div className="editor-buttons-label">
+                    <p>Tags</p>
+                  </div>
+                  <div className="editor-buttons-button">
+                    <ButtonTwo
+                      name="Adicionar Tag"
+                      onClick={(e) => setModalTagList(true)}
+                    />
+                  </div>
+                </div>
+                <div className="chips-block">
+                  {tagQuestao.map((items) =>
+                    <Chip
+                      key={items.idTag}
+                      label={items.descricao}
+                      color="primary"
+                    />
+                  )}
+                </div>
               </div>
             </FullCard>
 
-            {values.idTipoQuestao !== "" &&
-              <FullCard title="Dados da questão">
-                <div className="input-block">
-                  <TextField
-                    label="Nome"
-                    name="nome"
-                    value={values.nome}
-                    onChange={handleChange}
-                    type="text"
-                    fullWidth
-                  />
-                </div>
-                <div className="input-block">
-                  <TextField
-                    label="Enunciado"
-                    name="enunciado"
-                    value={values.enunciado}
-                    onChange={handleChange}
-                    type="text"
-                    fullWidth
-                    multiline
-                    rows={5}
-                  />
-                </div>
-                <div className="input-block">
-                  <TextField
-                    label="Pontuação"
-                    name="valor"
-                    value={values.valor}
-                    onChange={handleChange}
-                    type="number"
-                    fullWidth
-                  />
-                </div>
-                <div className="input-block">
-                  <div className="editor-buttons">
-                    <div className="editor-buttons-label">
-                      <p>Tags</p>
-                    </div>
-                    <div className="editor-buttons-button">
-                      <ButtonTwo
-                        name="Adicionar Tag"
-                        onClick={(e) => setModalTagList(true)}
-                      />
-                    </div>
-                  </div>
-                  <div className="chips-block">
-                    {tagQuestao.map((items) =>
-                      <Chip
-                        key={items.idTag}
-                        label={items.descricao}
-                        color="primary"
-                      />
-                    )}
-                  </div>
-                </div>
-              </FullCard>
-            }
 
-            {values.idTipoQuestao === "2" &&
-              <>
-                <FullCard title="Alternativas" button={
-                  <ButtonTwo
-                    onClick={() => {
-                      setAlternativas(currentAlternative => [...currentAlternative, {
-                        idAlternativa: generate(),
-                        descricao: '',
-                        isAlternativaCorreta: false
-                      }])
-                    }}
-                    name="Nova Alternativa"
-                    disabled={alternativas.length > 5}
-                  />
-                }>
 
-                  {alternativas.map((a, index) => {
-                    return (
-                      <div key={index} >
-                        <div className="input-block">
-                          <div className="editor-buttons">
-                            <div className="editor-buttons-1">
-                              <FormControlLabel
-                                control={<Checkbox />}
-                                label="Alternativa Correta"
-                                value={alternativas[index].isAlternativaCorreta}
-                                onChange={e => {
-                                  setAlternativas(currentAlternative =>
-                                    produce(currentAlternative, (v) => {
-                                      v[index].isAlternativaCorreta = !alternativas[index].isAlternativaCorreta;
-                                    })
-                                  );
+            <>
+              <FullCard title="Alternativas" button={
+                <ButtonTwo
+                  onClick={() => {
+                    setAlternativas(currentAlternative => [...currentAlternative, {
+                      idAlternativa: generate(),
+                      descricao: '',
+                      isAlternativaCorreta: false
+                    }])
+                  }}
+                  name="Nova Alternativa"
+                  disabled={alternativas.length > 5}
+                />
+              }>
 
-                                }}
-                              />
-                            </div>
-                            <div className="editor-buttons-2">
-                              <ButtonTwo
-                                onClick={() => {
-                                  setAlternativas(currentAlternative =>
-                                    currentAlternative.filter(x => x.idAlternativa !== a.idAlternativa)
-                                  );
-                                }}
-                                name="Remover Alternativa"
-                                color="error"
-                              />
-                            </div>
-
-                          </div>
-                          <>
-                            <TextField
-                              label={'Alternativa ' + returnLetter(index)}
-                              name="alternativa"
-                              value={alternativas[index].descricao}
+                {alternativas.map((a, index) => {
+                  return (
+                    <div key={index} >
+                      <div className="input-block">
+                        <div className="editor-buttons">
+                          <div className="editor-buttons-1">
+                            <FormControlLabel
+                              control={<Checkbox />}
+                              label="Alternativa Correta"
+                              value={alternativas[index].isAlternativaCorreta}
                               onChange={e => {
-                                const descricao = e.target.value;
                                 setAlternativas(currentAlternative =>
-                                  produce(currentAlternative, v => {
-                                    v[index].descricao = descricao;
+                                  produce(currentAlternative, (v) => {
+                                    v[index].isAlternativaCorreta = !alternativas[index].isAlternativaCorreta;
                                   })
                                 );
+
                               }}
-                              fullWidth
-                              multiline
-                              rows={3}
                             />
-                          </>
+                          </div>
+                          <div className="editor-buttons-2">
+                            <ButtonTwo
+                              onClick={() => {
+                                setAlternativas(currentAlternative =>
+                                  currentAlternative.filter(x => x.idAlternativa !== a.idAlternativa)
+                                );
+                              }}
+                              name="Remover Alternativa"
+                              color="error"
+                            />
+                          </div>
+
                         </div>
-
+                        <>
+                          <TextField
+                            label={'Alternativa ' + returnLetter(index)}
+                            name="alternativa"
+                            value={alternativas[index].descricao}
+                            onChange={e => {
+                              const descricao = e.target.value;
+                              setAlternativas(currentAlternative =>
+                                produce(currentAlternative, v => {
+                                  v[index].descricao = descricao;
+                                })
+                              );
+                            }}
+                            fullWidth
+                            multiline
+                            rows={3}
+                          />
+                        </>
                       </div>
-                    )
-                  })}
 
-                </FullCard>
-              </>
-            }
+                    </div>
+                  )
+                })}
+
+              </FullCard>
+            </>
 
             <ButtonOne
               description="Criar"
@@ -290,6 +269,7 @@ export default function CreateQuestions() {
           <div className="input-block">
             <Autocomplete
               multiple
+              disableCloseOnSelect
               id="tags-outlined"
               options={tags}
               onChange={(val, values) => setCurrentTags(values)}

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { GridOverlay, DataGrid, ptBR } from '@mui/x-data-grid';
-import LinearProgress from '@mui/material/LinearProgress';
+import { DataGrid, ptBR } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 
 import CreateIcon from '@mui/icons-material/Create';
 import AddIcon from '@mui/icons-material/Add';
 
-import LoadingProgress from "../../components/LoadingProgress";
 import Sidebar from "../../components/Sidebar";
 import PageTitle from "../../components/PageTitle";
 import ListCard from "../../components/ListCard";
@@ -14,8 +12,6 @@ import DataGridContainer from "../../components/DataGridContainer";
 import { Icon, ButtonTwo } from "../../components/Button";
 
 import api from '../../services/api';
-
-import './index.css';
 
 export default function Users() {
 
@@ -35,12 +31,12 @@ export default function Users() {
 
   }, [])
 
-    // TIPOS DE USUÁRIO
-    function type(value){
-      let types = ['Aluno', 'Professor', 'Coordenador'];
-  
-      return types[value];
-    }
+  // TIPOS DE USUÁRIO
+  function type(value) {
+    let types = ['Aluno', 'Professor', 'Coordenador'];
+
+    return types[value];
+  }
 
   const columns = [
     {
