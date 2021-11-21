@@ -130,7 +130,7 @@ export default function EditEnforcement() {
                                                     id="enforcement-value"
                                                     className="enforcement-select"
                                                     type="number"
-                                                    label="Valor"
+                                                    label="Pontuação"
                                                     variant="outlined"
                                                     name="valor"
                                                     onChange={handleChange}
