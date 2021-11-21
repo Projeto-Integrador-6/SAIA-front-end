@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { MenuItem, TextField} from '@mui/material';
+import { MenuItem, TextField } from '@mui/material';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { Formik, Form } from 'formik';
 
@@ -32,6 +32,7 @@ export default function EditEnforcement() {
 
     const [educationalTests, setEducationalTests] = useState([])
     const [enforcement, setEnforcement] = useState({})
+    const [subjects, setSubjects] = useState([])
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -43,6 +44,9 @@ export default function EditEnforcement() {
 
             const educationalTestResponse = await api.get(`/avaliacao/user/${user.idUsuario}`)
             setEducationalTests(educationalTestResponse.data.result)
+
+            const subjectsResponse = await api.get(`/disciplina`)
+            setSubjects(subjectsResponse.data)
 
             setLoading(false);
         }, 500)
@@ -75,7 +79,8 @@ export default function EditEnforcement() {
                             dataFim: enforcement.dataFim,
                             nome: enforcement.nome,
                             valor: enforcement.valor,
-                            idAvaliacao: enforcement.idAvaliacao
+                            idAvaliacao: enforcement.idAvaliacao,
+                            idDisciplina: enforcement.idDisciplina
                         }}
                         onSubmit={async (values) => {
                             edit(values);
@@ -98,6 +103,23 @@ export default function EditEnforcement() {
                                                 >
                                                     {educationalTests.map((option) => (
                                                         <MenuItem key={option.idAvaliacao} value={option.idAvaliacao}>
+                                                            {option.nome}
+                                                        </MenuItem>
+                                                    ))}
+                                                </TextField>
+                                            </div>
+                                            <div className="display-block">
+                                                <TextField
+                                                    className="subject-select"
+                                                    label="Disciplina"
+                                                    name="idDisciplina"
+                                                    onChange={handleChange}
+                                                    value={values.idDisciplina}
+                                                    disabled
+                                                    select
+                                                >
+                                                    {subjects.map((option) => (
+                                                        <MenuItem key={option.idDisciplina} value={option.idDisciplina}>
                                                             {option.nome}
                                                         </MenuItem>
                                                     ))}

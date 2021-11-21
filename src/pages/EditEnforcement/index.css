@@ -5,6 +5,10 @@
     grid-template-columns: repeat(4, 1fr);
     padding: 20px 0px;
 }
+.subject-select{
+    width: 100%;
+}
+
 
 @media screen and (max-width: 770px) {
     .data-form {
