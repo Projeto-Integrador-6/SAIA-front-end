@@ -20,12 +20,12 @@ import { SnackContext } from '../../contexts/SnackContext';
 
 import api from '../../services/api';
 
-export default function LinkedTeacher() {
+export default function LinkedStudents() {
   let { nome, id } = useParams();
 
   const { setSnack } = useContext(SnackContext);
 
-  const [professores, setProfessores] = useState([]);
+  const [alunos, setAlunos] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [currentUsersSeleted, setCurrentUsersSeleted] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
@@ -37,11 +37,11 @@ export default function LinkedTeacher() {
   const [status, setStatus] = useState(0);
 
   useEffect(() => {
-    document.title = `SAIA - Usuários`
+    document.title = `SAIA - Alunos Vinculados a ${nome}`
 
     setTimeout(async () => {
-      const response = await api.get(`/disciplina/professores/${id}`)
-      setProfessores(response.data.result.disciplina_professor);
+      const response = await api.get(`/disciplina/alunos/${id}`)
+      setAlunos(response.data.result.disciplina_aluno);
 
       setLoading(false);
     }, 500)
@@ -55,31 +55,31 @@ export default function LinkedTeacher() {
     return types[value];
   }
 
-  async function loadTeachers() {
-    const response = await api.get(`/usuario/type/1`);
+  async function loadStudents() {
+    const response = await api.get(`/usuario/type/0`);
     setUsuarios(response.data.result);
   }
 
   async function linkUsers(values) {
     try {
-      let professores = [];
+      let alunos = [];
 
       for (let i = 0; i < values.length; i++) {
-        professores.push({ usuario_id: values[i].idUsuario, disciplina_id: id })
+        alunos.push({ usuario_id: values[i].idUsuario, disciplina_id: id })
       }
 
-      await api.post(`/professor_disciplina`, { professores });
-      setSnack({ message: `Professores foram vinculados a disciplina de ${nome}.`, type: 'success', open: true });
+      await api.post(`/aluno_disciplina`, { alunos });
+      setSnack({ message: `Alunos foram vinculados a disciplina de ${nome}.`, type: 'success', open: true });
       setStatus(status + 1);
     } catch {
-      setSnack({ message: `Falha ao vincular os professores na disciplina de ${nome}.`, type: 'error', open: true });
+      setSnack({ message: `Falha ao vincular os alunos na disciplina de ${nome}.`, type: 'error', open: true });
       setStatus(status + 1);
     }
   }
 
   async function unlinkUsers() {
     try {
-      await api.delete(`/professor_disciplina/${currentUser.idUsuario}/${id}`);
+      await api.delete(`/aluno_disciplina/${currentUser.idUsuario}/${id}`);
       setSnack({ message: `${currentUser.nome} foi desvinculado da disciplina de ${nome}.`, type: 'success', open: true });
       setStatus(status + 1);
     } catch {
@@ -128,17 +128,17 @@ export default function LinkedTeacher() {
 
   return (
     <Sidebar>
-      <PageTitle title={`Professores Vinculados a ${nome}`} />
+      <PageTitle title={`Alunos Vinculados a ${nome}`} backLink="/manager/subjects" />
 
       <ListCard content={
-        <ButtonTwo icon={<AddIcon />} name="Vincular" onClick={(e) => { loadTeachers(); setModalLink(true) }} />
+        <ButtonTwo icon={<AddIcon />} name="Vincular" onClick={(e) => { loadStudents(); setModalLink(true) }} />
       } />
 
       <DataGridContainer>
         <DataGrid
           getRowId={(r) => r.idUsuario}
           autoHeight={true}
-          rows={professores}
+          rows={alunos}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
@@ -149,11 +149,11 @@ export default function LinkedTeacher() {
         />
       </DataGridContainer>
 
-      {/* MODAL - VINCULAR PROFESSORES */}
+      {/* MODAL - VINCULAR ALUNOS */}
       <DialogBox
         open={modalLink}
         onClose={() => setModalLink(false)}
-        title="Vinculando Professores"
+        title="Vinculando Alunos"
       >
         <form>
           <div className="input-block">
@@ -166,7 +166,7 @@ export default function LinkedTeacher() {
               getOptionSelected={(option, value) => option.idUsuario === value.idUsuario}
               getOptionLabel={(option) => option.nome}
               filterSelectedOptions
-              noOptionsText={'Não há usuários para mostrar'}
+              noOptionsText={'Não há alunos para mostrar'}
               renderOption={(props, option, { selected }) => (
                 <li {...props}>
                   <Checkbox
@@ -181,7 +181,7 @@ export default function LinkedTeacher() {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Usuários"
+                  label="Alunos"
                 />
               )}
             />
@@ -194,7 +194,7 @@ export default function LinkedTeacher() {
         </DialogActions>
       </DialogBox>
 
-      {/* MODAL - DESVINCULAR PROFESSORES */}
+      {/* MODAL - DESVINCULAR ALUNOS */}
       <DialogBox
         open={modalDelete}
         onClose={() => setModalDelete(false)}

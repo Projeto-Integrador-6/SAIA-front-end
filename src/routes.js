@@ -29,7 +29,8 @@ import EditUsers from './pages/EditUsers';
 import Subjects from './pages/Subjects'
 import CreateSubject from './pages/CreateSubject'
 import EditSubject from './pages/EditSubject'
-import LinkedTeacher from "./pages/LinkedTeacher";
+import LinkedTeachers from "./pages/LinkedTeachers";
+import LinkedStudents from "./pages/LinkedStudents";
 
 import Results from './pages/Results';
 import UserProfile from "./pages/UserProfile";
@@ -107,7 +108,8 @@ export default function Routes() {
         <PrivateRoute isPrivate path="/manager/users" component={Users} />
 
         {/* Painel Coordenador - Disciplinas */}
-        <PrivateRoute isPrivate path="/manager/subjects/teacher/:nome/:id" component={LinkedTeacher} />
+        <PrivateRoute isPrivate path="/manager/subjects/students/:nome/:id" component={LinkedStudents} />
+        <PrivateRoute isPrivate path="/manager/subjects/teachers/:nome/:id" component={LinkedTeachers} />
         <PrivateRoute isPrivate path="/manager/subjects/update/:id" component={EditSubject} />
         <PrivateRoute isPrivate path="/manager/subjects/create" component={CreateSubject} />
         <PrivateRoute isPrivate path="/manager/subjects" component={Subjects} />

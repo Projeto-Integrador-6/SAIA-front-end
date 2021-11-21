@@ -63,8 +63,8 @@ export default function Subjects() {
             <MenuDropDown 
               icon={<InsertLinkIcon/>}
               buttons={[
-                { nome: 'Alunos vinculados a disciplina', link: ''},
-                { nome: 'Professores vinculados a disciplina', link: `subjects/teacher/${subjects.row.nome}/${subjects.row.idDisciplina}`}
+                { nome: 'Alunos vinculados a disciplina', link: `subjects/students/${subjects.row.nome}/${subjects.row.idDisciplina}`},
+                { nome: 'Professores vinculados a disciplina', link: `subjects/teachers/${subjects.row.nome}/${subjects.row.idDisciplina}`}
               ]}
             />
           </>
