@@ -9,6 +9,15 @@
   letter-spacing: 1px;
 }
 
+.page-title-container .page-title-back-button a {
+  text-decoration: none;
+}
+
+.page-title-container .page-title-back-button button {
+  border-radius: 50px;
+}
+
+
 @media screen and (min-width: 770px){
   .page-title-container .title {
     font-size: 2.2rem !important;

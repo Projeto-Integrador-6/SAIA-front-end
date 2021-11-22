@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import TimerIcon from '@mui/icons-material/Timer';
-import { Pagination, TextField } from "@mui/material";
+import { FormControl, FormControlLabel, Pagination, Radio, RadioGroup, TextField } from "@mui/material";
 import produce from 'immer';
 import { generate } from 'shortid';
+import Countdown from 'react-countdown';
 
 import { ButtonOne, Icon } from "../../components/Button";
 import LoadingProgress from "../../components/LoadingProgress";
@@ -23,23 +24,19 @@ export default function EducationalTestInProgress() {
   const { user } = useContext(AuthContext);
   const { setSnack } = useContext(SnackContext);
 
-  const [avaliacao, setAvaliacao] = useState([]);
+  const [aplicacao, setAplicacao] = useState([]);
   const [resposta, setResposta] = useState([]);
 
   const [loading, setLoading] = useState(true);
-  const itemsPerPage = 1;
-  const [page, setPage] = useState(1);
-  const [noOfPages, setNoOfPages] = useState(1);
 
   useEffect(() => {
 
     setTimeout(async () => {
       const response = await api.get(`/aplicacao/avaliacao/${id}`);
-      setAvaliacao(response.data.result);
-      setNoOfPages(Math.ceil(response.data.result.questaos.length / itemsPerPage))
+      setAplicacao(response.data.result);
 
       // GERA RESPOSTAS PELA QUANTIDADE DE QUESTÃO
-      for (let i = 0; i < response.data.result.questaos.length; i++) {
+      for (let i = 0; i < response.data.result.avaliacao.questaos.length; i++) {
         setResposta(currentResponse => [...currentResponse, {
           idQuestao: generate(),
           resposta: ''
@@ -55,22 +52,38 @@ export default function EducationalTestInProgress() {
 
   }, [])
 
-
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
-
   async function save(e) {
     e.preventDefault();
     try {
       let idAplicacao = id;
       let idUsuario = user.idUsuario;
-      await api.post(`/resposta_aberta`, { idAplicacao, idUsuario, resposta } );
+      await api.post(`/resposta_aberta`, { idAplicacao, idUsuario, resposta });
       setSnack({ message: "Avaliação respondida com sucesso.", type: 'success', open: true });
       history.push("/educational_test")
     } catch (err) {
       setSnack({ message: "Houve um problema durante o envio das respostas.", type: 'error', open: true });
     }
+  }
+
+  const Completionist = () => <span>You are good to go!</span>;
+
+  // FUNÇÃO PARA RETORNAR HORAS, MINUTOS E SEGUNDOS DO COUNTDOWN
+  function renderer({ hours, minutes, seconds, completed }) {
+    if (completed) {
+      // Render a completed state
+      return <Completionist />;
+    } else {
+      // Render a countdown
+      return <span>{hours}:{minutes}:{seconds}</span>;
+    }
+  };
+
+  function convertHoursInMilliseconds(value) {
+    let date = new Date(value)
+
+    let dateFormated = date.getTime();
+
+    return dateFormated;
   }
 
   return (
@@ -87,34 +100,28 @@ export default function EducationalTestInProgress() {
             </div>
 
             <div className="educational-test-progress-title">
-              <h3>{avaliacao.nome}</h3>
-              <p>{avaliacao.descricao}</p>
+              <h3>{aplicacao.nome}</h3>
+              <p>{aplicacao.avaliacao.descricao}</p>
             </div>
 
             <div className="educational-test-progress-coutdown">
-              <h4><TimerIcon /> 2:00</h4>
+              <h4>
+                <TimerIcon />
+                {/* <Countdown
+                  date={Date.now() }
+                  renderer={renderer}
+                /> */}
+              </h4>
             </div>
           </div>
 
           <div className="educational-test-progress-body">
-            {/* <div className="educational-test-progress-pagination">
-              <Pagination
-                count={noOfPages}
-                page={page}
-                onChange={handleChange}
-                defaultPage={1}
-                color="primary"
-                size="large"
-              />
-            </div> */}
-
-            <div className="educational-test-progress-question">
-
-              <form onSubmit={save} method="POST">
-                <div className="educational-test-question-container">
-                  {avaliacao.questaos
-                    .map((items, index) => (
-                      <div key={index}>
+            <form onSubmit={save} method="POST">
+              {aplicacao.avaliacao.questaos
+                .map((items, index) => (
+                  <div key={index}>
+                    <div className="educational-test-progress-question">
+                      <div className="educational-test-question-container">
                         <div className="educational-test-question-items">
                           <div className="educational-test-question-name">
                             <h4>{items.nome}</h4>
@@ -122,7 +129,19 @@ export default function EducationalTestInProgress() {
                           <div className="educational-test-question-description">
                             <p>{items.enunciado}</p>
                           </div>
-                          <>
+
+                          <FormControl component="fieldset">
+                            <RadioGroup
+                              name="radio-buttons-group"
+                            >
+                              {items.alternativas.map(items => (
+                                <FormControlLabel value={items.idAlternativa} control={<Radio />} label={items.descricao} />
+                              ))}
+
+                            </RadioGroup>
+                          </FormControl>
+
+                          {/* <>
                             <TextField
                               label="Resposta"
                               value={resposta[index].resposta}
@@ -139,20 +158,20 @@ export default function EducationalTestInProgress() {
                               multiline
                               rows={7}
                             />
-                          </>
+                          </> */}
 
                         </div>
-
                       </div>
-                    ))}
-                  <ButtonOne
-                    description="Enviar"
-                    color="var(--green)"
-                    type="submit"
-                  />
-                </div>
-              </form>
-            </div>
+                    </div>
+                  </div>
+                ))}
+              <ButtonOne
+                description="Enviar"
+                color="var(--green)"
+                type="submit"
+              />
+            </form>
+
           </div>
         </div>
       }

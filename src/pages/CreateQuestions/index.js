@@ -113,9 +113,6 @@ export default function CreateQuestions() {
       >
         {({ values, handleChange }) => (
           <Form>
-
-
-
             <FullCard title="Dados da questão">
               <div className="input-block">
                 <TextField
@@ -172,9 +169,6 @@ export default function CreateQuestions() {
                 </div>
               </div>
             </FullCard>
-
-
-
             <>
               <FullCard title="Alternativas" button={
                 <ButtonTwo

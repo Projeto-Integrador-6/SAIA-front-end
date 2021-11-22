@@ -30,7 +30,6 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonIcon from '@mui/icons-material/Person';
 import ListAltIcon from '@mui/icons-material/ListAlt';
@@ -265,13 +264,6 @@ export default function Sidebar({ ...props }) {
                 <EventNoteIcon />
               </ListItemIcon>
               <ListItemText primary="Aplicações" />
-            </ListItem>
-
-            <ListItem button component={Link} to="/manager/general_results" selected={location.pathname === '/manager/general_results'}>
-              <ListItemIcon>
-                <AnalyticsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Análises Gerais" />
             </ListItem>
 
           </Collapse>

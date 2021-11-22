@@ -33,7 +33,7 @@ export default function CreateSubject() {
 
             setLoading(false);
         }, 500)
-    }, [])
+    }, [id])
 
     async function edit(values) {
 

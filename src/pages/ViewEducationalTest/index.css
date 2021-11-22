@@ -1,0 +1,18 @@
+.questions-view-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.educational-view-data .educational-view-data-item-1,
+.educational-view-data .educational-view-data-item-2 {
+  margin-bottom: 20px;
+}
+
+.educational-view-data .educational-view-data-item-1 h4,
+.educational-view-data .educational-view-data-item-2 h4,
+.questions-view-list .question-view-items h4,
+.questions-view-list .alternative-view-items h4 {
+  margin-bottom: 5px;
+  color: var(--text);
+}

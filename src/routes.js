@@ -4,14 +4,14 @@ import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import Loading from './components/Loading';
 
 import Login from './pages/Login';
-import ForgottenPassword from "./pages/ForgottenPassword";
 import Home from './pages/Home';
 
 import CreateEducationalTest from "./pages/CreateEducationalTest";
 import EducationalTest from "./pages/EducationalTest";
 import EducationalTestManager from "./pages/EducationalTestManager";
+import ViewEducationalTest from "./pages/ViewEducationalTest";
 
-import EducationalTestInProgress from "./pages/EducationalTestInProgress/EducationalTestInProgress";
+import EducationalTestInProgress from "./pages/EducationalTestInProgress";
 import EditEducationalTest from "./pages/EditEducationalTest";
 
 import CreateQuestions from "./pages/CreateQuestions";
@@ -83,7 +83,7 @@ export default function Routes() {
         <PrivateRoute isPrivate path="/educational_test" component={EducationalTest} />
 
         {/* Painel Educador - Avaliações */}
-        <PrivateRoute isPrivate path="/manager/educational_test/results" component={Results} />
+        <PrivateRoute isPrivate path="/manager/educational_test/view/:id" component={ViewEducationalTest} />
         <PrivateRoute isPrivate path="/manager/educational_test/update/:id" component={EditEducationalTest} />
         <PrivateRoute isPrivate path="/manager/educational_test/create" component={CreateEducationalTest} />
         <PrivateRoute isPrivate path="/manager/educational_test" component={EducationalTestManager} />
@@ -94,6 +94,7 @@ export default function Routes() {
         <PrivateRoute isPrivate path="/manager/questions" component={Questions} />
 
         {/* Painel Educador - Aplicação Avaliação */}
+        <PrivateRoute isPrivate path="/manager/enforcement/results" component={Results} />
         <PrivateRoute isPrivate path="/manager/enforcement/create" component={CreateEnforcement} />
         <PrivateRoute isPrivate path="/manager/enforcement/update/:id" component={EditEnforcement} />
         <PrivateRoute isPrivate path="/manager/enforcement" component={Enforcement} />
