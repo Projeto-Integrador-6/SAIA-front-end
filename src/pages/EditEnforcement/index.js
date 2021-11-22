@@ -69,10 +69,7 @@ export default function EditEnforcement() {
                 <LoadingProgress />
                 :
                 <>
-                    <Link to='/manager/enforcement'>
-                        <Icon icon={<KeyboardReturnIcon />}></Icon>
-                    </Link>
-                    <PageTitle title="Editando Aplicação" />
+                    <PageTitle title="Editando Aplicação" backLink="/manager/enforcement"/>
                     <Formik
                         initialValues={{
                             dataInicio: enforcement.dataInicio,
