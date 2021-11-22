@@ -34,7 +34,7 @@ export default function EducationalTestManager() {
       setLoading(false);
     }, 500)
 
-  }, [])
+  }, [user.idUsuario])
 
   const columns = [
     {

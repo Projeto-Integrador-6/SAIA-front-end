@@ -30,7 +30,7 @@ export default function Enforcement() {
 
       setLoading(false);
     }, 500)
-  }, [])
+  }, [user.idUsuario])
 
   const columns = [
     {

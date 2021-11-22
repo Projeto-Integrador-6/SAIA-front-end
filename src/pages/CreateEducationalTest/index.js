@@ -35,7 +35,7 @@ export default function CreateEducationalTest() {
       const response = await api.get(`/questao/user/${user.idUsuario}`)
       setQuestoes(response.data.result)
     }, 500)
-  }, [])
+  }, [user.idUsuario])
 
   // CRIA AVALIAÇÃO
   async function create(values) {

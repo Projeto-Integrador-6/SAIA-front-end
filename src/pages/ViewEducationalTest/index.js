@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 
@@ -31,7 +31,7 @@ export default function ViewEducationalTest() {
 
     document.title = `SAIA - Visualizando Avaliação`;
 
-  }, [])
+  }, [id])
 
   return (
     <Sidebar>

@@ -32,7 +32,7 @@ export default function EditUsers() {
       setLoading(false);
     }, 500)
 
-  }, [])
+  }, [id])
 
   async function edit(values) {
     try {

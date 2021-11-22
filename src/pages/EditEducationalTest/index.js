@@ -38,7 +38,7 @@ export default function EditEducationalTest() {
       setLoading(false);
     }, 500);
 
-  }, [])
+  }, [id])
 
   // EDITA AVALIAÇÃO
   async function edit(values) {

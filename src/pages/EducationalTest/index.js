@@ -30,7 +30,7 @@ export default function EducationalTest() {
       setLoading(false);
     }, 500)
 
-  }, [])
+  }, [user.idUsuario])
 
   function formatDateDayFrist(date) {
     var d = new Date(date);

@@ -4,7 +4,6 @@ import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import Loading from './components/Loading';
 
 import Login from './pages/Login';
-import ForgottenPassword from "./pages/ForgottenPassword";
 import Home from './pages/Home';
 
 import CreateEducationalTest from "./pages/CreateEducationalTest";

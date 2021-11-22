@@ -40,7 +40,7 @@ export default function CreateEnforcement() {
       setSubjects(subjectsResponse.data)
 
     }, 500)
-  }, [])
+  }, [user.idUsuario])
 
   async function create(values) {
 

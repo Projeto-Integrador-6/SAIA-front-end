@@ -14,7 +14,7 @@ import LoadingProgress from "../../components/LoadingProgress";
 import PageTitle from '../../components/PageTitle';
 import Sidebar from '../../components/Sidebar';
 import FullCard from '../../components/FullCard';
-import { ButtonOne, Icon } from '../../components/Button';
+import { ButtonOne } from '../../components/Button';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { SnackContext } from '../../contexts/SnackContext';
@@ -49,7 +49,7 @@ export default function EditEnforcement() {
 
       setLoading(false);
     }, 500)
-  }, [])
+  }, [id, user.idUsuario])
 
   async function edit(values) {
     try {

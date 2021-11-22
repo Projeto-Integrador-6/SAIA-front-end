@@ -79,7 +79,7 @@ export default function EditQuestions() {
 
       setLoading(false);
     }, 500)
-  }, [])
+  }, [id])
 
   function returnLetter(number) {
     let letters = ['A', 'B', 'C', 'D', 'E', 'F'];

@@ -33,7 +33,7 @@ export default function Questions() {
       setLoading(false);
     }, 500)
 
-  }, [])
+  }, [user.idUsuario])
 
   const columns = [
     {

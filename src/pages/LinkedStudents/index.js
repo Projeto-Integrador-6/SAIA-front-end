@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DataGrid, ptBR } from '@mui/x-data-grid';
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Autocomplete, DialogActions, TextField, Checkbox } from "@mui/material";
 
-import CreateIcon from '@mui/icons-material/Create';
 import AddIcon from '@mui/icons-material/Add';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -46,7 +45,7 @@ export default function LinkedStudents() {
       setLoading(false);
     }, 500)
 
-  }, [status])
+  }, [status, id, nome])
 
   // TIPOS DE USUÁRIO
   function type(value) {
