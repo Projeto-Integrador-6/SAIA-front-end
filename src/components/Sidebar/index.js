@@ -267,13 +267,6 @@ export default function Sidebar({ ...props }) {
               <ListItemText primary="Aplicações" />
             </ListItem>
 
-            <ListItem button component={Link} to="/manager/general_results" selected={location.pathname === '/manager/general_results'}>
-              <ListItemIcon>
-                <AnalyticsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Análises Gerais" />
-            </ListItem>
-
           </Collapse>
 
           <Divider />

@@ -93,7 +93,7 @@ export default function EditQuestions() {
       let tags = newTagQuestao;
 
       await api.put(`/questao/${id}`, { ...values, alternativas, tags });
-      
+
       setSnack({ message: "Questão atualizada com sucesso.", type: 'success', open: true });
       history.push("/manager/questions")
 
@@ -134,7 +134,7 @@ export default function EditQuestions() {
         <LoadingProgress />
         :
         <>
-          <PageTitle title="Editando Questão"  backLink="/manager/questions" />
+          <PageTitle title="Editando Questão" backLink="/manager/questions" />
           <Formik
             enableReinitialize
             initialValues={questao}
@@ -208,67 +208,64 @@ export default function EditQuestions() {
                   </div>
                 </FullCard>
 
-                {values.idTipoQuestao === 2 &&
-                  <>
-                    <FullCard title="Alternativas" button={
-                      <ButtonTwo
-                        onClick={() => {
-                          setAlternativas(currentAlternative => [...currentAlternative, {
-                            idAlternativa: generate(),
-                            descricao: '',
-                            isAlternativaCorreta: false
-                          }])
-                        }}
-                        name="Nova Alternativa"
-                        disabled={alternativas.length > 5}
-                      />
-                    }>
 
-                      {alternativas.map((a, index) => {
-                        return (
-                          <div key={index}>
-                            <div className="input-block">
-                              <div className="editor-buttons">
-                                <FormControlLabel
-                                  control={<Checkbox />}
-                                  label="Alternativa Correta"
-                                  value={alternativas[index].isAlternativaCorreta}
-                                  checked={alternativas[index].isAlternativaCorreta}
-                                  onChange={e => {
-                                    setAlternativas(currentAlternative =>
-                                      produce(currentAlternative, (v) => {
-                                        v[index].isAlternativaCorreta = !alternativas[index].isAlternativaCorreta;
-                                      })
-                                    );
-                                  }}
-                                />
-                              </div>
-                              <>
-                                <TextField
-                                  label={'Alternativa ' + returnLetter(index)}
-                                  name="alternativa"
-                                  value={alternativas[index].descricao}
-                                  onChange={e => {
-                                    const descricao = e.target.value;
-                                    setAlternativas(currentAlternative =>
-                                      produce(currentAlternative, v => {
-                                        v[index].descricao = descricao;
-                                      })
-                                    );
-                                  }}
-                                  fullWidth
-                                  multiline
-                                  rows={3}
-                                />
+                <FullCard title="Alternativas" button={
+                  <ButtonTwo
+                    onClick={() => {
+                      setAlternativas(currentAlternative => [...currentAlternative, {
+                        idAlternativa: generate(),
+                        descricao: '',
+                        isAlternativaCorreta: false
+                      }])
+                    }}
+                    name="Nova Alternativa"
+                    disabled={alternativas.length > 5}
+                  />
+                }>
 
-                              </>
-                            </div>
+                  {alternativas.map((a, index) => {
+                    return (
+                      <div key={index}>
+                        <div className="input-block">
+                          <div className="editor-buttons">
+                            <FormControlLabel
+                              control={<Checkbox />}
+                              label="Alternativa Correta"
+                              value={alternativas[index].isAlternativaCorreta}
+                              checked={alternativas[index].isAlternativaCorreta}
+                              onChange={e => {
+                                setAlternativas(currentAlternative =>
+                                  produce(currentAlternative, (v) => {
+                                    v[index].isAlternativaCorreta = !alternativas[index].isAlternativaCorreta;
+                                  })
+                                );
+                              }}
+                            />
                           </div>
-                        )
-                      })}
-                    </FullCard>
-                  </>
-                }
+                          <>
+                            <TextField
+                              label={'Alternativa ' + returnLetter(index)}
+                              name="alternativa"
+                              value={alternativas[index].descricao}
+                              onChange={e => {
+                                const descricao = e.target.value;
+                                setAlternativas(currentAlternative =>
+                                  produce(currentAlternative, v => {
+                                    v[index].descricao = descricao;
+                                  })
+                                );
+                              }}
+                              fullWidth
+                              multiline
+                              rows={3}
+                            />
+
+                          </>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </FullCard>
 
                 <ButtonOne
                   description="Atualizar"

@@ -163,7 +163,6 @@ export default function LinkedStudents() {
               id="tags-outlined"
               options={usuarios}
               onChange={(val, values) => setCurrentUsersSeleted(values)}
-              getOptionSelected={(option, value) => option.idUsuario === value.idUsuario}
               getOptionLabel={(option) => option.nome}
               filterSelectedOptions
               noOptionsText={'Não há alunos para mostrar'}

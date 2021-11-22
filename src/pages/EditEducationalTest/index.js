@@ -99,9 +99,17 @@ export default function EditEducationalTest() {
                   {questoes.map(items =>
                     <SimpleCard key={items.idQuestao}>
                       <div className="questions-list">
-                        <h4>{items.nome}</h4>
-                        <p>Enunciado: {items.enunciado}</p>
-                        <p>Valor: {items.valor}</p>
+                        <div className="question-items">
+                          <h4>{items.nome}</h4>
+                          <p>Enunciado: {items.enunciado}</p>
+                          <p>Valor: {items.valor}</p>
+                        </div>
+                        <div className="alternative-items">
+                          <h4>Alternativas</h4>
+                          {items.alternativas.map(items => (
+                            <p>- {items.descricao} {items.isAlternativaCorreta === true && "(Resposta Correta)"}</p>
+                          ))}
+                        </div>
                       </div>
                     </SimpleCard>
                   )}

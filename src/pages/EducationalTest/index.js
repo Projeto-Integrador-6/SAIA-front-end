@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { DataGrid, ptBR } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarFilterButton, ptBR } from '@mui/x-data-grid'; 
 import { Link } from "react-router-dom";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
@@ -59,7 +59,12 @@ export default function EducationalTest() {
       field: 'disciplina',
       headerName: 'Disciplina',
       minWidth: 150,
-      flex: 1
+      flex: 1,
+      renderCell: (discipline) => {
+        return(
+          discipline.row.disciplina.nome
+        )
+      }
     },
     {
       field: 'dataInicio',
@@ -121,6 +126,9 @@ export default function EducationalTest() {
           hideFooterSelectedRowCount={true}
           selectionModel={false}
           loading={loading}
+          components={{
+            Toolbar: GridToolbarFilterButton,
+          }}
         />
       </DataGridContainer>
 

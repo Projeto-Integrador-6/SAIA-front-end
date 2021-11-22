@@ -10,4 +10,5 @@
 
 .datagrid-container > div {
   border: none !important;
+  height: 400px !important;
 }

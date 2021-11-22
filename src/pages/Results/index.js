@@ -212,11 +212,8 @@ export default function Results() {
                     </TextField>
                 </FormControl>
             </div> */}
-            <Link to='/manager/enforcement'>
-                <Icon icon={<KeyboardReturnIcon/>}></Icon>
-            </Link>
             <div >
-                <PageTitle title={enforcements[selectedEnforcement].label} />
+                <PageTitle title={enforcements[selectedEnforcement].label} backLink="/manager/enforcement"/>
                 <div className="results-resume">
                     <p className="title">RESUMO</p>
                     <TripleBox

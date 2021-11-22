@@ -1,3 +1,13 @@
 .warning-question-edit {
   margin-bottom: 25px;
 }
+
+.questions-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.questions-list h4 {
+  color: var(--text);
+}

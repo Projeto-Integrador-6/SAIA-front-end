@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DataGrid, ptBR } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarFilterButton, ptBR } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 
 import CreateIcon from '@mui/icons-material/Create';
@@ -100,6 +100,9 @@ export default function Users() {
           hideFooterSelectedRowCount={true}
           selectionModel={false}
           loading={loading}
+          components={{
+            Toolbar: GridToolbarFilterButton,
+          }}
         />
       </DataGridContainer>
     </Sidebar>
