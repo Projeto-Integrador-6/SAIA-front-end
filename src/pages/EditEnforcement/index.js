@@ -62,50 +62,6 @@ export default function EditEnforcement() {
     }
   }
 
-<<<<<<< HEAD
-    return (
-        <Sidebar>
-            {loading ?
-                <LoadingProgress />
-                :
-                <>
-                    <PageTitle title="Editando Aplicação" backLink="/manager/enforcement"/>
-                    <Formik
-                        initialValues={{
-                            dataInicio: enforcement.dataInicio,
-                            dataFim: enforcement.dataFim,
-                            nome: enforcement.nome,
-                            valor: enforcement.valor,
-                            idAvaliacao: enforcement.idAvaliacao,
-                            idDisciplina: enforcement.idDisciplina
-                        }}
-                        onSubmit={async (values) => {
-                            edit(values);
-                        }}
-||||||| 6ab3789
-    return (
-        <Sidebar>
-            {loading ?
-                <LoadingProgress />
-                :
-                <>
-                    <Link to='/manager/enforcement'>
-                        <Icon icon={<KeyboardReturnIcon />}></Icon>
-                    </Link>
-                    <PageTitle title="Editando Aplicação" />
-                    <Formik
-                        initialValues={{
-                            dataInicio: enforcement.dataInicio,
-                            dataFim: enforcement.dataFim,
-                            nome: enforcement.nome,
-                            valor: enforcement.valor,
-                            idAvaliacao: enforcement.idAvaliacao,
-                            idDisciplina: enforcement.idDisciplina
-                        }}
-                        onSubmit={async (values) => {
-                            edit(values);
-                        }}
-=======
   return (
     <Sidebar>
       {loading ?
@@ -138,7 +94,6 @@ export default function EditEnforcement() {
                       disabled
                       select
                       fullWidth
->>>>>>> 920e844f985025aa40e80a9bfcf899b8657980c5
                     >
                       {educationalTests.map((option) => (
                         <MenuItem key={option.idAvaliacao} value={option.idAvaliacao}>

@@ -54,10 +54,11 @@ export default function EducationalTestInProgress() {
 
   async function save(e) {
     e.preventDefault();
+    
     try {
       let idAplicacao = id;
       let idUsuario = user.idUsuario;
-      await api.post(`/resposta_aberta`, { idAplicacao, idUsuario, resposta });
+      await api.post(`/resposta`, { idAplicacao, idUsuario, resposta });
       setSnack({ message: "Avaliação respondida com sucesso.", type: 'success', open: true });
       history.push("/educational_test")
     } catch (err) {
@@ -116,7 +117,7 @@ export default function EducationalTestInProgress() {
           </div>
 
           <div className="educational-test-progress-body">
-            <form onSubmit={save} method="POST">
+            <form onSubmit={save}>
               {aplicacao.avaliacao.questaos
                 .map((items, index) => (
                   <div key={index}>
@@ -132,19 +133,7 @@ export default function EducationalTestInProgress() {
 
                           <FormControl component="fieldset">
                             <RadioGroup
-                              name="radio-buttons-group"
-                            >
-                              {items.alternativas.map(items => (
-                                <FormControlLabel value={items.idAlternativa} control={<Radio />} label={items.descricao} />
-                              ))}
-
-                            </RadioGroup>
-                          </FormControl>
-
-                          {/* <>
-                            <TextField
-                              label="Resposta"
-                              value={resposta[index].resposta}
+                              name="alternativas"
                               onChange={e => {
                                 const resposta = e.target.value;
                                 setResposta(currentResponse =>
@@ -154,15 +143,23 @@ export default function EducationalTestInProgress() {
                                   })
                                 );
                               }}
-                              fullWidth
-                              multiline
-                              rows={7}
-                            />
-                          </> */}
+
+                            >
+                              {items.alternativas.map(items => (
+                                <FormControlLabel
+                                  value={items.idAlternativa}
+                                  control={<Radio />}
+                                  label={items.descricao}
+                                />
+                              ))}
+
+                            </RadioGroup>
+                          </FormControl>
 
                         </div>
                       </div>
                     </div>
+                    {JSON.stringify(resposta, null, 2)}
                   </div>
                 ))}
               <ButtonOne
