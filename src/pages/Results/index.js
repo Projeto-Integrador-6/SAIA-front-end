@@ -197,7 +197,7 @@ import './index.css';
 
 export default function Results() {
 
-    const [results, setResults] = useState([{}])
+    const [results, setResults] = useState({})
     const [loading, setLoading] = useState(true);
 
     let { id } = useParams();
@@ -206,30 +206,31 @@ export default function Results() {
         document.title = `SAIA - Análise por Avaliação`
     
         setTimeout(async () => {
-            const response = api.get(`/analise/${id}`)
-            setResults(response)
+            const response = await api.get(`/analise/${id}`)
+            setResults(response.data)
     
           setLoading(false);
         }, 500)
       }, [id])
 
-      console.log(results)
-
     return (
         <Sidebar>
+            {loading ?
+             <LoadingProgress /> 
+             :
             <div>
-                <PageTitle title={1} backLink="/manager/enforcement"/>
-                {/* <div className="results-resume">
+                <PageTitle title={results.prova[0].label} backLink="/manager/enforcement"/>
+                <div className="results-resume">
                     <p className="title">RESUMO</p>
                     <TripleBox
                         firstTitle="PERCENTUAL DE ACERTO"
-                        firstContent={`${}%`}
+                        firstContent={`${results.resume[0].hitPercentage}`}
                         firstContentColor="var(--green)"
                         secondTitle="PERCENTUAL DE ERROS"
-                        secondContent={`${}%`}
+                        secondContent={`${results.resume[0].errorPercentage}`}
                         secondContentColor="var(--red)"
                         thirdTitle="DESEMPENHO GERAL"
-                        thirdContent={}
+                        thirdContent={results.resume[0].performance}
                         thirdContentColor="var(--green)">
                     </TripleBox>
                 </div>
@@ -244,7 +245,7 @@ export default function Results() {
                             <BarChart
                                 width={500}
                                 height={300}
-                                data={}
+                                data={results.barChartData}
                                 margin={{
                                     top: 60,
                                     right: 60,
@@ -272,7 +273,7 @@ export default function Results() {
                             <LineChart 
                                 width={730} 
                                 height={250} 
-                                data={}
+                                data={results.lineChartData}
                                 margin={{ top: 60, right: 60, left: 30, bottom: 60 }}
                             >
                                 <CartesianGrid strokeDasharray="3 3" />
@@ -286,7 +287,7 @@ export default function Results() {
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
-                    <p className="title">GRÁFICO DE DESEMPENHO POR ASSUNTO - PERCENTUAL DE ACERTO</p>
+                    {/* <p className="title">GRÁFICO DE DESEMPENHO POR ASSUNTO - PERCENTUAL DE ACERTO</p>
                     <div className="chart-container">
                         <ResponsiveContainer 
                             width="95%" 
@@ -307,9 +308,10 @@ export default function Results() {
                                 <Legend />
                             </RadarChart>
                         </ResponsiveContainer>
-                    </div> 
-                </div>*/}
-            </div>
+                    </div>  */}
+                </div>
+            </div> 
+            }       
         </Sidebar>
     )
 }

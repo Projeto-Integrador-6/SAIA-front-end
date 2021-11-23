@@ -9,7 +9,6 @@ import { AuthContext } from '../../contexts/AuthContext';
 import api from '../../services/api';
 
 import './index.css';
-import { fontWeight } from "@mui/system";
 
 export default function UserProfile() {
   const { user } = useContext(AuthContext);
@@ -57,10 +56,10 @@ export default function UserProfile() {
               </div>
             </div>
 
-          {usuario.tipoUsuario == 0  &&
+          {usuario.tipoUsuario === 0  &&
             <h4 style={{fontWeight:"bold"}}>Disciplinas em curso</h4>
           } 
-          {usuario.tipoUsuario == 1 &&
+          {usuario.tipoUsuario === 1 &&
             <h4 style={{fontWeight:"bold"}}>Disciplinas que ministra</h4>
           }
      
