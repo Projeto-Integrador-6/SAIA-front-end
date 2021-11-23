@@ -8,8 +8,6 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 import api from '../../services/api';
 
-import { AuthContext } from '../../contexts/AuthContext';
-
 import './index.css';
 
 export default function UserProfile() {
