@@ -8,6 +8,8 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 import api from '../../services/api';
 
+import { AuthContext } from '../../contexts/AuthContext';
+
 import './index.css';
 
 export default function UserProfile() {
@@ -57,7 +59,7 @@ export default function UserProfile() {
             </div>
 
             <h4>Disciplinas em curso</h4>
-        
+
             <div className="user-profile-subjects">
               {disciplinas.map(items => (
                 <div className="user-profile-subject">
