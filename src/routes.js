@@ -94,13 +94,13 @@ export default function Routes() {
         <PrivateRoute isPrivate path="/manager/questions" component={Questions} />
 
         {/* Painel Educador - Aplicação Avaliação */}
-        <PrivateRoute isPrivate path="/manager/enforcement/results" component={Results} />
+        <PrivateRoute isPrivate path="/manager/enforcement/results/:id" component={Results} />
         <PrivateRoute isPrivate path="/manager/enforcement/create" component={CreateEnforcement} />
         <PrivateRoute isPrivate path="/manager/enforcement/update/:id" component={EditEnforcement} />
         <PrivateRoute isPrivate path="/manager/enforcement" component={Enforcement} />
 
         {/* Painel Educador - Resultados */}
-        <PrivateRoute isPrivate path="/manager/general_results" component={GeneralResults} />
+        {/* <PrivateRoute isPrivate path="/manager/general_results" component={GeneralResults} /> */}
 
 
         {/* Painel Coordenador - Usuários */}

@@ -43,7 +43,6 @@ export default function Home() {
             {user.tipoUsuario !== 0 &&
               <>
                 <Box title="APLICAÇÕES" link="manager/enforcement" />
-                <Box title="ANÁLISES GERAIS" link="/manager/general_results" />
               </>
             }
           </div>
