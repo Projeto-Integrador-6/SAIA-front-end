@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 
 import Sidebar from "../../components/Sidebar";
 import PageTitle from "../../components/PageTitle";
 
+import api from '../../services/api';
+
+import { AuthContext } from '../../contexts/AuthContext';
+
 import './index.css';
 
 export default function UserProfile() {
+
+  const { user } = useContext(AuthContext);
+
+  const [userData, setUser] = useState({})
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    document.title = `SAIA - Perfil`
+
+    setTimeout (async () => {
+      const userResponse = api.get(`usuario/${user.idUsuario}`)
+      setUser(userResponse.data.usuario)
+
+      setLoading(false);
+    }, 500)
+  }, [user.idUsuario])
+  
+
   return (
     <Sidebar>
-      <PageTitle title="LUIZ FERNANDO DE SOUZA" />
+      <PageTitle title={userData.nome} />
 
       <div className="user-profile">
         <h4>Meus Dados</h4>
@@ -16,7 +38,7 @@ export default function UserProfile() {
         <div className="user-profile-items">
           <div className="user-profile-item">
             <h3>E-mail</h3>
-            <p>zluizfs@outlook.com</p>
+            <p>{userData.email}</p>
           </div>
 
           <div className="user-profile-item">
