@@ -41,17 +41,8 @@ export default function ViewEducationalTest() {
         <>
           <PageTitle title={`Visualizando Avaliação: ${avaliacao.nome}`} backLink="/manager/educational_test" />
 
-          <FullCard title="Dados da avaliação" noBody={true}>
-            <div className="educational-view-data">
-              <div className="educational-view-data-item-1">
-                <h4>Nome</h4>
-                <p>{avaliacao.nome}</p>
-              </div>
-              <div className="educational-view-data-item-2">
-                <h4>Descrição</h4>
-                <p>{avaliacao.descricao}</p>
-              </div>
-            </div>
+          <FullCard title="Descrição" noBody={true}>
+            <p>{avaliacao.descricao}</p>
           </FullCard>
 
           <FullCard title="Questões da avaliação" noBody={true}>
