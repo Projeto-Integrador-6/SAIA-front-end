@@ -53,6 +53,7 @@ export default function useAuth() {
       api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`;
 
       response.data.usuario.password = null;
+      
       setUser(response.data.usuario);
       setUserType({ id: response.data.usuario.tipoUsuario, descricao: type(response.data.usuario.tipoUsuario) });
     } catch (res) {
