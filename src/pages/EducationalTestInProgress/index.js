@@ -83,6 +83,11 @@ export default function EducationalTestInProgress() {
     if (day.length < 2)
       day = '0' + day;
 
+    if (hours.length < 2)
+      hours = '0' + hours;
+    if (minutes.length < 2)
+      minutes = '0' + minutes;
+
     return [day, month, year].join('/') + " às " + [hours, minutes].join(':');
   }
 
@@ -108,7 +113,7 @@ export default function EducationalTestInProgress() {
                 </h4>
               </div>
             </div>
-
+            <div></div>
           </div>
 
           <div className="educational-test-progress-body">

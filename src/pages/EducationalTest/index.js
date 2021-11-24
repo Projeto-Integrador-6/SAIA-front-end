@@ -24,13 +24,24 @@ export default function EducationalTest() {
     document.title = `SAIA - Avaliações`
 
     setTimeout(async () => {
-      const response = await api.get(`/aplicacao/disciplina/${user.idUsuario}`)
+      const response = await api.get(`/aplicacao/disciplina/${user.idUsuario}?date=${formatDateUS(new Date())}`)
       setAplicacao(response.data.result);
 
       setLoading(false);
     }, 500)
 
   }, [user.idUsuario])
+
+  function formatDateUS(date) {
+    var d = new Date(date);
+    d = new Date(d.getTime() + d.getTimezoneOffset() * 60000)
+
+    var month = '' + (d.getMonth() + 1);
+    var day = '' + (d.getDate() + 1);
+    var year = d.getFullYear();
+
+    return [year, month, day].join('-') + " " + ['00', '00'].join(':');
+  }
 
   function formatDateDayFrist(date) {
     var d = new Date(date);
