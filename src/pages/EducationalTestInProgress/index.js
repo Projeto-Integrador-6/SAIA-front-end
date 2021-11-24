@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import TimerIcon from '@mui/icons-material/Timer';
-import { FormControl, FormControlLabel, Pagination, Radio, RadioGroup, TextField } from "@mui/material";
+import { FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import produce from 'immer';
 import { generate } from 'shortid';
 import Countdown from 'react-countdown';
@@ -54,7 +54,7 @@ export default function EducationalTestInProgress() {
 
   async function save(e) {
     e.preventDefault();
-    
+
     try {
       let idAplicacao = id;
       let idUsuario = user.idUsuario;
@@ -66,25 +66,24 @@ export default function EducationalTestInProgress() {
     }
   }
 
-  const Completionist = () => <span>You are good to go!</span>;
+  function formatDateDayFrist(date) {
+    var d = new Date(date);
+    var h = new Date(date)
+    d = new Date(d.getTime() + d.getTimezoneOffset() * 60000)
 
-  // FUNÇÃO PARA RETORNAR HORAS, MINUTOS E SEGUNDOS DO COUNTDOWN
-  function renderer({ hours, minutes, seconds, completed }) {
-    if (completed) {
-      // Render a completed state
-      return <Completionist />;
-    } else {
-      // Render a countdown
-      return <span>{hours}:{minutes}:{seconds}</span>;
-    }
-  };
+    var month = '' + (d.getMonth() + 1);
+    var day = '' + (d.getDate());
+    var year = d.getFullYear();
 
-  function convertHoursInMilliseconds(value) {
-    let date = new Date(value)
+    var hours = h.getHours();
+    var minutes = h.getMinutes();
 
-    let dateFormated = date.getTime();
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
 
-    return dateFormated;
+    return [day, month, year].join('/') + " às " + [hours, minutes].join(':');
   }
 
   return (
@@ -99,21 +98,17 @@ export default function EducationalTestInProgress() {
                 <Icon icon={<ArrowBackIcon />} size="large" />
               </Link>
             </div>
-
             <div className="educational-test-progress-title">
               <h3>{aplicacao.nome}</h3>
               <p>{aplicacao.avaliacao.descricao}</p>
+              <div className="educational-test-progress-coutdown">
+                <h4>
+                  <TimerIcon />
+                  <p>Disponível até {formatDateDayFrist(aplicacao.dataFim)}</p>
+                </h4>
+              </div>
             </div>
 
-            <div className="educational-test-progress-coutdown">
-              <h4>
-                <TimerIcon />
-                {/* <Countdown
-                  date={Date.now() }
-                  renderer={renderer}
-                /> */}
-              </h4>
-            </div>
           </div>
 
           <div className="educational-test-progress-body">
@@ -159,7 +154,6 @@ export default function EducationalTestInProgress() {
                         </div>
                       </div>
                     </div>
-                    {JSON.stringify(resposta, null, 2)}
                   </div>
                 ))}
               <ButtonOne

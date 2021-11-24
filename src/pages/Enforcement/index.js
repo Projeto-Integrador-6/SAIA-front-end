@@ -48,7 +48,7 @@ export default function Enforcement() {
             <Link to={`enforcement/results/${enforcement.row.idAplicacao}`}>
               <Icon icon={<ShowChartIcon />} />
             </Link>
-            <Link to={`questions/update/${enforcement.row.idAplicacao}`}>
+            <Link to={`enforcement/update/${enforcement.row.idAplicacao}`}>
               <Icon icon={<CreateIcon />} />
             </Link>
           </>

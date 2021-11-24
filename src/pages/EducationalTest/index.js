@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { DataGrid, GridToolbarFilterButton, ptBR } from '@mui/x-data-grid'; 
+import { DataGrid, GridToolbarFilterButton, ptBR } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
@@ -34,18 +34,32 @@ export default function EducationalTest() {
 
   function formatDateDayFrist(date) {
     var d = new Date(date);
+    var h = new Date(date)
     d = new Date(d.getTime() + d.getTimezoneOffset() * 60000)
 
     var month = '' + (d.getMonth() + 1);
     var day = '' + (d.getDate());
     var year = d.getFullYear();
 
+    var hours = h.getHours();
+    var minutes = h.getMinutes();
+
     if (month.length < 2)
       month = '0' + month;
     if (day.length < 2)
       day = '0' + day;
 
-    return [day, month, year].join('/');
+    return [day, month, year].join('/') + " " + [hours, minutes].join(':');
+  }
+
+  function verifyStatus(value) {
+    if (value === 0) {
+      return 'Não'
+    }
+
+    if (value === 1) {
+      return 'Sim'
+    }
   }
 
   const columns = [
@@ -61,7 +75,7 @@ export default function EducationalTest() {
       minWidth: 150,
       flex: 1,
       renderCell: (discipline) => {
-        return(
+        return (
           discipline.row.disciplina.nome
         )
       }
@@ -72,7 +86,7 @@ export default function EducationalTest() {
       minWidth: 150,
       flex: 1,
       renderCell: (date) => {
-        return(
+        return (
           formatDateDayFrist(date.row.dataInicio)
         )
       }
@@ -83,7 +97,7 @@ export default function EducationalTest() {
       minWidth: 150,
       flex: 1,
       renderCell: (date) => {
-        return(
+        return (
           formatDateDayFrist(date.row.dataFim)
         )
       }
@@ -95,15 +109,32 @@ export default function EducationalTest() {
       flex: 1
     },
     {
+      field: 'participacao',
+      headerName: 'Participação',
+      minWidth: 150,
+      flex: 1,
+      renderCell: (status) => {
+        return (
+          <>
+            <p>{verifyStatus(status.row.participacao)}</p>
+          </>
+        )
+      }
+    },
+    {
       field: 'acoes',
       headerName: 'Ações',
       minWidth: 150,
       renderCell: (user) => {
         return (
           <>
-            <Link to={`educational_test/open_test/${user.row.idAplicacao}`}>
-              <Icon icon={<PlayArrowIcon />} />
-            </Link>
+            {user.row.participacao === 0 ?
+              <Link to={`educational_test/open_test/${user.row.idAplicacao}`}>
+                <Icon icon={<PlayArrowIcon />} />
+              </Link>
+              :
+              <Icon icon={<PlayArrowIcon />} disabled/>
+            }
           </>
         )
       }

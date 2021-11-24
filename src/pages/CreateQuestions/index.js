@@ -24,7 +24,11 @@ export default function CreateQuestions() {
   const { user } = useContext(AuthContext);
   const { setSnack } = useContext(SnackContext);
 
-  const [alternativas, setAlternativas] = useState([{}]);
+  const [alternativas, setAlternativas] = useState([{
+    idAlternativa: generate(),
+    descricao: '',
+    isAlternativaCorreta: false
+  }]);
   const [tags, setTags] = useState([]);
   const [tagQuestao, setTagQuestao] = useState([]);
 
