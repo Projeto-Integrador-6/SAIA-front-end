@@ -37,10 +37,10 @@ export default function EducationalTest() {
     d = new Date(d.getTime() + d.getTimezoneOffset() * 60000)
 
     var month = '' + (d.getMonth() + 1);
-    var day = '' + (d.getDate() + 1);
+    var day = '' + (d.getDate());
     var year = d.getFullYear();
 
-    return [year, month, day].join('-') + " " + ['00', '00'].join(':');
+    return [year, month, day].join('-') + " " + ['23', '59'].join(':');
   }
 
   function formatDateDayFrist(date) {
