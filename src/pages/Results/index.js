@@ -7,7 +7,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid,
         PolarAngleAxis, PolarRadiusAxis, Radar 
         } from 'recharts';
 
-import Sidebar from '../../components/Sidebar'
+import Sidebar  from '../../components/Sidebar'
 import TripleBox from '../../components/TripleBox'
 import PageTitle from '../../components/PageTitle'
 import LoadingProgress from "../../components/LoadingProgress";
@@ -223,6 +223,8 @@ export default function Results() {
                 <div className="results-resume">
                     <p className="title">RESUMO</p>
                     <TripleBox
+                        hasTooltip={true}
+                        tooltipTitle={<ul><li>{"0% - 40% RUIM"}</li> <li>{"41% - 80% BOM"}</li> <li>{"80% - 100% ÓTIMO"}</li></ul>}
                         firstTitle="PERCENTUAL DE ACERTO"
                         firstContent={`${results.resume[0].hitPercentage}`}
                         firstContentColor="var(--green)"
