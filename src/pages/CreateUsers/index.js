@@ -32,7 +32,7 @@ export default function CreateUsers() {
 
   return (
     <Sidebar>
-      <PageTitle title="Criando Usuário" />
+      <PageTitle title="Criando Usuário" backLink="/manager/users"/>
 
       <Formik
         initialValues={{

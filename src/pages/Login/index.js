@@ -58,7 +58,6 @@ export default function Login() {
                   value={values.password}
                   onChange={handleChange}
                 />
-                <Link className="forgotten-password" to="/forgotten_password">Esqueceu a senha?</Link>
               </div>
 
               <div className="input-block">
