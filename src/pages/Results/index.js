@@ -224,7 +224,7 @@ export default function Results() {
                     <p className="title">RESUMO</p>
                     <TripleBox
                         hasTooltip={true}
-                        tooltipTitle={<ul><li>{"0% - 40% RUIM"}</li> <li>{"41% - 80% BOM"}</li> <li>{"80% - 100% ÓTIMO"}</li></ul>}
+                        tooltipTitle={<div><p>{"0% - 40% RUIM"}</p> <p>{"41% - 80% BOM"}</p> <p>{"80% - 100% ÓTIMO"}</p></div>}
                         firstTitle="PERCENTUAL DE ACERTO"
                         firstContent={`${results.resume[0].hitPercentage}`}
                         firstContentColor="var(--green)"

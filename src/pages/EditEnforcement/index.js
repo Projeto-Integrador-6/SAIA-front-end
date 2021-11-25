@@ -73,7 +73,7 @@ export default function EditEnforcement() {
             initialValues={{
               dataInicio: enforcement.dataInicio,
               dataFim: enforcement.dataFim,
-              nome: enforcement.nome,
+              idAvaliacao: enforcement.idAvaliacao,
               valor: enforcement.valor,
               idDisciplina: enforcement.idDisciplina
             }}
