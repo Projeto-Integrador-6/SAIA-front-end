@@ -28,9 +28,7 @@
   }
 
   .simple-card-items {
-    display: grid !important;
-    grid-template-columns: 2fr 1fr;
-    justify-items: flex-end;
-    align-items: center !important; 
+    flex-direction: row !important;
+    align-items: center !important;
   }
 }
