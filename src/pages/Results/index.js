@@ -1,18 +1,19 @@
 import React, { useEffect, useState, useContext } from "react"
 import { useParams } from 'react-router-dom'
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, 
-         Tooltip, Legend, ResponsiveContainer, 
-         Line, LineChart, RadarChart, PolarGrid, 
-        PolarAngleAxis, PolarRadiusAxis, Radar 
-        } from 'recharts';
+import {
+    BarChart, Bar, XAxis, YAxis, CartesianGrid,
+    Tooltip, Legend, ResponsiveContainer,
+    Line, LineChart, RadarChart, PolarGrid,
+    PolarAngleAxis, PolarRadiusAxis, Radar
+} from 'recharts';
 
-import Sidebar  from '../../components/Sidebar'
+import Sidebar from '../../components/Sidebar'
 import TripleBox from '../../components/TripleBox'
 import PageTitle from '../../components/PageTitle'
 import LoadingProgress from "../../components/LoadingProgress";
 
-import {AuthContext} from '../../contexts/AuthContext'
+import { AuthContext } from '../../contexts/AuthContext'
 
 import api from '../../services/api'
 
@@ -204,92 +205,92 @@ export default function Results() {
 
     useEffect(() => {
         document.title = `SAIA - Análise por Avaliação`
-    
+
         setTimeout(async () => {
             const response = await api.get(`/analise/${id}`)
             setResults(response.data)
-    
-          setLoading(false);
+
+            setLoading(false);
         }, 500)
-      }, [id])
+    }, [id])
 
     return (
         <Sidebar>
             {loading ?
-             <LoadingProgress /> 
-             :
-            <div>
-                <PageTitle title={results.prova[0].label} backLink="/manager/enforcement"/>
-                <div className="results-resume">
-                    <p className="title">RESUMO</p>
-                    <TripleBox
-                        hasTooltip={true}
-                        tooltipTitle={<div><p>{"0% - 40% RUIM"}</p> <p>{"41% - 80% BOM"}</p> <p>{"80% - 100% ÓTIMO"}</p></div>}
-                        firstTitle="PERCENTUAL DE ACERTO"
-                        firstContent={`${results.resume[0].hitPercentage}`}
-                        firstContentColor="var(--green)"
-                        secondTitle="PERCENTUAL DE ERROS"
-                        secondContent={`${results.resume[0].errorPercentage}`}
-                        secondContentColor="var(--red)"
-                        thirdTitle="DESEMPENHO GERAL"
-                        thirdContent={results.resume[0].performance}
-                        thirdContentColor="var(--green)">
-                    </TripleBox>
-                </div>
-                <div className="results-chart">
-                    <p className="title">GRÁFICO DE DESEMPENHO POR QUESTÃO</p>
-                    <div className="chart-container">
-                        <ResponsiveContainer 
-                            width="95%" 
-                            height={400} 
-                            style={{ margin: "auto" }}
-                        >
-                            <BarChart
-                                width={500}
-                                height={300}
-                                data={results.barChartData}
-                                margin={{
-                                    top: 60,
-                                    right: 60,
-                                    left: 30,
-                                    bottom: 60,
-                                }}
-                            >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend iconType="circle" />
-                                <Bar dataKey="Erros" stackId="a" fill="var(--wrong-answer)" />
-                                <Bar dataKey="Acertos" stackId="a" fill="var(--right-answer)" />
-                            </BarChart>
-                        </ResponsiveContainer>
+                <LoadingProgress />
+                :
+                <div>
+                    <PageTitle title={"Resultados de: " + results.prova[0].label} backLink="/manager/enforcement" />
+                    <div className="results-resume">
+                        <p className="title">RESUMO</p>
+                        <TripleBox
+                            hasTooltip={true}
+                            tooltipTitle={<div><p>{"0% - 40% RUIM"}</p> <p>{"41% - 80% BOM"}</p> <p>{"80% - 100% ÓTIMO"}</p></div>}
+                            firstTitle="PERCENTUAL DE ACERTO"
+                            firstContent={`${results.resume[0].hitPercentage}`}
+                            firstContentColor="var(--green)"
+                            secondTitle="PERCENTUAL DE ERROS"
+                            secondContent={`${results.resume[0].errorPercentage}`}
+                            secondContentColor="var(--red)"
+                            thirdTitle="DESEMPENHO GERAL"
+                            thirdContent={results.resume[0].performance}
+                            thirdContentColor="var(--green)">
+                        </TripleBox>
                     </div>
-                    <p className="title">GRÁFICO DE DESEMPENHO POR ALTERNATIVA</p>
-                    <div className="chart-container">
-                        <ResponsiveContainer 
-                            width="95%" 
-                            height={400} 
-                            style={{ margin: "auto" }}
-                        >
-                            <LineChart 
-                                width={730} 
-                                height={250} 
-                                data={results.lineChartData}
-                                margin={{ top: 60, right: 60, left: 30, bottom: 60 }}
+                    <div className="results-chart">
+                        <p className="title">GRÁFICO DE DESEMPENHO POR QUESTÃO</p>
+                        <div className="chart-container">
+                            <ResponsiveContainer
+                                width="95%"
+                                height={400}
+                                style={{ margin: "auto" }}
                             >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip />
-                                <Line type="monotone" dataKey="Alternativa A" stroke="#FEA82F" />
-                                <Line type="monotone" dataKey="Alternativa B" stroke="#82ca9d" />
-                                <Line type="monotone" dataKey="Alternativa C" stroke="#9C95DC" />
-                                <Line type="monotone" dataKey="Alternativa D" stroke="#FF2E00" />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                    {/* <p className="title">GRÁFICO DE DESEMPENHO POR ASSUNTO - PERCENTUAL DE ACERTO</p>
+                                <BarChart
+                                    width={500}
+                                    height={300}
+                                    data={results.barChartData}
+                                    margin={{
+                                        top: 60,
+                                        right: 60,
+                                        left: 30,
+                                        bottom: 60,
+                                    }}
+                                >
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Legend iconType="circle" />
+                                    <Bar dataKey="Erros" stackId="a" fill="var(--wrong-answer)" />
+                                    <Bar dataKey="Acertos" stackId="a" fill="var(--right-answer)" />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                        <p className="title">GRÁFICO DE DESEMPENHO POR ALTERNATIVA</p>
+                        <div className="chart-container">
+                            <ResponsiveContainer
+                                width="95%"
+                                height={400}
+                                style={{ margin: "auto" }}
+                            >
+                                <LineChart
+                                    width={730}
+                                    height={250}
+                                    data={results.lineChartData}
+                                    margin={{ top: 60, right: 60, left: 30, bottom: 60 }}
+                                >
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Line type="monotone" dataKey="Alternativa A" stroke="#FEA82F" />
+                                    <Line type="monotone" dataKey="Alternativa B" stroke="#82ca9d" />
+                                    <Line type="monotone" dataKey="Alternativa C" stroke="#9C95DC" />
+                                    <Line type="monotone" dataKey="Alternativa D" stroke="#FF2E00" />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                        {/* <p className="title">GRÁFICO DE DESEMPENHO POR ASSUNTO - PERCENTUAL DE ACERTO</p>
                     <div className="chart-container">
                         <ResponsiveContainer 
                             width="95%" 
@@ -311,9 +312,9 @@ export default function Results() {
                             </RadarChart>
                         </ResponsiveContainer>
                     </div>  */}
+                    </div>
                 </div>
-            </div> 
-            }       
+            }
         </Sidebar>
     )
 }

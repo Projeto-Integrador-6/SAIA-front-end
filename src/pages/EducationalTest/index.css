@@ -1,0 +1,11 @@
+.educational-test-all-tests-container {
+  margin-bottom: 40px;
+}
+
+.educational-test-all-tests-container h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  margin-bottom: 20px;
+}

@@ -32,9 +32,10 @@ import EditSubject from './pages/EditSubject'
 import LinkedTeachers from "./pages/LinkedTeachers";
 import LinkedStudents from "./pages/LinkedStudents";
 
+import IndividualResults from './pages/IndividualResults';
+import UserResults from './pages/UserResults';
 import Results from './pages/Results';
 import UserProfile from "./pages/UserProfile";
-import GeneralResults from './pages/GeneralResults'
 
 import history from './history/index';
 
@@ -94,6 +95,8 @@ export default function Routes() {
         <PrivateRoute isPrivate path="/manager/questions" component={Questions} />
 
         {/* Painel Educador - Aplicação Avaliação */}
+        <PrivateRoute isPrivate path="/manager/enforcement/individual_results/user_results/:nome/:idUsuario/:idAplicacao" component={UserResults} />
+        <PrivateRoute isPrivate path="/manager/enforcement/individual_results/:id" component={IndividualResults} />
         <PrivateRoute isPrivate path="/manager/enforcement/results/:id" component={Results} />
         <PrivateRoute isPrivate path="/manager/enforcement/create" component={CreateEnforcement} />
         <PrivateRoute isPrivate path="/manager/enforcement/update/:id" component={EditEnforcement} />
@@ -101,7 +104,6 @@ export default function Routes() {
 
         {/* Painel Educador - Resultados */}
         {/* <PrivateRoute isPrivate path="/manager/general_results" component={GeneralResults} /> */}
-
 
         {/* Painel Coordenador - Usuários */}
         <PrivateRoute isPrivate path="/manager/users/update/:id" component={EditUsers} />

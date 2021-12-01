@@ -1,0 +1,12 @@
+.alternative-user-response-type {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.alternative-user-response-type p {
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  margin-bottom: 10px;
+}

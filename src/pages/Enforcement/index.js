@@ -11,6 +11,7 @@ import Sidebar from '../../components/Sidebar';
 import ListCard from '../../components/ListCard';
 import { ButtonTwo, Icon } from '../../components/Button';
 import DataGridContainer from "../../components/DataGridContainer";
+import MenuDropDown from "../../components/MenuDropDown";
 
 import { AuthContext } from '../../contexts/AuthContext';
 import api from "../../services/api"
@@ -45,12 +46,17 @@ export default function Enforcement() {
       renderCell: (enforcement) => {
         return (
           <>
-            <Link to={`enforcement/results/${enforcement.row.idAplicacao}`}>
-              <Icon icon={<ShowChartIcon />} />
-            </Link>
             <Link to={`enforcement/update/${enforcement.row.idAplicacao}`}>
               <Icon icon={<CreateIcon />} />
             </Link>
+
+            <MenuDropDown
+              icon={<ShowChartIcon />}
+              buttons={[
+                { nome: 'Resultados gerais', link: `enforcement/results/${enforcement.row.idAplicacao}` },
+                { nome: 'Resultados individuais', link: `enforcement/individual_results/${enforcement.row.idAplicacao}` }
+              ]}
+            />
           </>
         )
       }

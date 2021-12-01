@@ -17,7 +17,8 @@ import './index.css';
 export default function EducationalTest() {
   const { user } = useContext(AuthContext);
 
-  const [aplicacao, setAplicacao] = useState([])
+  const [aplicacoesEmAndamento, setAplicacoesEmAndamento] = useState([])
+  const [aplicacoesEncerradas, setAplicacoesEncerradas] = useState([])
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,7 +26,8 @@ export default function EducationalTest() {
 
     setTimeout(async () => {
       const response = await api.get(`/aplicacao/disciplina/${user.idUsuario}?date=${formatDateUS(new Date())}`)
-      setAplicacao(response.data.result);
+      setAplicacoesEmAndamento(response.data.andamento);
+      setAplicacoesEncerradas(response.data.encerradas);
 
       setLoading(false);
     }, 500)
@@ -63,17 +65,78 @@ export default function EducationalTest() {
     return [day, month, year].join('/') + " " + [hours, minutes].join(':');
   }
 
-  function verifyStatus(value) {
-    if (value === 0) {
-      return 'Não'
-    }
+  const columns_em_andamento = [
+    {
+      field: 'nome',
+      headerName: 'Avaliação',
+      width: 350
 
-    if (value === 1) {
-      return 'Sim'
+    },
+    {
+      field: 'disciplina',
+      headerName: 'Disciplina',
+      minWidth: 150,
+      flex: 1,
+      renderCell: (discipline) => {
+        return (
+          discipline.row.disciplina.nome
+        )
+      }
+    },
+    {
+      field: 'dataInicio',
+      headerName: 'Início',
+      minWidth: 150,
+      flex: 1,
+      renderCell: (date) => {
+        return (
+          formatDateDayFrist(date.row.dataInicio)
+        )
+      }
+    },
+    {
+      field: 'dataFim',
+      headerName: 'Fim',
+      minWidth: 150,
+      flex: 1,
+      renderCell: (date) => {
+        return (
+          formatDateDayFrist(date.row.dataFim)
+        )
+      }
+    },
+    {
+      field: 'valor',
+      headerName: 'Valor',
+      minWidth: 150,
+      flex: 1
+    },
+    {
+      field: 'participacao',
+      headerName: 'Participação',
+      minWidth: 150,
+      flex: 1,
+      renderCell: () => {
+        return "Não";
+      }
+    },
+    {
+      field: 'acoes',
+      headerName: 'Ações',
+      minWidth: 150,
+      renderCell: (user) => {
+        return (
+          <>
+            <Link to={`educational_test/open_test/${user.row.idAplicacao}`}>
+              <Icon icon={<PlayArrowIcon />} />
+            </Link>
+          </>
+        )
+      }
     }
-  }
+  ];
 
-  const columns = [
+  const columns_encerrado = [
     {
       field: 'nome',
       headerName: 'Avaliação',
@@ -125,11 +188,7 @@ export default function EducationalTest() {
       minWidth: 150,
       flex: 1,
       renderCell: (status) => {
-        return (
-          <>
-            <p>{verifyStatus(status.row.participacao)}</p>
-          </>
-        )
+        return "Sim";
       }
     },
     {
@@ -138,15 +197,7 @@ export default function EducationalTest() {
       minWidth: 150,
       renderCell: (user) => {
         return (
-          <>
-            {user.row.participacao === 0 ?
-              <Link to={`educational_test/open_test/${user.row.idAplicacao}`}>
-                <Icon icon={<PlayArrowIcon />} />
-              </Link>
-              :
-              <Icon icon={<PlayArrowIcon />} disabled/>
-            }
-          </>
+          <Icon icon={<PlayArrowIcon />} disabled />
         )
       }
     }
@@ -156,23 +207,48 @@ export default function EducationalTest() {
     <Sidebar>
       <PageTitle title="Avaliações" />
 
-      <DataGridContainer>
-        <DataGrid
-          getRowId={(r) => r.idAplicacao}
-          autoHeight={true}
-          rows={aplicacao}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
-          hideFooterSelectedRowCount={true}
-          selectionModel={false}
-          loading={loading}
-          components={{
-            Toolbar: GridToolbarFilterButton,
-          }}
-        />
-      </DataGridContainer>
+
+      <div className="educational-test-all-tests-container">
+        <h4>Avaliações em andamento</h4>
+        <DataGridContainer>
+          <DataGrid
+            getRowId={(r) => r.idAplicacao}
+            autoHeight={true}
+            rows={aplicacoesEmAndamento}
+            columns={columns_em_andamento}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
+            hideFooterSelectedRowCount={true}
+            selectionModel={false}
+            loading={loading}
+            components={{
+              Toolbar: GridToolbarFilterButton,
+            }}
+          />
+        </DataGridContainer>
+      </div>
+
+      <div className="educational-test-all-tests-container">
+        <h4>Avaliações anteriores</h4>
+        <DataGridContainer>
+          <DataGrid
+            getRowId={(r) => r.idAplicacao}
+            autoHeight={true}
+            rows={aplicacoesEncerradas}
+            columns={columns_encerrado}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
+            hideFooterSelectedRowCount={true}
+            selectionModel={false}
+            loading={loading}
+            components={{
+              Toolbar: GridToolbarFilterButton,
+            }}
+          />
+        </DataGridContainer>
+      </div>
 
     </Sidebar>
   )
