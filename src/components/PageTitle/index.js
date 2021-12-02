@@ -16,7 +16,7 @@ export default function PageTitle({ ...props }) {
           </Link>
         </div>
       }
-      <h2 className="title">{props.title}</h2>
+      <h2 className="page-title-h2">{props.title}</h2>
     </div>
   )
 }

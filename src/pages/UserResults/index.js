@@ -6,10 +6,12 @@ import Sidebar from '../../components/Sidebar'
 import PageTitle from '../../components/PageTitle'
 import FullCard from "../../components/FullCard";
 import LoadingProgress from "../../components/LoadingProgress";
+import TripleBox from "../../components/TripleBox";
 
 import api from '../../services/api';
 
 import './index.css';
+
 
 export default function UserResults() {
   let { nome, idUsuario, idAplicacao } = useParams();
@@ -36,6 +38,22 @@ export default function UserResults() {
         :
         <>
           <PageTitle title={`Resultados de ${nome} da ` + aplicacao.aplicacao.nome} backLink={`/manager/enforcement/individual_results/${idAplicacao}`} />
+          <div className="results-individual-resume">
+            <p className="title">RESUMO</p>
+            <TripleBox
+              hasTooltip={true}
+              tooltipTitle={<div><p>{"0% - 40% RUIM"}</p> <p>{"41% - 80% BOM"}</p> <p>{"80% - 100% ÓTIMO"}</p></div>}
+              firstTitle="PERCENTUAL DE ACERTO"
+              firstContent="50%"
+              firstContentColor="var(--green)"
+              secondTitle="PERCENTUAL DE ERROS"
+              secondContent="50%"
+              secondContentColor="var(--red)"
+              thirdTitle="DESEMPENHO GERAL"
+              thirdContent="BOM"
+              thirdContentColor="var(--green)">
+            </TripleBox>
+          </div>
 
           {aplicacao.aplicacao.avaliacao.questaos.map(questao => (
             <FullCard key={questao.idQuestao} title={questao.nome}>
@@ -43,38 +61,30 @@ export default function UserResults() {
                 <div className="alternative-container-user-response">
 
                   <div className="alternative-user-response-type">
-                    <p>Resposta Marcada Pelo Usuário</p>
-
                     <RadioGroup
                       name="alternativa-correta"
                     >
-                      {aplicacao.respostas_usuario.map(alternativa_corrreta => (
-                        questao.idQuestao === alternativa_corrreta.idQuestao &&
-                        <FormControlLabel
-                          value={alternativa_corrreta.idAlternativa}
-                          control={<Radio />}
-                          checked={true}
-                          label={alternativa_corrreta.descricao}
-                        />
-                      ))}
-
-                    </RadioGroup>
-                  </div>
-
-                  <div className="alternative-user-response-type">
-                    <RadioGroup
-                      name="alternativas-questao"
-                    >
-                      <p>Alternativas da Questão (A Alternativa Marcada é a alternativa correta da questão)</p>
-
-                      {questao.alternativas.map(alternativa => (
+                      {aplicacao.respostas_usuario.map(alternativa_correta => (
+                        questao.idQuestao === alternativa_correta.idQuestao &&
                         <>
                           <FormControlLabel
-                            value={alternativa.idAlternativa}
-                            control={<Radio />}
-                            checked={alternativa.isAlternativaCorreta}
-                            label={alternativa.descricao}
+                            value={alternativa_correta.idAlternativa}
+                            control={<Radio color={alternativa_correta.correta ? "primary" : "error"} />}
+                            checked={true}
+                            label={alternativa_correta.descricao}
                           />
+
+                          {questao.alternativas.map(alternativa => (
+                            alternativa_correta.idAlternativa !== alternativa.idAlternativa &&
+                            <>
+                              <FormControlLabel
+                                value={alternativa.idAlternativa}
+                                control={<Radio />}
+                                checked={alternativa.isAlternativaCorreta}
+                                label={alternativa.descricao}
+                              />
+                            </>
+                          ))}
                         </>
                       ))}
 

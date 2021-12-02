@@ -62,7 +62,7 @@ export default function IndividualResults() {
               aplicacao.nao_respondeu.length != 0
                 ?
                 aplicacao.nao_respondeu.map((items, index) => (
-                  <ListCard key={index} title={items.nome} />
+                  <ListCard key={index} content={items.nome} />
                 ))
                 :
                 <p>Todos alunos responderam a avaliação.</p>
