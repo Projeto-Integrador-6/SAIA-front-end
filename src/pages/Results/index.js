@@ -286,7 +286,9 @@ export default function Results() {
                                     <Line type="monotone" dataKey="Alternativa A" stroke="#FEA82F" />
                                     <Line type="monotone" dataKey="Alternativa B" stroke="#82ca9d" />
                                     <Line type="monotone" dataKey="Alternativa C" stroke="#9C95DC" />
-                                    <Line type="monotone" dataKey="Alternativa D" stroke="#FF2E00" />
+                                    <Line type="monotone" dataKey="Alternativa D" stroke="#3d348a" />
+                                    <Line type="monotone" dataKey="Alternativa E" stroke="#8a344f" />
+                                    <Line type="monotone" dataKey="Alternativa F" stroke="#518a34" />
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>

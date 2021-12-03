@@ -17,14 +17,18 @@ export default function UserResults() {
   let { nome, idUsuario, idAplicacao } = useParams();
 
   const [aplicacao, setAplicacao] = useState([]);
+  const [resumo, setResumo] = useState([])
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title = `SAIA - Resultados de: ${nome}`;
 
     setTimeout(async () => {
-      const response = await api.get(`/resposta/${idUsuario}/${idAplicacao}`)
-      setAplicacao(response.data);
+      const aplicacao_reponse = await api.get(`/resposta/${idUsuario}/${idAplicacao}`);
+      const resumo_response = await api.get(`/analise/${idAplicacao}/${idUsuario}`);
+      
+      setAplicacao(aplicacao_reponse.data);
+      setResumo(resumo_response.data);
 
       setLoading(false);
     }, 500);
@@ -44,13 +48,13 @@ export default function UserResults() {
               hasTooltip={true}
               tooltipTitle={<div><p>{"0% - 40% RUIM"}</p> <p>{"41% - 80% BOM"}</p> <p>{"80% - 100% ÓTIMO"}</p></div>}
               firstTitle="PERCENTUAL DE ACERTO"
-              firstContent="50%"
+              firstContent={`${resumo.resume[0].hitPercentage}`}
               firstContentColor="var(--green)"
               secondTitle="PERCENTUAL DE ERROS"
-              secondContent="50%"
+              secondContent={`${resumo.resume[0].errorPercentage}`}
               secondContentColor="var(--red)"
               thirdTitle="DESEMPENHO GERAL"
-              thirdContent="BOM"
+              thirdContent={resumo.resume[0].performance}
               thirdContentColor="var(--green)">
             </TripleBox>
           </div>
