@@ -292,7 +292,7 @@ export default function Results() {
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
-                        {/* <p className="title">GRÁFICO DE DESEMPENHO POR ASSUNTO - PERCENTUAL DE ACERTO</p>
+                        <p className="title">GRÁFICO DE DESEMPENHO POR ASSUNTO - PERCENTUAL DE ACERTO</p>
                     <div className="chart-container">
                         <ResponsiveContainer 
                             width="95%" 
@@ -303,7 +303,7 @@ export default function Results() {
                                 outerRadius={90} 
                                 width={730} 
                                 height={250} 
-                                data={}
+                                data={results.radarChartData}
                                 margin={{ top: 60, right: 60, left: 30, bottom: 60 }}
                             >
                                 <PolarGrid />
@@ -313,7 +313,7 @@ export default function Results() {
                                 <Legend />
                             </RadarChart>
                         </ResponsiveContainer>
-                    </div>  */}
+                    </div> 
                     </div>
                 </div>
             }
