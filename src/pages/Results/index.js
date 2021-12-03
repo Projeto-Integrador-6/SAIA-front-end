@@ -309,7 +309,7 @@ export default function Results() {
                                 <PolarGrid />
                                 <PolarAngleAxis dataKey="Conteúdo" />
                                 <PolarRadiusAxis angle={90} domain={[0, 100]} />
-                                <Radar name="Turma A" dataKey="Porcentagem" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                                <Radar name="Geral" dataKey="Porcentagem" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
                                 <Legend />
                             </RadarChart>
                         </ResponsiveContainer>
